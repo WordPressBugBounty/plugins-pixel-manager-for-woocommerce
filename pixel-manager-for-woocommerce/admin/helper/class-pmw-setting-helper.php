@@ -59,6 +59,8 @@ if(!class_exists('PMW_SettingHelper')):
                   $this->add_switch_fiels($value);
                 }else if($value['type'] == "checkbox") {
                   $this->add_checkbox_fiels($value);
+                }else if($value['type'] == "multi_checkbox") {
+                  $this->add_multi_checkbox_fiels($value);
                 }else if($value['type'] == "multi_text") {
                   $this->add_multi_text_fiels($value);
                 }else if($value['type'] == "text_with_switch") {
@@ -640,6 +642,64 @@ if(!class_exists('PMW_SettingHelper')):
               </div>          
             <?php }?>
             </div>            
+          </div>
+        </div>
+        <?php
+      }
+    }
+    public function add_multi_checkbox_fiels(array $args){
+      $name = $this->get_array_val($args, "name");
+      $options = $this->get_array_val($args, "options");
+      if($name != "" && count($options) > 0){
+        $id = $this->get_array_val($args, "id");
+        $label = $this->get_array_val($args, "label");
+        //$class = $this->get_array_val($args, "class");
+        $value = explode(",", $this->get_array_val($args, "value"));
+        $tooltip = $this->get_array_val($args, "tooltip");
+
+        $is_pro_featured = $this->get_array_val($args, "is_pro_featured");
+        $pro_text = $this->get_array_val($args, "is_pro_text");
+        $pro_utm_text = $this->get_array_val($args, "pro_utm_text");
+        $is_pro_only = $this->get_array_val($args, "is_pro_only");
+        $disable = ($is_pro_only)?$this->is_disable_pro_featured():"";
+        ?>
+        <div class="form-input-inline pmw_checkbox-with-title ml-2">
+          <div class="pmw_input-col-lg">
+            <label class="pmw_custom-control-label " for="<?php echo esc_attr($id); ?>">
+              <?php echo esc_attr($label); 
+              ($is_pro_featured)?$this->display_proplan_with_link($pro_text, $pro_utm_text):"";
+              ?>
+            </label>
+          </div>
+          <div class="pmw_input-col-sm">
+            <div class="alert-wrapper">
+              <?php if( !empty($tooltip) && isset($tooltip['title']) ){
+              $title = $this->get_array_val($tooltip, "title");
+              $link_title = $this->get_array_val($tooltip, "link_title", "Installation Manual");
+              $link = $this->get_array_val($tooltip, "link");
+              ?>
+              <div class="pmw-alert-btn pmw-checkbox-alert-btn"><i class="alert-icon"></i></div>
+              <div class="pmw-alert-text"><p><?php echo esc_attr($title); ?></p>
+                <?php if($link){?>
+                  <a target="_blank" href="<?php echo esc_url_raw($link); ?>"><?php echo esc_attr($link_title); ?></a>
+                <?php } ?>
+              </div>          
+            <?php }?>
+            </div>            
+          </div>
+          <div class="pmw-multi_checkbox_list">
+            <?php foreach($options as $key => $option ){
+              $checked = (is_array($value) && in_array($key, $value)) ? "checked" : "";
+              ?>
+            <div class="pmw_options_checkbox">
+              <label class="pmw_custom-control-label " for="<?php echo esc_attr($key); ?>">
+                <input type="checkbox" <?php echo esc_attr($disable); echo esc_attr($checked); ?>  name="<?php echo esc_attr($name); ?>[]" id="<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($key); ?>" class="pmw_custom-control-input pmw_switch">
+                <?php echo esc_attr($option); 
+                ($is_pro_featured)?$this->display_proplan_with_link($pro_text, $pro_utm_text):"";
+                ?>
+              </label>
+            </div>
+            <?php } ?>
           </div>
         </div>
         <?php

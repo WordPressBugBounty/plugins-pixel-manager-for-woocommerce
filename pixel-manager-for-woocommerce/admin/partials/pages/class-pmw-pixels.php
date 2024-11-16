@@ -103,6 +103,8 @@ if(!class_exists('PMW_Pixels')){
       $exclude_tax_ordertotal = isset($pixels_option['integration']['exclude_tax_ordertotal'])?$pixels_option['integration']['exclude_tax_ordertotal']:"";
       $exclude_shipping_ordertotal = isset($pixels_option['integration']['exclude_shipping_ordertotal'])?$pixels_option['integration']['exclude_shipping_ordertotal']:"";
       $send_product_sku = isset($pixels_option['integration']['send_product_sku'])?$pixels_option['integration']['send_product_sku']:"";
+      $roles_exclude_tracking = isset($pixels_option['integration']['roles_exclude_tracking'])?$pixels_option['integration']['roles_exclude_tracking']:"";
+      $options_roles = $this->get_pmw_roles_list();
 
       $fields = [
         "tab_pixels" =>[
@@ -133,7 +135,7 @@ if(!class_exists('PMW_Pixels')){
         "section_freevspro" => [    
           [
             "type" => "section",
-            "label" => __("Comparison between free and pro events tracking ", "pixel-manager-for-woocommerce"),
+            "label" => __("Comparison between free and pro events tracking", "pixel-manager-for-woocommerce"),
             "class" => "freevspro_section_setting",
           ]
         ],
@@ -568,6 +570,20 @@ if(!class_exists('PMW_Pixels')){
             "class" => "exclude_shipping_ordertotal",
             "tooltip" =>[
               "title" => __("Activate this feature to exclude shipping from the order total variable.", "pixel-manager-for-woocommerce")
+            ]
+          ]
+        ],
+        "roles_exclude_tracking" => [    
+          [
+            "type" => "multi_checkbox",
+            "label" => __("Exclude User Roles from Event Tracking", "pixel-manager-for-woocommerce"),
+            "name" => "roles_exclude_tracking",
+            "id" => "roles_exclude_tracking",
+            "options" => $options_roles,
+            "value" => $roles_exclude_tracking,
+            "class" => "roles_exclude_tracking",
+            "tooltip" =>[
+              "title" => __("Select user roles to exclude from event tracking.", "pixel-manager-for-woocommerce")
             ]
           ]
         ],

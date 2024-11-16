@@ -17,10 +17,12 @@ if(!class_exists('PMW_Pixel')):
   class PMW_Pixel extends PMW_PixelHelper{
     protected $options = array();
     public function __construct(){
-      $this->req_int();
-      $this->options = $this->get_option();
-      //add_action('after_setup_theme', array($this, 'inject_pixels'));
-      $this->inject_pixels();
+      if(!is_admin()){     
+        $this->req_int();
+        $this->options = $this->get_option();
+        //add_action('after_setup_theme', array($this, 'inject_pixels'));
+        $this->inject_pixels();
+      }
     }
 
     public function req_int(){
@@ -33,8 +35,17 @@ if(!class_exists('PMW_Pixel')):
 
     public function inject_pixels(){
       // set current user
-      /*$current_user = wp_get_current_user();
-      if( isset($current_user->ID) && $current_user->ID != 0 ){
+      $current_user = wp_get_current_user();
+      $excluded_roles = isset($this->options['integration']['roles_exclude_tracking'])?explode(',', $this->options['integration']['roles_exclude_tracking']):'';
+      if($current_user && !empty($excluded_roles)){
+        $user_roles = $current_user->roles;
+        foreach ($user_roles as $role) {
+          if (in_array($role, $excluded_roles)) {
+            return true; // Disable event tracking for this user
+          }
+        }
+      }
+      /*if( isset($current_user->ID) && $current_user->ID != 0 ){
         $this->options['user_id'] = $current_user->ID;
         $this->options['user_email'] = (isset($current_user->data->user_email))?$current_user->data->user_email:"";
       }*/

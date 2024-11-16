@@ -82,6 +82,18 @@ if(!class_exists('PMW_AdminHelper')):
     public function get_pmw_api_store(){
       return unserialize( get_option("pmw_api_store"));
     }
+
+    public function get_pmw_roles_list() {
+      global $wp_roles;
+  
+      // Get all WordPress roles
+      if (!isset($wp_roles)) {
+          $wp_roles = new WP_Roles();
+      }
+  
+      $roles = $wp_roles->get_names();  
+      return $roles;
+  }
     /**
      * validate pixels function
      **/

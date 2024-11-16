@@ -1,18 +1,17 @@
 === Pixel Tag Manager for WooCommerce - Google Analytics 4, Google Ads, and More Pixels ===
 Contributors: growcommerce
 Plugin Name: Pixel Tag Manager for WooCommerce - Google Analytics 4, Google Ads, and More Pixels
-Plugin URI: 
+Plugin URI: https://wordpress.org/plugins/pixel-manager-for-woocommerce/
 Author: GrowCommerce
 Author URI: https://growcommerce.io/
-Donate link:
 Tags: google analytics 4, google ads conversion, facebook pixel, dynamic retargeting, facebook conversion API
 Requires at least: 3.5.0
-Tested up to: 6.6.1
+Tested up to: 6.7
 WC requires at least: 4.0
-WC tested up to: 9.2.2
+WC tested up to: 9.4.1
 Requires PHP: 5.2.4
-Stable tag: 1.5.3
-Version: 1.5.3
+Stable tag: 1.5.4
+Version: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,7 +47,7 @@ For WooCommerce store owners, tracking eCommerce events becomes seamless with th
 
 ###Pro Features
 
-* To unlock complet eCommerce pixels tracking access and enhanced features [Upgrade to our Pro version.](https://growcommerce.io/pricings/)
+* To unlock complete eCommerce pixels tracking access and enhanced features [Upgrade to our Pro version.](https://growcommerce.io/pricings/)
 * Implement all tracking using Google Tag Manager [(PRO)](https://growcommerce.io/pricings/)
 * Google Analytics 4 (GA4) [(PRO)](https://growcommerce.io/pricings/)
 * Form Submission Tracking in GA4 [(PRO)](https://growcommerce.io/pricings/)
@@ -143,6 +142,10 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 7. Google Consent Mode V2 with Axeptio (Cookies Consents Banner)
 
 == Changelog ==
+= 1.5.4 - 16/11/2024 =
+* Check compatibility with latest WordPress and WooCommerce.
+* Added settings option to exclude specific user roles from event tracking.
+
 = 1.5.3 - 24/08/2024 =
 * Improved UI interface and enhanced conversions tracking for GA4.
 
@@ -225,7 +228,7 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 
 = 1.1.0 - 16/07/2022 =
 * In the Free plan, allow any three pixels from Bing Ads(Microsoft Advertising), Meta Pixel (Facebook Pixel), Snapchat Pixel, Pinterest Pixel and Twitter Pixel.
-* Now, The Pixel Tag Manager plugin also supports Microsoft Advertising ( Bing Ads ) and Twitter Ads. 
+* Now, The Pixel Tag Manager plugin also supports Microsoft Advertising ( Bing Ads ) and Twitter Ads.
 
 = 1.0.0 =
 * Initial release

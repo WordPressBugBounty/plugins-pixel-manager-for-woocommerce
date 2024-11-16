@@ -115,7 +115,8 @@ if(!class_exists('PMW_AjaxHelper')):
         "integration" => array(           
           "exclude_tax_ordertotal" => isset($_POST["exclude_tax_ordertotal"])?sanitize_text_field($_POST["exclude_tax_ordertotal"]):false,
           "exclude_shipping_ordertotal" => isset($_POST["exclude_shipping_ordertotal"])?sanitize_text_field($_POST["exclude_shipping_ordertotal"]):false,
-          "send_product_sku" => isset($_POST["send_product_sku"])?sanitize_text_field($_POST["send_product_sku"]):false
+          "send_product_sku" => isset($_POST["send_product_sku"])?sanitize_text_field($_POST["send_product_sku"]):false,
+          "roles_exclude_tracking" => isset($_POST["roles_exclude_tracking"])?sanitize_text_field($_POST["roles_exclude_tracking"]):''
         ),
         "axeptio" => array(
           "project_id" => isset($_POST["axeptio_project_id"])?sanitize_text_field($_POST["axeptio_project_id"]):"",

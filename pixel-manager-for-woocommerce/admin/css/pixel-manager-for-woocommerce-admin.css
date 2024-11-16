@@ -47,7 +47,7 @@ h3.pmw-title{color: rgba(0, 0, 0, 0.54);}
 
 .pmw_page p,.pmw_page h1,.pmw_page h2,.pmw_page h3,.pmw_page h4,.pmw_page h5,.pmw_page h6 {margin-top: 0;}
 .align-items-center {align-items: center}
-.hero-section-banner {width: calc(100% - 75px); display: inline-flex; box-shadow: 0 .5rem 1rem rgba(0,0,0,.15); padding-top: 15px;overflow: hidden; background: linear-gradient(90deg, #FF1616 -12.5%, #1c2647 103.95%); margin-top: 11px; margin-left: 20px;margin-bottom: 8px; border-radius: 7px;}
+.hero-section-banner {width: calc(100% - 75px); display: inline-flex; box-shadow: 0 0.2rem 0.2rem rgba(0,0,0,.15); padding-top: 15px;overflow: hidden; background: linear-gradient(90deg, #FF1616 -12.5%, #1c2647 103.95%); margin-top: 11px; margin-left: 20px;margin-bottom: 8px; border-radius: 7px;}
 .hero-caption h1 {
     color: #fff;
     font-size: 15px;
@@ -378,13 +378,12 @@ h4.pmw-sub-section:after {
 }
 .pmw-alert-text {
     position: absolute;
-    box-shadow: 5px 6px 4px rgba(60,67,74, 0.25);
+    box-shadow: 0 .2rem .2rem rgba(60,67,74, 0.25);
     border-radius: 10px;
     background-color: #e0e6ec;
-    padding: 23px 15px;
+    padding: 5px 15px;
     min-width: 339px;
-    left: -100%;
-    margin-top: 5px;
+    left: -444%;
     transform: translateY(20px);
     transition: transform .5s ease-out;
     opacity: 0;
@@ -399,8 +398,8 @@ h4.pmw-sub-section:after {
     content: '';
     border: 13px solid transparent;
     position: absolute;
-    top: -32px;
-    left: 45px;
+    top: -24px;
+    left: 234px;
     border-bottom-color: #e0e6ec;
     border-bottom-width: 20px;
 }
@@ -411,7 +410,7 @@ h4.pmw-sub-section:after {
 }
 .pmw-alert-text p {
     line-height: 27px;
-    margin-bottom: 6px;
+    margin-bottom: 0px;
 }
 .pmw_page label {
     display: inline-block;
@@ -491,15 +490,25 @@ h4.pmw-sub-section:after {
 }
 .pmw_page .form-check-input[type="radio"]:checked ~ label::before {background-color: #FF1616;}
 .pmw_page .form-check-radio .form-check-label::after {
-    content: '';
-    border: 1px solid #ccc;
-    position: absolute;
-    width: 17px;
-    height: 17px;
-    border-radius: 20px;
-    top: 0;
-    left: 0;
+  content: '';
+  border: 1px solid #ccc;
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  border-radius: 20px;
+  top: 0;
+  left: 0;
 }
+
+.pmw_page .pmw-multi_checkbox_list{
+  display: block;  margin: 20px 0 0px 10px;
+}
+.pmw_page .pmw_options_checkbox{
+  margin-right: 20px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.pmw_page .pmw_options_checkbox label{font-weight: normal;}
 
 .pmw_page .form-check-checkbox .form-check-label {line-height: 20px;}
 .pmw_page .form-check-checkbox .form-check-label::before {
@@ -905,6 +914,7 @@ form#pmw-pixels{width: 80%;}
     padding: 20px;
     border: 1px solid #f1f1f1;
     margin-left: 10px;
+    text-align: center;
 }
 #pmw_right_sidebar a.pmw-plan_link-btn, .frrtopro a.pmw-plan_link-btn{display: block;
   text-align: center;
@@ -924,7 +934,12 @@ form#pmw-pixels{width: 80%;}
 .pmw_right_sidebar-bg{
   
 }
-.pmw-pro-bg{background: #C2D5D5; border-radius: 10px; padding: 5px 10px; margin-left:10px;}
+.pmw-pro-bg{background: #03A5F3;
+    border-radius: 16px;
+    padding: 7px 29px;
+    margin-left: 10px; border: 2px solid #fff;
+    color: #fff; transition: background-color .3s cubic-bezier(.165,.84,.44,1), box-shadow .3s cubic-bezier(.165,.84,.44,1);
+    box-shadow: 0 4px 4px rgba(8, 8, 8, .08), 0 1px 2px rgba(8, 8, 8, .2), inset 0 6px 12px rgba(255, 255, 255, .12), inset 0 1px 1px rgba(255, 255, 255, .2);}
 #sec-pmw-pixels, #sec-pmw-pixels-integration, #sec-pmw-pixels-cookies {
   opacity: 0;
   visibility: hidden;
@@ -956,12 +971,15 @@ form#pmw-pixels{width: 80%;}
 .pmw_order-info li label{width: 180px; font-weight: 600; }
 .pmw_order-info li span{margin-bottom: 16px; display: inline-block; vertical-align: middle;}
 .rm-b {margin-bottom: 0;}
-.pmw_rate_us_footer{box-shadow: 0 .5rem .3rem rgba(0,0,0,.15); text-align: center;
-    margin: 10px 0px 10px 370px;
+.pmw_rate_us_footer{box-shadow: 0 .2rem .2rem rgba(0, 0, 0, .15);
+    
+    margin: 10px 0px 10px 0px;
     display: block;
+    max-width: 75%;
     padding: 10px 20px;
-    background-color: #f4fcff; border-radius:30px 9px 50px 9px; }
-.pmw_rate_us_footer a {color: #3c434a; font-size: 15px; font-style: oblique;}
+    background-color: #03A5F3;
+    border-radius: 30px 9px 50px 9px;}
+.pmw_rate_us_footer a {color: #f7f7f7; font-size: 17px; font-style: oblique;}
 .pmw_new_features {
     background-color: #f71a1a;
     padding: 0 2px;

@@ -29,7 +29,12 @@ var pmw_helper = {
 		var f_data = {};
 		if(form_data.length >0 ){
 	    for (var i = 0; i < form_data.length; i++){
-	       f_data[form_data[i]['name']] = form_data[i]['value'];
+				let feild_name = form_data[i]['name'].replace('[]','');
+				if(f_data[feild_name]){
+					f_data[feild_name] += ',' + form_data[i]['value'];
+				}else{
+	      	f_data[feild_name] = form_data[i]['value'];
+				}
 	    }
 	  }else{
 	  	return;
