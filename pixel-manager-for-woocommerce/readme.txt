@@ -6,12 +6,12 @@ Author: GrowCommerce
 Author URI: https://growcommerce.io/
 Tags: google analytics 4, google ads conversion, facebook pixel, dynamic retargeting, facebook conversion API
 Requires at least: 3.5.0
-Tested up to: 6.7
+Tested up to: 6.7.2
 WC requires at least: 4.0
-WC tested up to: 9.4.1
+WC tested up to: 9.6.2
 Requires PHP: 5.2.4
-Stable tag: 1.5.4
-Version: 1.5.4
+Stable tag: 1.5.5
+Version: 1.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,9 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 7. Google Consent Mode V2 with Axeptio (Cookies Consents Banner)
 
 == Changelog ==
+= 1.5.5 - 16/02/2025 =
+* Added settings option to exclude Fee from order revenue.
+
 = 1.5.4 - 16/11/2024 =
 * Check compatibility with latest WordPress and WooCommerce.
 * Added settings option to exclude specific user roles from event tracking.

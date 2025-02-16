@@ -102,6 +102,7 @@ if(!class_exists('PMW_Pixels')){
        **/
       $exclude_tax_ordertotal = isset($pixels_option['integration']['exclude_tax_ordertotal'])?$pixels_option['integration']['exclude_tax_ordertotal']:"";
       $exclude_shipping_ordertotal = isset($pixels_option['integration']['exclude_shipping_ordertotal'])?$pixels_option['integration']['exclude_shipping_ordertotal']:"";
+      $exclude_fee_ordertotal = isset($pixels_option['integration']['exclude_fee_ordertotal'])?$pixels_option['integration']['exclude_fee_ordertotal']:"";
       $send_product_sku = isset($pixels_option['integration']['send_product_sku'])?$pixels_option['integration']['send_product_sku']:"";
       $roles_exclude_tracking = isset($pixels_option['integration']['roles_exclude_tracking'])?$pixels_option['integration']['roles_exclude_tracking']:"";
       $options_roles = $this->get_pmw_roles_list();
@@ -570,6 +571,19 @@ if(!class_exists('PMW_Pixels')){
             "class" => "exclude_shipping_ordertotal",
             "tooltip" =>[
               "title" => __("Activate this feature to exclude shipping from the order total variable.", "pixel-manager-for-woocommerce")
+            ]
+          ]
+        ],
+        "exclude_fee_ordertotal" => [    
+          [
+            "type" => "switch",
+            "label" => __("Exclude fee from order revenue", "pixel-manager-for-woocommerce"),
+            "name" => "exclude_fee_ordertotal",
+            "id" => "exclude_fee_ordertotal",
+            "value" => $exclude_fee_ordertotal,
+            "class" => "exclude_fee_ordertotal",
+            "tooltip" =>[
+              "title" => __("Activate this feature to exclude fee from the order total variable.", "pixel-manager-for-woocommerce")
             ]
           ]
         ],

@@ -82,7 +82,6 @@ if(!class_exists('PMW_AdminHelper')):
     public function get_pmw_api_store(){
       return unserialize( get_option("pmw_api_store"));
     }
-
     public function get_pmw_roles_list() {
       global $wp_roles;
   
@@ -91,9 +90,9 @@ if(!class_exists('PMW_AdminHelper')):
           $wp_roles = new WP_Roles();
       }
   
-      $roles = $wp_roles->get_names();  
+      $roles = $wp_roles->get_names();
       return $roles;
-  }
+    }
     /**
      * validate pixels function
      **/
@@ -387,13 +386,6 @@ if(!class_exists('PMW_AdminHelper')):
     public function pmw_add_admin_notices(){
       $notice_css = '
         /* Custom CSS for WordPress Admin Notice */
-        .offer_092023, .offer_freevspro, .axeptio_052024 {
-            border-left: 4px solid #0073aa;
-            padding: 20px;
-            background-color: #ffffff;
-            display: flex;
-            align-items: center;
-        }
         .pmw-admin-notice{
           border-left: 4px solid #0073aa; 
         }
@@ -431,16 +423,6 @@ if(!class_exists('PMW_AdminHelper')):
       wp_add_inline_style('wp-admin', $notice_css);
       $notices = $this->get_pmw_admin_notices();
       $pixels_option = $this->get_pmw_pixels_option();
-      /**** axeptio ****/
-      $notice_id = "axeptio_052024";
-      if( !isset($notices[$notice_id]) && !pmw_is_pro_version){        
-        $html = '<img src="'.esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/axeptio.png").'" alt="Axeptio Image"><div><h3>Google started requiring Consent Mode v2 from March 2024.</h3><span class="text">Enable Google Consent Mode V2 seamlessly through Axeptio Integration. Customize default consent settings for three regions: US, UK, and China</span><a href="admin.php?page=pixel-manager#axeptio_project_id"><b><u>Enable Google Consent Mode v2</u></b></a></div>';
-        $notices[$notice_id] = array(
-          "is_active" => true,
-          "created_at" => "2024-05-07",
-          "html" => $this->pmw_add_admin_notice_html("notice-info", $html, $notice_id)
-        );
-      }
       //****Offer 1 ****
       $notice_id = "offer_freevspro";
       if( !isset($notices[$notice_id]) && !pmw_is_pro_version ){        

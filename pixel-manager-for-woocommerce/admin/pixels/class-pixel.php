@@ -17,7 +17,7 @@ if(!class_exists('PMW_Pixel')):
   class PMW_Pixel extends PMW_PixelHelper{
     protected $options = array();
     public function __construct(){
-      if(!is_admin()){     
+      if(!is_admin()){
         $this->req_int();
         $this->options = $this->get_option();
         //add_action('after_setup_theme', array($this, 'inject_pixels'));

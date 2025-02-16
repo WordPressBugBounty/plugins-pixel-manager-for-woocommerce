@@ -101,28 +101,25 @@ if(!class_exists('PMW_PixelHelper')):
       return is_plugin_active('woocommerce/woocommerce.php');
     }
 
-    public function get_order_total($page, $order){
-    	if($page == "cart"){
-    		$order_total = (float) $order->total;
-	    	if ( (isset($this->options["integration"]["exclude_tax_ordertotal"]) && $this->options["integration"]["exclude_tax_ordertotal"] == 1) ) {
-					$order_total = (float) ( $order_total - $order->get_taxes_total() );
-				} 
-				if ( (isset($this->options["integration"]["exclude_shipping_ordertotal"]) && $this->options["integration"]["exclude_shipping_ordertotal"] ==1) ) {
-					$order_total = (float) ( $order_total - $order->get_shipping_total() );
-				}
-				return $order_total;
-    	}
+    public function get_order_total($page, $order){    	
     	if($page == "order_received"){
-	    	$order_total = (float) $order->get_total();
+    		$order_total = (float) $order->get_total();
 	    	if ( (isset($this->options["integration"]["exclude_tax_ordertotal"]) && $this->options["integration"]["exclude_tax_ordertotal"] ==1) ) {
 					$order_total = (float) ( $order_total - $order->get_total_tax() );
-				} 
+				}
 				if ( (isset($this->options["integration"]["exclude_shipping_ordertotal"]) && $this->options["integration"]["exclude_shipping_ordertotal"] ==1) ) {
 					$order_total = (float) ( $order_total - $order->get_shipping_total() );
 				}
+				if ( (isset($this->options["integration"]["exclude_fee_ordertotal"]) && $this->options["integration"]["exclude_fee_ordertotal"] ==1) ) {
+					$fee_total = 0;
+			    // Calculate the total fees
+			    foreach ($order->get_items('fee') as $fee) {
+			       $fee_total += $fee->get_total();
+			    }
+			    $order_total = (float) ( $order_total - $fee_total );
+			  }
 				return $order_total;
 			}
-			
     }
     public function get_user_data(){
     	if(empty($this->user_data)){

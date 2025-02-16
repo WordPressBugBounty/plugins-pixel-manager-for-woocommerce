@@ -115,6 +115,7 @@ if(!class_exists('PMW_AjaxHelper')):
         "integration" => array(           
           "exclude_tax_ordertotal" => isset($_POST["exclude_tax_ordertotal"])?sanitize_text_field($_POST["exclude_tax_ordertotal"]):false,
           "exclude_shipping_ordertotal" => isset($_POST["exclude_shipping_ordertotal"])?sanitize_text_field($_POST["exclude_shipping_ordertotal"]):false,
+          "exclude_fee_ordertotal" => isset($_POST["exclude_fee_ordertotal"])?sanitize_text_field($_POST["exclude_fee_ordertotal"]):false,
           "send_product_sku" => isset($_POST["send_product_sku"])?sanitize_text_field($_POST["send_product_sku"]):false,
           "roles_exclude_tracking" => isset($_POST["roles_exclude_tracking"])?sanitize_text_field($_POST["roles_exclude_tracking"]):''
         ),
@@ -228,7 +229,6 @@ if(!class_exists('PMW_AjaxHelper')):
      * validate the value of pixels
      **/
     public function validate_pixels(array $pixels_option){
-     //print_r($pixels_option);
       $return = array();      
       if(!isset($pixels_option["user"]["email_id"]) || $pixels_option["user"]["email_id"] == "" || !is_email($pixels_option["user"]["email_id"]) ){
         $return = array("error" => true, "message" => __("Check your email ID.", "pixel-manager-for-woocommerce"));

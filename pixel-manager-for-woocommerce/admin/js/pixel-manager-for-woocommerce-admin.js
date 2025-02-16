@@ -142,12 +142,12 @@ var pmw_helper = {
       jQuery(this).toggleClass("active");
       jQuery(this).next('.pmw_slide-down-area').slideToggle();
     });
-    
+		
 		/* Activate License Key- Account Page */
 		jQuery("#pmw-pixels-licensekey").on("submit", function( event ){
 			event.preventDefault();
 			var data = jQuery("#pmw-pixels-licensekey").serializeArray();
-      pmw_helper.pmw_ajax_call(data);
+			pmw_helper.pmw_ajax_call(data);
 		});
 	});
 })( jQuery );

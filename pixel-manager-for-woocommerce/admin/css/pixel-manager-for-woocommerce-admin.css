@@ -912,7 +912,7 @@ form#pmw-pixels{width: 80%;}
     background: #f4fcff;
     box-shadow: 0 0.2rem 0.2rem rgba(0,0,0,.15);
     padding: 20px;
-    border: 1px solid #f1f1f1;
+    /*border: 1px solid #f1f1f1;*/
     margin-left: 10px;
     text-align: center;
 }
@@ -1203,7 +1203,7 @@ form#pmw-pixels{width: 80%;}
   --lightgray: whitesmoke;
   --darkgreen: #2a9d8f;
   --popular: #ffdd40;
-  --starter: #f73859;
+  --starter: #2ecc71;
   --essential: #00aeef;
   --professional: #ff7f45;
 }
@@ -1574,9 +1574,9 @@ form#pmw-pixels{width: 80%;}
 .sidebar-img a{display: block;}
 .pmw_form-wrapper hr{width: 100%}
 #pmw-pixels-licensekey, .plan_details{min-width: 600px; margin-top: 20px;}
-.frrtopro{    padding: 20px;
+.frrtopro{    padding: 10px;
     background: #f1f1f1;
-    margin-top: 20px;
+    margin: 30px;
     display: block;}
 .frrtopro{ font-size: 15px; line-height: 1.5;}
 .frrtopro ul li{margin-bottom:10px; }
