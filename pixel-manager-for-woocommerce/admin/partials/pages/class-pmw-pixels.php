@@ -64,6 +64,12 @@ if(!class_exists('PMW_Pixels')){
       $google_ads_enhanced_conversion_is_enable = isset($pixels_option['google_ads_enhanced_conversion']['is_enable'])?$pixels_option['google_ads_enhanced_conversion']['is_enable']:"";
       $google_ads_dynamic_remarketing_is_enable = isset($pixels_option['google_ads_dynamic_remarketing']['is_enable'])?$pixels_option['google_ads_dynamic_remarketing']['is_enable']:"";
 
+      // Google Ads Form Conversion
+      $google_ads_form_conversion_id = isset($pixels_option['google_ads_form_conversion']['id']) ? $pixels_option['google_ads_form_conversion']['id'] : "";
+      $google_ads_form_conversion_label = isset($pixels_option['google_ads_form_conversion']['label']) ? $pixels_option['google_ads_form_conversion']['label'] : "";
+      $google_ads_form_conversion_is_enable = isset($pixels_option['google_ads_form_conversion']['is_enable']) ? $pixels_option['google_ads_form_conversion']['is_enable'] : "";
+      $google_ads_form_conversion_selector = isset($pixels_option['google_ads_form_conversion']['selector']) ? $pixels_option['google_ads_form_conversion']['selector'] : "";
+
       //Pixels
       $facebook_pixel_id = isset($pixels_option['facebook_pixel']['pixel_id'])?$pixels_option['facebook_pixel']['pixel_id']:"";
       $facebook_pixel_is_enable = isset($pixels_option['facebook_pixel']['is_enable'])?$pixels_option['facebook_pixel']['is_enable']:"";
@@ -288,6 +294,69 @@ if(!class_exists('PMW_Pixels')){
             "class" => "google_ads_dynamic_remarketing_is_enable",
             "tooltip" =>[
               "title" => __("Enable Google Ads dynamic remarketing tracking.", "pixel-manager-for-woocommerce")
+            ]
+          ]
+        ],
+        "sub_section_google_ads_form_conversion" => [    
+          [
+            "type" => "sub_section",
+            "label" => __("Google Ads Form Conversion", "pixel-manager-for-woocommerce"),
+           // "label_img" => "google_ads.png",
+            "class" => "google_ads_sub_section_setting section_sub_setting",
+          ]
+        ],
+        "google_ads_form_conversion" => [    
+          [
+            "type" => "multi_text",
+            "text_fields" =>[
+              [
+                "is_pro_featured" => true,
+                "is_pro_text" => "PRO",
+                "pro_utm_text"=> "PRO+Enable+Google+Ads+Form+Conversion+Pixel+Settings",
+                "label" => __("Google Ads Form Conversion ID", "pixel-manager-for-woocommerce"),           
+                "note"  => __("Ex. Conversion Form ID: 11338938599", "pixel-manager-for-woocommerce"),
+                "name" => "google_ads_form_conversion_id",
+                "id" => "google_ads_form_conversion_id",
+                "value" => $google_ads_form_conversion_id,
+                "placeholder" => __("Conversion ID", "pixel-manager-for-woocommerce"),
+                "class" => "google_ads_form_conversion_id"
+              ],
+              [ 
+                "label" => __("Conversion Form Label", "pixel-manager-for-woocommerce"),          
+                "note"  => __("Ex. Conversion Form Label: vVf2CN2drc0aEOfx6Z4q", "pixel-manager-for-woocommerce"),
+                "name" => "google_ads_form_conversion_label",
+                "id" => "google_ads_form_conversion_label",
+                "value" => $google_ads_form_conversion_label,
+                "placeholder" => __("Conversion Label", "pixel-manager-for-woocommerce"),
+                "class" => "google_ads_form_conversion_label"
+              ]
+            ]
+          ]
+        ],
+        "google_ads_form_conversion_selector" => [    
+          [
+            "type" => "text_with_switch",
+            "is_pro_featured" => true,
+            "is_pro_text" => "Upgrade to Pro",
+            "pro_utm_text"=> "PRO+Enable+Form+Gogole+Ads+Submission+Tracking+Pixel+Settings",
+            "label" => __("Google Ads Form Conversion Selector", "pixel-manager-for-woocommerce"),
+            //"label_img" => "facebook_pixel.png",
+            "note"  => __("Enter Form IDs or Class - Ex. .user,#registration,.contact_form", "pixel-manager-for-woocommerce"),
+            "name" => "google_ads_form_conversion_selector",
+            "id" => "google_ads_form_conversion_selector",
+            "value" => $google_ads_form_conversion_selector,
+            "placeholder" => __(".user,#registration,.contact_form", "pixel-manager-for-woocommerce"),
+            "class" => "google_ads_form_conversion_selector"
+          ],[
+            "type" => "switch_with_text",
+            "name" => "google_ads_form_conversion_is_enable",
+            "id" => "google_ads_form_conversion_is_enable",
+            "value" => $google_ads_form_conversion_is_enable,
+            "class" => "google_ads_form_conversion_is_enable",
+            "tooltip" =>[
+              "title" => __("How do I create a Google Ads Conversion?", "pixel-manager-for-woocommerce"),
+              "link_title" => __("Installation Manual", "pixel-manager-for-woocommerce"),
+              "link" => "https://support.google.com/tagmanager/answer/6105160?hl=en"
             ]
           ]
         ],
@@ -720,13 +789,20 @@ if(!class_exists('PMW_Pixels')){
                 <p><a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/privacy-terms/"); ?>"><?php echo esc_attr__('Privacy & Terms', 'pixel-manager-for-woocommerce'); ?></a></p>
                 <div class="modal_button-area">
                   <button class="pmw_btn pmw_btn-fill" id="pmw_accept_privecy_policy"><?php echo esc_attr__('Allow & Continue', 'pixel-manager-for-woocommerce'); ?></button>
-                  <?php /*<button class="pmw_btn pmw_btn-default">Skip</button>*/ ?>
+                  <button class="pmw_btn pmw_btn-default" id="allow_this_tool_only">Allow This Tool Only</button>
                 </div>
               </div>
               <div class="modal-bottom-area">
                 <h2 class="toggle_title-text"><?php echo esc_attr__('What Permissions are being Granted?', 'pixel-manager-for-woocommerce'); ?></h2>
                 <div class="pmw_slide-down-area">
                   <ul>
+                    <li>
+                      <div class="pmw_slide-area-image"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/icon-plugin.png"); ?>" alt="img"></div>
+                      <div class="pmw_slide-area-content">
+                        <span class="pmw_slide-area-title"><?php echo esc_attr__('Allow This Tool Only', 'pixel-manager-for-woocommerce'); ?></span>
+                        <p><?php echo esc_attr__('Only this plugin and store basic info like domain, currency, language, and country to improve functionality.', 'pixel-manager-for-woocommerce'); ?></p>
+                      </div>
+                    </li>
                     <li>
                       <div class="pmw_slide-area-image"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/Icon-profile.png"); ?>" alt="img"></div>
                       <div class="pmw_slide-area-content">
@@ -746,13 +822,6 @@ if(!class_exists('PMW_Pixels')){
                       <div class="pmw_slide-area-content">
                         <span class="pmw_slide-area-title"><?php echo esc_attr__('Admin Notice', 'pixel-manager-for-woocommerce'); ?></span>
                         <p><?php echo esc_attr__('Updates, announcements, marketing, no spam', 'pixel-manager-for-woocommerce'); ?></p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="pmw_slide-area-image"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/Icon-status.png"); ?>" alt="img"></div>
-                      <div class="pmw_slide-area-content">
-                        <span class="pmw_slide-area-title"><?php echo esc_attr__('Current Plugin Status', 'pixel-manager-for-woocommerce'); ?></span>
-                        <p><?php echo esc_attr__('Active, deactivated, or uninstalled, settings', 'pixel-manager-for-woocommerce'); ?></p>
                       </div>
                     </li>
                     <li>
@@ -808,6 +877,13 @@ if(!class_exists('PMW_Pixels')){
                 jQuery(this).html(line_title);
               }
             });
+            
+            const google_form_fied_ids = [
+              "google_ads_conversion_id",
+              "google_ads_conversion_label",
+              "google_ads_form_conversion_id",
+              "google_ads_form_conversion_label"
+            ];
             jQuery(".pmw_side_menu_list li").on("click", function () {
               var id = jQuery(this).attr("data-id");
               jQuery(".pmw_side_menu_list li").removeClass("active");
@@ -817,14 +893,14 @@ if(!class_exists('PMW_Pixels')){
             });
             jQuery("#sec-pmw-pixels").toggleClass("active");
             jQuery("#pmw-pixels .pmw_form-control").on("focus", function () {
-              if( jQuery(this).attr("id") == "google_ads_conversion_id" || jQuery(this).attr("id") == "google_ads_conversion_label"){
+              if( google_form_fied_ids.includes(jQuery(this).attr("id")) ){
                 jQuery(this).parent().parent().addClass("active");
               }else{
                 jQuery(this).parent().parent().parent().addClass("active");
               }
             });
             jQuery("#pmw-pixels .pmw_form-control").on("focusout", function (event) {
-              if(jQuery(this).val() == "" && ( jQuery(this).attr("id") == "google_ads_conversion_id" || jQuery(this).attr("id") == "google_ads_conversion_label")){
+              if(jQuery(this).val() == "" && google_form_fied_ids.includes(jQuery(this).attr("id")) ){
                 jQuery(this).parent().parent().removeClass("active");
               }else if(jQuery(this).val() == ""){
                 jQuery(this).parent().parent().parent().removeClass("active");
@@ -832,25 +908,25 @@ if(!class_exists('PMW_Pixels')){
             });
             jQuery("#pmw-pixels .pmw_form-control").on("input", function (event) {
               event.preventDefault();
-              if(jQuery(this).val() == "" && ( jQuery(this).attr("id") == "google_ads_conversion_id" || jQuery(this).attr("id") == "google_ads_conversion_label")){
+              if(jQuery(this).val() == "" && google_form_fied_ids.includes(jQuery(this).attr("id")) ){
                 jQuery(this).parent().parent().removeClass("active");
               }else if(jQuery(this).val() == "" && ( jQuery(this).attr("id") == "fb_conversion_api_token")){
                 //var id = jQuery(this).attr("id").replace("id","is_enable");
                 jQuery("#fb_conversion_api_is_enable").prop('checked', false);                 
               }else if(jQuery(this).val() == ""){
                 jQuery(this).parent().parent().parent().removeClass("active");
-                var id = jQuery(this).attr("id").replace("project_id","is_enable").replace("id","is_enable");
+                var id = jQuery(this).attr("id").replace("selector","is_enable").replace("project_id","is_enable").replace("id","is_enable");
                 jQuery("#"+id).prop('checked', false);
               }else if(jQuery(this).val() != "" && ( jQuery(this).attr("id") == "fb_conversion_api_token")){
                 //var id = jQuery(this).attr("id").replace("id","is_enable");
                 jQuery("#fb_conversion_api_is_enable").prop('checked', true);                 
               }else if(jQuery(this).val() != ""){
-                var id = jQuery(this).attr("id").replace("project_id","is_enable").replace("id","is_enable");
+                var id = jQuery(this).attr("id").replace("selector","is_enable").replace("project_id","is_enable").replace("id","is_enable");
                 jQuery("#"+id).prop('checked', true);                 
               }
             });
             jQuery('#pmw-pixels .pmw_form-control').each(function(){
-              if(jQuery(this).val() != "" && ( jQuery(this).attr("id") == "google_ads_conversion_id" || jQuery(this).attr("id") == "google_ads_conversion_label")){
+              if(jQuery(this).val() != "" && google_form_fied_ids.includes(jQuery(this).attr("id")) ){
                 jQuery(this).parent().parent().addClass("active");
               }else if(jQuery(this).val() != ""){
                 jQuery(this).parent().parent().parent().addClass("active");

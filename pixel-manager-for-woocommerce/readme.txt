@@ -6,12 +6,12 @@ Author: GrowCommerce
 Author URI: https://growcommerce.io/
 Tags: google analytics 4, google ads conversion, facebook pixel, dynamic retargeting, facebook conversion API
 Requires at least: 3.5.0
-Tested up to: 6.7.2
+Tested up to: 6.8.1
 WC requires at least: 4.0
-WC tested up to: 9.6.2
+WC tested up to: 9.8.5
 Requires PHP: 5.2.4
-Stable tag: 1.5.5
-Version: 1.5.5
+Stable tag: 1.5.6
+Version: 1.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -142,6 +142,10 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 7. Google Consent Mode V2 with Axeptio (Cookies Consents Banner)
 
 == Changelog ==
+= 1.5.6 - 01/06/2025 =
+* Added Google Ads form conversion tracking functionality.
+* User Interface (UI)
+
 = 1.5.5 - 16/02/2025 =
 * Added settings option to exclude Fee from order revenue.
 
@@ -150,11 +154,11 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 * Added settings option to exclude specific user roles from event tracking.
 
 = 1.5.3 - 24/08/2024 =
-* Improved UI interface and enhanced conversions tracking for GA4.
+* Improved UI interface and enhanced conversion tracking for GA4.
 
 = 1.5.1 - 02/06/2024 =
 * Rename the plugin name
-* User Interface (UI) and code Enhancement 
+* User Interface (UI) and code Enhancement
 
 = 1.5.0 - 07/05/2024 =
 * Enabled seamless integration of Axeptio cookie banner with the Google Tag Manager, easy to integration, not required any code.

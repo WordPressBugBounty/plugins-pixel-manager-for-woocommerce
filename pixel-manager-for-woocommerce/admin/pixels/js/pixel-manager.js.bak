@@ -101,7 +101,7 @@ class PMW_PixelManagerJS {
   }
 
   TrackFormSubmissions(event){
-    event.preventDefault();
+    //event.preventDefault();
     var this_var =  event.currentTarget;
     var form_name = this_var.getAttribute('aria-label') || this_var.getAttribute('name') || this_var.getAttribute('id');
     var form_id = this_var.getAttribute('id');

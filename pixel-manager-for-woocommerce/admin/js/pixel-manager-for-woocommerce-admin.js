@@ -135,6 +135,19 @@ var pmw_helper = {
       var data = jQuery("#pmw-pixels").serializeArray();
       pmw_helper.pmw_ajax_call(data);
     });
+    jQuery("#allow_this_tool_only").on("click", function (event) {
+      event.preventDefault();
+      pmw_helper.close_privacy_popup();
+		  document.getElementById("is_theme_plugin_list").value = 0;
+      /*change action value*/
+      var action_els=document.getElementsByName("action");
+			for (var i=0;i<action_els.length;i++) {
+				action_els[i].value = "pmw_pixels_save";
+			}
+			/*end */
+      var data = jQuery("#pmw-pixels").serializeArray();
+      pmw_helper.pmw_ajax_call(data);
+    });
     jQuery("#close").on("click", function () {
     	pmw_helper.close_privacy_popup();
     });

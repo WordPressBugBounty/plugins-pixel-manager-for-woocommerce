@@ -208,11 +208,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <script type="text/javascript" data-pagespeed-no-defer data-cfasync="false">
             window.addEventListener('load', call_purchase,true);
             function call_purchase(){
-              var PMW_JS = new PMW_PixelManagerJS("", false);
-              if( Object.keys(PixelManagerDataLayer[0]["data"]["checkout"]).length >0 ){
-                PMW_JS.Purchase();
+              const ptm_last_orderid = localStorage.getItem("ptm_last_orderid");
+              const ptm_current_orderid = PixelManagerDataLayer[0]["data"]["checkout"]["id"];
+              if (ptm_last_orderid !== ptm_current_orderid) {
+                var PMW_JS = new PMW_PixelManagerJS("", false);
+                if( Object.keys(PixelManagerDataLayer[0]["data"]["checkout"]).length >0 ){
+                  PMW_JS.Purchase();
+                }
+                PMW_JS.PurchaseFB();
+                localStorage.setItem("ptm_last_orderid", ptm_current_orderid);
               }
-              PMW_JS.PurchaseFB();
             }        
           </script>
           <?php

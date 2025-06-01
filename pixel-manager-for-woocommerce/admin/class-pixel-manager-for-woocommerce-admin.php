@@ -111,7 +111,7 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 			add_submenu_page('pixel-manager', __('Documentation','pixel-manager-for-woocommerce'), __('Documentation','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-documentation', array($this, 'show_page'));
 			add_submenu_page('pixel-manager', __('Support','pixel-manager-for-woocommerce'), __('Support','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-support', array($this, 'show_page'));
 			if(!$this->is_pro_version){
-				add_submenu_page('pixel-manager', __('Upgrade to Pro','pixel-manager-for-woocommerce'), '<span style="background: #FF1616;padding: 1px 10px 3px 10px;color:#fff;">'.__('Upgrade to Pro','pixel-manager-for-woocommerce').'</span>', 'manage_options', 'pixel-manager-upgrade-pro', array($this, 'show_page'));
+				add_submenu_page('pixel-manager', __('Upgrade to Pro','pixel-manager-for-woocommerce'), '<span style="background: #2271b1;padding: 1px 10px 3px 10px;color:#fff;">'.__('Upgrade to Pro','pixel-manager-for-woocommerce').'</span>', 'manage_options', 'pixel-manager-upgrade-pro', array($this, 'show_page'));
 				add_submenu_page('pixel-manager', __('Free Vs Pro','pixel-manager-for-woocommerce'), __('Free Vs Pro','pixel-manager-for-woocommerce').'<img style="position: absolute; height: 28px;bottom: 5px; right: 10px;" src="'.$discount_icon.'">', 'manage_options', 'pixel-manager-freevspro', array($this, 'show_page'));				
 			}
 			

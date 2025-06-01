@@ -33,8 +33,8 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
       ?>
       <div class="pmw_form-wrapper pmw_form-wrapper_freevsprow pmw_form-row">
         <div class="pmw_form-group pmw_freevsprow">
-          <div class="pmw-pricing-plan mb-3">
-            <h1><?php esc_attr_e("Boost your tracking capabilities by upgrading to our Pro Plan, starting at just $9.","pixel-manager-for-woocommerce"); ?></h1>
+          <div class="pmw-pricing-plan mb-5">
+            <h1><?php esc_attr_e("Upgrad to our Pro Plan, starting at just $9.","pixel-manager-for-woocommerce"); ?></h1>
             <div class="frrtopro">
               <h3><?php esc_attr_e('Unlock our best savings offer with our annual plan! Get up to a 50% discount on yearly plans!','pixel-manager-for-woocommerce'); ?></h3>
             </div>
@@ -52,7 +52,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               <div class="pmw_col-4">
                 <div class="bg-white p-5 rounded-lg shadow">
                   <?php /*<div class="pmw-one-month-free">
-                    <span style="background-color:#FF1616; color:#fff; margin-top:5px; padding:3px 12px;"><?php esc_attr_e('ONE MONTH FREE','pixel-manager-for-woocommerce'); ?></span><br>
+                    <span style="background-color:#2271b1; color:#fff; margin-top:5px; padding:3px 12px;"><?php esc_attr_e('ONE MONTH FREE','pixel-manager-for-woocommerce'); ?></span><br>
                     <span class="text-small font-weight-bold"><?php esc_attr_e('No payment required','pixel-manager-for-woocommerce'); ?></span>
                   </div> */ ?>
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('BUSINESS','pixel-manager-for-woocommerce'); ?></h2>
@@ -157,7 +157,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
             </div>
           </div>
           <div class=""><?php esc_attr_e('Reach out to us for any questions about pricings and support ','pixel-manager-for-woocommerce'); ?><a target="_blank" href="<?php echo esc_url_raw($this->get_support_page_link()); ?>">Click here.</a></div>
-          <header class="mb-5 text-white">
+          <header class="mb-6 text-white">
             <div class="row">
               <div class="col-lg-10 p-2 mx-auto pmw_site-color-bg">
                 <h4><?php esc_attr_e('15 Days 100% No-Risk Money Back Guarantee!','pixel-manager-for-woocommerce'); ?></h4>

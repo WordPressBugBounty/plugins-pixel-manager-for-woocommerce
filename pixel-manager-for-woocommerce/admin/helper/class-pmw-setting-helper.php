@@ -41,7 +41,7 @@ if(!class_exists('PMW_SettingHelper')):
           if(isset($pixel_fields[0]["type"]) && $pixel_fields[0]["type"] != "hidden") {
             $active_class ="";
           ?>
-          <div class="pmw_form-row">
+          <div class="pmw_form-row <?php echo ($key != "button")?esc_attr($key):""; ?>">
             <div class="pmw_form-group ">
             <?php
           }

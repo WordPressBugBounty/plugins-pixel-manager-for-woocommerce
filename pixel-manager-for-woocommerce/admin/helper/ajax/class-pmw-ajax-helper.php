@@ -73,7 +73,7 @@ if(!class_exists('PMW_AjaxHelper')):
                 echo wp_send_json( array("error" => false, 'message'=> __("Your license key is activated.", "pixel-manager-for-woocommerce")) );
               }else{
                 //$this->update_plan_paid_to_free();
-                echo wp_send_json( array("error" => false, 'message'=> __("Your license key is dseactivated.", "pixel-manager-for-woocommerce")) );
+                echo wp_send_json( array("error" => false, 'message'=> __("Your license key is deactivated.", "pixel-manager-for-woocommerce")) );
               }
             }else{
               echo wp_send_json( array("error" => false, 'message'=> $api_rs->mesg) );
@@ -101,6 +101,12 @@ if(!class_exists('PMW_AjaxHelper')):
           "id" => isset($_POST["google_ads_conversion_id"])?sanitize_text_field($_POST["google_ads_conversion_id"]):"",
           "label" => isset($_POST["google_ads_conversion_label"])?sanitize_text_field($_POST["google_ads_conversion_label"]):"",
           "is_enable" => isset($_POST["google_ads_conversion_is_enable"])?sanitize_text_field($_POST["google_ads_conversion_is_enable"]):false
+        ),
+        "google_ads_form_conversion" => array(
+          "id" => isset($_POST["google_ads_form_conversion_id"])?sanitize_text_field($_POST["google_ads_form_conversion_id"]):"",
+          "label" => isset($_POST["google_ads_form_conversion_label"])?sanitize_text_field($_POST["google_ads_form_conversion_label"]):"",
+          "selector" => isset($_POST["google_ads_form_conversion_selector"])?sanitize_text_field($_POST["google_ads_form_conversion_selector"]):"",
+          "is_enable" => isset($_POST["google_ads_form_conversion_is_enable"])?sanitize_text_field($_POST["google_ads_form_conversion_is_enable"]):false
         ),
         "fb_conversion_api" => array(
           "api_token" => isset($_POST["fb_conversion_api_token"])?sanitize_text_field($_POST["fb_conversion_api_token"]):"",

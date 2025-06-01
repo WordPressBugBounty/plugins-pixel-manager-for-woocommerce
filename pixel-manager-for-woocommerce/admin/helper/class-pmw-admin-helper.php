@@ -412,7 +412,7 @@ if(!class_exists('PMW_AdminHelper')):
         } .pmw-admin-notice a.offer-btn{
           display: block;
           text-align: center;
-          background: #ff1616;
+          background: #2271b1;
           color: #fff;
           max-width: 133px;
           border-radius: 10px;
@@ -460,7 +460,7 @@ if(!class_exists('PMW_AdminHelper')):
       //****Review ****
       $notice_id = "wp_ptm_review";
       if( !isset($notices[$notice_id]) ){        
-        $html = '<div><br><h3>Is the Pixel Tag Manager working as you desire?</h3><span class="text">If so, kindly share your review, and together we can take the Pixel Tag Manager to new heights.</span><a class="offer-btn" target="_blank" href="'.esc_url_raw("https://wordpress.org/support/plugin/pixel-manager-for-woocommerce/reviews/").'">Share Your Experience</a></div>';
+        $html = '<div><br><h3>Is the Pixel Tag Manager working as you desire?</h3><span class="text">We’d really appreciate your feedback on Pixel Tag Manager. Your insights can help us make it even better!</span><a class="offer-btn" target="_blank" href="'.esc_url_raw("https://wordpress.org/support/plugin/pixel-manager-for-woocommerce/reviews/").'">Share Your Experience</a></div>';
         $notices[$notice_id] = array(
           "is_active" => true,
           "created_at" => "2023-09-03",
