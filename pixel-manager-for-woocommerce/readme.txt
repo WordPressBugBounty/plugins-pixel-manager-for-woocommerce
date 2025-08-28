@@ -6,12 +6,12 @@ Author: GrowCommerce
 Author URI: https://growcommerce.io/
 Tags: google analytics 4, google ads conversion, facebook pixel, dynamic retargeting, facebook conversion API
 Requires at least: 3.5.0
-Tested up to: 6.8.1
+Tested up to: 6.8.2
 WC requires at least: 4.0
-WC tested up to: 9.8.5
+WC tested up to: 10.1.2
 Requires PHP: 5.2.4
-Stable tag: 1.5.6
-Version: 1.5.6
+Stable tag: 2.0
+Version: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,18 @@ For WooCommerce store owners, tracking eCommerce events becomes seamless with th
 * <strong>Twitter Ads Pixel:</strong> Track valuable data for your Twitter advertising campaigns using the Twitter Ads Pixel.
 * <strong>TikTok Ads Pixel:</strong> Track all eCommerce events seamlessly with TikTok Ads.
 
+###GrowInsights360 GA4 Dashboard
+
+GrowInsights360 is a powerful analytics dashboard that helps you visualize and understand your Google Analytics 4 (GA4) data — all in one place. With secure Google OAuth integration, you can easily connect your GA4 account and start monitoring key website metrics. Gain insights across multiple dimensions such as traffic, conversions, user behavior, and performance.
+
+* <strong>Google Analytics Dashboard Overview:</strong> View GA4 insights across multiple timeframes, including Today, This Week, This Month, This Quarter, Last Quarter, This Year, and Last Year.
+* <strong>General Reports:</strong> Access Google Analytics insights across various timeframes to track performance trends over time.
+* <strong>Product Performance Reports:</strong> Get detailed insights with multi-dimensional analysis to understand how individual products are performing on your e-commerce site.
+* <strong>Purchase Journey Reports:</strong> Analyze user journeys across dimensions such as country, device category, language, city, and browser.
+* <strong>Comparison Options:</strong> Each metric includes built-in comparisons to previous periods.
+* <strong>Time-Based Performance & Custom Date Range:</strong> Select from various preset dates or set a custom date range.
+* <strong>Download CSV & PDF:</strong> Export your table data in CSV or PDF format.
+
 ###Pro Features
 
 * To unlock complete eCommerce pixels tracking access and enhanced features [Upgrade to our Pro version.](https://growcommerce.io/pricings/)
@@ -52,6 +64,7 @@ For WooCommerce store owners, tracking eCommerce events becomes seamless with th
 * Google Analytics 4 (GA4) [(PRO)](https://growcommerce.io/pricings/)
 * Form Submission Tracking in GA4 [(PRO)](https://growcommerce.io/pricings/)
 * Google Ads Conversion [(PRO)](https://growcommerce.io/pricings/)
+* Google Ads form conversion tracking
 * Google Ads Enhanced Conversion [(PRO)](https://growcommerce.io/pricings/)
 * Google Ads Remarketing and Dynamic remarketing [(PRO)](https://growcommerce.io/pricings/)
 * Our plugin's pixels tracking is supported to All eCommerce events
@@ -71,6 +84,7 @@ For WooCommerce store owners, tracking eCommerce events becomes seamless with th
 * Basic tracking available for the following pixels. (Page view and Purchase events tracking)
 * Google Analytics 4 (GA4)
 * Google Ads Conversion
+* Google Ads form conversion tracking
 * Google Ads Remarketing and Dynamic remarketing
 * Microsoft Ads Pixel (Bing Ads Pixel)
 * Remarketing and Dynamic remarketing tracking for Microsoft Ads Pixel (Bing Ads Pixel)
@@ -140,8 +154,15 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 5. User onboard and pixel settings screen.
 6. Advanced Options settings
 7. Google Consent Mode V2 with Axeptio (Cookies Consents Banner)
+8. GrowInsights360 – Google Analytics Dashboard Overview
+9. General Reports – GrowInsights360
+10. Product Performance – GrowInsights360
+11. Purchase Journey – GrowInsights360
 
 == Changelog ==
+= 2.0 - 27/08/2025 =
+* In this update, we have added the GrowInsights360 Dashboard inside the Pixel Tag Manager to provide enhanced tracking and reporting capabilities. The update also introduces multi-dimensional GA4 reporting, including Product Performance and Purchase Journey insights, along with time-based performance analysis and custom date range selection. We’ve also added options to download reports in CSV and PDF formats, improved the overall user interface for a more intuitive experience
+
 = 1.5.6 - 01/06/2025 =
 * Added Google Ads form conversion tracking functionality.
 * User Interface (UI)

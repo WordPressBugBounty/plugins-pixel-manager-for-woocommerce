@@ -1,20 +1,10 @@
 <?php
-/**
- * The admin-specific functionality of the plugin.
- *
- * @link       
- * @since      1.0.0
- *
- * @package    Pixel_Manager_For_Woocommerce
- * @package    Pixel_Manager_For_Woocommerce/admin/partials
- * Pixel Tag Manager For Woocommerce
- */
-
+require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/common/class-pmw-header.php');
 if(!defined('ABSPATH')){
   exit; // Exit if accessed directly
 }
-if(!class_exists('PMW_PixelsDocumentation')){
-  class PMW_PixelsDocumentation extends PMW_AdminHelper{
+if(!class_exists('PMW_PixelsGrowInsights360')){
+  class PMW_PixelsGrowInsights360 extends PMW_AdminHelper{
     public function __construct( ) {
       $this->load_html();
     }
@@ -25,8 +15,13 @@ if(!class_exists('PMW_PixelsDocumentation')){
      * Page HTML
      **/
     protected function page_html(){
-      //echo $this->get_store_id();
-      $iframe_url = "https://growcommerce.io/doc/pixel-manager/";
+      $api_store = (object)$this->get_pmw_api_store();
+      $store_id = isset($api_store->store_id)?$api_store->store_id:"";
+      $store_data = array(
+        "store_id" => sanitize_text_field($store_id),
+        "product_id" => ( defined( 'PMW_PRODUCT_ID' ) )?PMW_PRODUCT_ID:1
+      );
+      $iframe_url = "https://growinsights360.growcommerce.io/login?".http_build_query( $store_data );
       ?>
       <div class="pmw_page">
         <div class="grow-doc-header grow-custom-header">
@@ -42,12 +37,12 @@ if(!class_exists('PMW_PixelsDocumentation')){
       </div>
       <script>
         (function($){
-          // Apply hidden menu by default
-          $('body').addClass('pmw-menu-hidden');
+            // Apply hidden menu by default
+            $('body').addClass('pmw-menu-hidden');
 
-          $('#toggle-menu').on('click', function(){
-              $('body').toggleClass('pmw-menu-hidden');
-          });
+            $('#toggle-menu').on('click', function(){
+                $('body').toggleClass('pmw-menu-hidden');
+            });
         })(jQuery);
       </script>
       <?php

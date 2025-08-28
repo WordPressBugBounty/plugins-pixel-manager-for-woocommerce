@@ -423,6 +423,32 @@ if(!class_exists('PMW_AdminHelper')):
       wp_add_inline_style('wp-admin', $notice_css);
       $notices = $this->get_pmw_admin_notices();
       $pixels_option = $this->get_pmw_pixels_option();
+           
+      /*** GrowInsights360 ***/
+      $notice_id = "growinsights364";
+      if(!is_array($notices)){
+        $notices = array();
+      }
+      if(!isset($notices[$notice_id]) && isset($pixels_option['growinsights364']['is_enable']) && !$pixels_option['growinsights364']['is_enable']  || !isset($pixels_option['growinsights364']['is_enable'])){
+        $html = '
+          <div>
+            <p style="margin:0; font-size:16px; font-weight:600; color:#1d2327;">
+              🚀 GrowInsights360 – All-in-one GA4 Analytics Dashboard
+            </p>
+            <p style="margin:8px 0 12px; font-size:14px; color:#1d2327; line-height:1.5;">
+              New feature in the Pixel Tag Manager plugin: Connect your Google Analytics 4 account securely with Google OAuth, monitor traffic, conversions, user behavior, and gain powerful insights reports to grow your business – all in one dashboard.
+            </p>
+            <a class="button button-primary" href="admin.php?page=pixel-manager-growinsights360" style="text-decoration:none;">
+              👉 Open GrowInsights360 Dashboard
+            </a>
+          </div>';
+        $notices[$notice_id] = array(
+          "is_active" => true,
+          "created_at" => "2025-08-20",
+          "html" => $this->pmw_add_admin_notice_html("notice-info", $html, $notice_id)
+        );
+      }
+
       //****Offer 1 ****
       $notice_id = "offer_freevspro";
       if( !isset($notices[$notice_id]) && !pmw_is_pro_version ){        
@@ -488,6 +514,18 @@ if(!class_exists('PMW_AdminHelper')):
     public function get_plan_features_html(){
       ob_start();
       ?>
+      <li class="ptm-has-price-child"><strong><?php esc_attr_e('GrowInsights360 GA4 Dashboard.','pixel-manager-for-woocommerce'); ?></strong>
+        <ul>
+            <li><?php esc_attr_e('Google Analytics Dashboard Overview','pixel-manager-for-woocommerce'); ?></li>
+            <li><?php esc_attr_e('General Reports - provides a high-level summary','pixel-manager-for-woocommerce'); ?></li>
+            <li><?php esc_attr_e('Product Performance Reports - with Multi-Dimensional Analysis','pixel-manager-for-woocommerce'); ?></li>
+            <li><?php esc_attr_e('Purchase Journey Reports','pixel-manager-for-woocommerce'); ?></li>
+            <li><?php esc_attr_e('Comparison options','pixel-manager-for-woocommerce'); ?></li>
+            <li><?php esc_attr_e('Time-Based Performance & Custom Date Range','pixel-manager-for-woocommerce'); ?></li>
+            <li><?php esc_attr_e('Ecommerce & User Metrics Reports','pixel-manager-for-woocommerce'); ?></li>
+            <li><?php esc_attr_e('Download CSV & PDF','pixel-manager-for-woocommerce'); ?></li>
+        </ul>
+      </li>
       <li><?php esc_attr_e('Google Consent Mode v2 with Axeptio Integration','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Google Analytics 4 Tracking','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Form Submission Tracking','pixel-manager-for-woocommerce'); ?></li>
@@ -516,7 +554,15 @@ if(!class_exists('PMW_AdminHelper')):
       <?php
       return ob_get_clean();
     }
-
+    public function get_plan_features_limited_allhtml(){
+      ob_start();?>
+      <td><span class="free plan-yes"></span>(<?php esc_attr_e('Limited','pixel-manager-for-woocommerce'); ?>)</td>
+      <td><span class="free plan-yes"></span>(<?php esc_attr_e('Limited','pixel-manager-for-woocommerce'); ?>)</td>
+      <td><span class="free plan-yes"></span>(<?php esc_attr_e('Limited','pixel-manager-for-woocommerce'); ?>)</td>
+      <td><span class="free plan-yes"></span>(<?php esc_attr_e('Limited','pixel-manager-for-woocommerce'); ?>)</td>
+      <?php
+      return ob_get_clean();
+    }
     public function get_sidebar_html($is_pro_version, $plan_name){
       ob_start();
       ?>
@@ -580,8 +626,7 @@ if(!class_exists('PMW_AdminHelper')):
           $PMW_API->update_store_api_data();          
         }
       }
-    }
-    
+    }    
   }
 endif;
 new PMW_AdminHelper();

@@ -84,6 +84,9 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 			if(strpos($this->screen_id, 'pixel-manager') !== false){
 				wp_enqueue_style( $this->plugin_name, esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL . '/admin/css/pixel-manager-for-woocommerce-admin.css'), array(), $this->version, 'all' );
 			}
+			if( in_array($this->screen_id, array("pixel-manager-growinsights360", "pixel-manager-documentation")) ){
+				wp_enqueue_style( $this->plugin_name.'-custom', esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL . '/admin/css/pixel-manager-for-woocommerce-admin-custom.css'), array(), $this->version, 'all' );
+			}
 		}
 
 		/**
@@ -107,6 +110,7 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 			add_menu_page(
 	      __('Pixel Tag Manager','pixel-manager-for-woocommerce'), __('Pixel Tag Manager','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager', array($this, 'show_page'),esc_url_raw($menu_icon), 56 );
 			add_submenu_page('pixel-manager', __('Pixel Settings','pixel-manager-for-woocommerce'), __('Pixel Settings','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager' );
+			add_submenu_page('pixel-manager', __('GrowInsights360','pixel-manager-for-woocommerce'), __('GrowInsights360','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-growinsights360', array($this, 'show_page') );
 			add_submenu_page('pixel-manager', __('Account','pixel-manager-for-woocommerce'), __('Account','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-account', array($this, 'show_page'));
 			add_submenu_page('pixel-manager', __('Documentation','pixel-manager-for-woocommerce'), __('Documentation','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-documentation', array($this, 'show_page'));
 			add_submenu_page('pixel-manager', __('Support','pixel-manager-for-woocommerce'), __('Support','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-support', array($this, 'show_page'));
@@ -122,15 +126,19 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 		 * @since    1.0.0
 		 */
 		public function show_page() {
-			do_action('pmw_header');
-			$get_action = "e-soft-creator";
+			$get_action = "";
 	   	if(isset($_GET['page'])) {
 	      $get_action = str_replace("-", "_", sanitize_text_field($_GET['page']) );
+	    }
+	    if( !in_array($get_action, array("pixel_manager_growinsights360", "pixel_manager_documentation")) ){
+	    	do_action('pmw_header');
 	    }
 	    if(method_exists($this, $get_action)){
 	      $this->$get_action();
 	    }
-	    do_action('pmw_footer');
+	    if( !in_array($get_action, array("pixel_manager_growinsights360", "pixel_manager_documentation")) ){
+	      do_action('pmw_footer');
+	    }
 	  }
 
 	  public function pixel_manager(){
@@ -158,6 +166,9 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 	    require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-documentation.php');
 	    new PMW_PixelsDocumentation();
 	  }
-
+		public function pixel_manager_growinsights360(){
+	    require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-growinsights360.php');
+	    new PMW_PixelsGrowInsights360();
+	  }
 	}
 }

@@ -11,10 +11,10 @@
  */
 
 if(!defined('ABSPATH')){
-	exit; // Exit if accessed directly
+  exit; // Exit if accessed directly
 }
 if(!class_exists('PMW_PixelsUpgradePro')){
-	class PMW_PixelsUpgradePro extends PMW_AdminHelper{
+  class PMW_PixelsUpgradePro extends PMW_AdminHelper{
     public function __construct( ) {
       $this->page_html();
     }
@@ -33,5 +33,5 @@ if(!class_exists('PMW_PixelsUpgradePro')){
       <?php
       exit;
     }
-	}
+  }
 }

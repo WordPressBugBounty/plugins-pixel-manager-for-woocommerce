@@ -139,6 +139,8 @@ class Pixel_Manager_For_Woocommerce {
 		$deactivate_link = $links['deactivate'];
     unset($links['deactivate']);
     $links[] = '<a href="' . get_admin_url(null, 'admin.php?page=pixel-manager') . '">'.__("Settings", "pixel-manager-for-woocommerce").'</a>';
+    $links[] = '<a href="' . get_admin_url(null, 'admin.php?page=pixel-manager-growinsights360') . '">'.__("GrowInsights360", "pixel-manager-for-woocommerce").'</a>';
+    $links[] = '<a href="' . get_admin_url(null, 'admin.php?page=pixel-manager-documentation') . '">'.__("Documentation", "pixel-manager-for-woocommerce").'</a>';
     $links['deactivate'] = $deactivate_link;
     return $links;
 	}

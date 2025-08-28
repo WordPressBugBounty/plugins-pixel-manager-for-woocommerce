@@ -50,7 +50,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
             <div class="pmw_row text-center mb-5 yearly">
               <!-- Pricing Table-->
               <div class="pmw_col-4">
-                <div class="bg-white p-5 rounded-lg shadow">
+                <div class="bg-white p-2 rounded-lg shadow">
                   <?php /*<div class="pmw-one-month-free">
                     <span style="background-color:#2271b1; color:#fff; margin-top:5px; padding:3px 12px;"><?php esc_attr_e('ONE MONTH FREE','pixel-manager-for-woocommerce'); ?></span><br>
                     <span class="text-small font-weight-bold"><?php esc_attr_e('No payment required','pixel-manager-for-woocommerce'); ?></span>
@@ -71,7 +71,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               </div>
               <!-- END -->
               <div class="pmw_col-4">
-                <div class="bg-white p-5 rounded-lg shadow">
+                <div class="bg-white p-2 rounded-lg shadow">
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('ENTERPRISE','pixel-manager-for-woocommerce'); ?></h2>
                   <div class="price_allow_site"><?php esc_attr_e('5 active  websites','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$12.4','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
@@ -88,7 +88,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               </div>
               <!-- END -->
               <div class="pmw_col-4">
-                <div class="bg-white p-5 rounded-lg shadow">
+                <div class="bg-white p-2 rounded-lg shadow">
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('ENTERPRISE PLUS','pixel-manager-for-woocommerce'); ?></h2>
                   <div class="price_allow_site"><?php esc_attr_e('20 active  websites','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$19.9','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
@@ -107,7 +107,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
             </div>
             <div class="pmw_row text-center monthly">
               <div class="pmw_col-4">
-                <div class="bg-white p-5 rounded-lg shadow">
+                <div class="bg-white p-2 rounded-lg shadow">
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('BUSINESS','pixel-manager-for-woocommerce'); ?></h2>
                   <div class="price_allow_site"><?php esc_attr_e('1 active website','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$9','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
@@ -123,7 +123,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               </div>
               <!-- END -->
               <div class="pmw_col-4">
-                <div class="bg-white p-5 rounded-lg shadow">
+                <div class="bg-white p-2 rounded-lg shadow">
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('ENTERPRISE','pixel-manager-for-woocommerce'); ?></h2>
                   <div class="price_allow_site"><?php esc_attr_e('5 active  websites','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$25','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
@@ -139,7 +139,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               </div>
                 <!-- END -->
               <div class="pmw_col-4">
-                <div class="bg-white p-5 rounded-lg shadow">
+                <div class="bg-white p-2 rounded-lg shadow">
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('ENTERPRISE PLUS','pixel-manager-for-woocommerce'); ?></h2>
                   <div class="price_allow_site"><?php esc_attr_e('20 active  websites','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$40','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
@@ -250,6 +250,36 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                   <td>20</td>
                 </tr>
                 <tr>
+                  <td class="ptm-full-width" colspan=5><strong><?php esc_attr_e('GrowInsights360 GA4 Dashboard','pixel-manager-for-woocommerce'); ?></strong></td>                 
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Google Analytics Dashboard Overview','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('General Reports - provides a high-level summary','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Product Performance Reports - with Multi-Dimensional Analysis','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Purchase Journey Reports','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Ecommerce & User Metrics','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Download CSV & PDF','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td class="ptm-full-width" colspan=5><strong><?php esc_attr_e('Pixels Tracking','pixel-manager-for-woocommerce'); ?></strong></td>
+                </tr>
+                <tr>
                   <td><?php esc_attr_e('GTM base tracking','pixel-manager-for-woocommerce'); ?></td>
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
@@ -325,6 +355,9 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                 <tr>
                   <td><?php esc_attr_e('Twitter Ads Pixel tracking','pixel-manager-for-woocommerce'); ?></td>
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
+                </tr>
+                <tr>
+                  <td class="ptm-full-width" colspan=5><strong><?php esc_attr_e('Support','pixel-manager-for-woocommerce'); ?></strong></td>
                 </tr>
                 <tr>
                   <td><?php esc_attr_e('Priority Support (24*5)','pixel-manager-for-woocommerce'); ?></td>

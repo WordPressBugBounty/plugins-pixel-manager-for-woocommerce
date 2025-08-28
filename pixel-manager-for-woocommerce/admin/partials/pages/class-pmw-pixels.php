@@ -219,6 +219,13 @@ if(!class_exists('PMW_Pixels')){
             "class" => "google_ads_sub_section_setting",
           ]
         ],
+        "sub_section_google_ads_conversion" => [
+          [
+            "type" => "sub_section",
+            "label" => __("Google Ads Conversion", "pixel-manager-for-woocommerce"),
+            "class" => "google_ads_sub_section_setting section_sub_setting",
+          ]
+        ],
         "google_ads_conversion" => [    
           [
             "type" => "multi_text",
@@ -789,7 +796,7 @@ if(!class_exists('PMW_Pixels')){
                 <p><a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/privacy-terms/"); ?>"><?php echo esc_attr__('Privacy & Terms', 'pixel-manager-for-woocommerce'); ?></a></p>
                 <div class="modal_button-area">
                   <button class="pmw_btn pmw_btn-fill" id="pmw_accept_privecy_policy"><?php echo esc_attr__('Allow & Continue', 'pixel-manager-for-woocommerce'); ?></button>
-                  <button class="pmw_btn pmw_btn-default" id="allow_this_tool_only">Allow This Tool Only</button>
+                  <button class="pmw_btn pmw_btn-default" id="allow_this_tool_only"><?php echo esc_attr__('Allow This Tool Only', 'pixel-manager-for-woocommerce'); ?></button>
                 </div>
               </div>
               <div class="modal-bottom-area">

@@ -57,7 +57,7 @@ if ( ! class_exists( 'PMW_Header' ) ) {
       				</section>
 			      	<section class="hero-section-banner">			  					    
 								<div class="hero-caption">
-								  <h1><?php echo esc_attr__('Integrate GA4, Google Ads, Facebook, TikTok, and other pixels, including Facebook Conversion API through the utilization of Google Tag Manager.', 'pixel-manager-for-woocommerce'); ?></h1>
+								  <h1><?php echo esc_attr__('Integrate GA4, Google Ads, Facebook, Facebook Conversion API, TikTok and other pixels through the utilization of Google Tag Manager.', 'pixel-manager-for-woocommerce'); ?></h1>
 								</div>
 						    <div class="pmw-top-pro-btn">
 						    	<a class="pmw_btn pmw_btn-light-default-pro" target="_blank" href="<?php echo esc_url_raw($this->get_price_plan_link());?>"><?php echo esc_attr__('Upgrade to Pro', 'pixel-manager-for-woocommerce'); ?></a>
@@ -81,7 +81,7 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 						</section>
 					<?php } ?>
 					<div class="pmw_rate_us_header">
-	        	<a class="pmw-rate-us" href="https://wordpress.org/support/plugin/pixel-manager-for-woocommerce/reviews/" target="_blank"><?php echo esc_attr__('add your review! ', 'pixel-manager-for-woocommerce'); ?><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/rate-us.png"); ?>" alt="rate-us" /></a>
+	        	<a class="pmw-rate-us" href="https://wordpress.org/support/plugin/pixel-manager-for-woocommerce/reviews/" target="_blank"><?php echo esc_attr__('Add your review! ', 'pixel-manager-for-woocommerce'); ?><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/rate-us.png"); ?>" alt="rate-us" /></a>
 	        </div>
 				</div>
 				<section class="pmw_section-tabbing">
@@ -109,14 +109,19 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 	  			'icon'=>'',
 	  			'css-icon'=>'pmw_icon-setting',
 	  			'acitve_icon'=>''
-	  		),'pixel-manager-account'=>array(
-	  			'title'=>__('Account', 'pixel-manager-for-woocommerce'),
-	  			'css-icon'=>'pmw_icon-account',
+	  		),'pixel-manager-growinsights360'=>array(
+	  			'title'=>__('GrowInsights360', 'pixel-manager-for-woocommerce'),
+	  			'css-icon'=>'pmw_icon-growinsights360',
 	  			'icon'=>'',
 	  			'acitve_icon'=>''
 	  		),'pixel-manager-documentation'=>array(
 	  			'title'=>__('Documentation', 'pixel-manager-for-woocommerce'),
 	  			'css-icon'=>'pmw_icon-documentation',
+	  			'icon'=>'',
+	  			'acitve_icon'=>''
+	  		),'pixel-manager-account'=>array(
+	  			'title'=>__('Account', 'pixel-manager-for-woocommerce'),
+	  			'css-icon'=>'pmw_icon-account',
 	  			'icon'=>'',
 	  			'acitve_icon'=>''
 	  		),'pixel-manager-support'=>array(
@@ -207,8 +212,12 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 					}?>
 					</ul>
 				</div>
-				<div class="pmw_section-tab-box">
 				<?php
+				$screen_id = isset($_GET['page'])?sanitize_text_field($_GET['page']):"";
+				if( !in_array($screen_id, array("pixel-manager-growinsights360", "pixel-manager-documentation")) ){?>
+					<div class="pmw_section-tab-box">
+				<?php
+				}
 			}
 		}
 	}
