@@ -26,7 +26,8 @@ if(!class_exists('PMW_AdminHelper')):
     public function init(){
       add_filter('sanitize_option_pmw_pixels_option', array($this, 'sanitize_option_pmw_general'), 10, 2);
       add_filter('sanitize_option_pmw_api_store', array($this, 'sanitize_option_pmw_general'), 10, 2);
-      add_filter('sanitize_option_pmw_migration', array($this, 'sanitize_option_pmw_general'), 10, 2);      
+      add_filter('sanitize_option_pmw_migration', array($this, 'sanitize_option_pmw_general'), 10, 2);
+      add_filter('sanitize_option_pmw_conversion_api_logs', array($this, 'sanitize_option_pmw_general'), 10, 2);
     }
     /**
      * sanitize options fields
@@ -58,6 +59,12 @@ if(!class_exists('PMW_AdminHelper')):
     }
     public function get_pmw_pixels_option(){
       return unserialize( get_option("pmw_pixels_option"));
+    }
+    /**
+     * Conversion API logs
+     **/
+    public function get_mw_conversion_api_logs(){
+      return maybe_unserialize( get_option("pmw_conversion_api_logs", []));
     }
     /**
      * Admin Notices
@@ -160,19 +167,20 @@ if(!class_exists('PMW_AdminHelper')):
       $re = '/^[-a-zA-Z_0-9]{17,20}$/m';
       return self::validate_with_regex($re, $string);
     }
-    public function is_google_analytics_3_property_id( $string ) {
-      if (empty($string)) {
-        return true;
-      }
-      $re = '/^UA-\d{6,10}-\d{1,2}$/m';
-      return self::validate_with_regex($re, $string);
-    }
 
     public function is_google_analytics_4_measurement_id( $string ) {
       if (empty($string)) {
         return true;
       }
       $re = '/^G-[A-Z0-9]{10,12}$/m';
+      return self::validate_with_regex($re, $string);
+    }
+
+    public function is_google_tag_id( $string ) {
+      if (empty($string)) {
+        return true;
+      }
+      $re = '/^(G|AW|GT)-[A-Z0-9]{6,20}$/m';
       return self::validate_with_regex($re, $string);
     }
 
@@ -336,7 +344,7 @@ if(!class_exists('PMW_AdminHelper')):
         $i = 1;
          foreach($notices as $key => $notice){
             if(isset($notice["is_active"]) && isset($notice["html"]) && $notice["is_active"] && $notice["html"] && $i <= $max_limite && ($last_hide_notice_date == "" || $last_hide_notice_date < date("Ymd")) ){
-              echo html_entity_decode(esc_html($notice["html"]));
+              echo wp_kses_post($notice["html"]);
               $i++;
             }
          }
@@ -388,6 +396,9 @@ if(!class_exists('PMW_AdminHelper')):
         /* Custom CSS for WordPress Admin Notice */
         .pmw-admin-notice{
           border-left: 4px solid #0073aa; 
+          display: flex;
+          align-items: center;
+          padding: 10px;
         }
         .pmw-admin-notice img {
             max-width: 120px; /* Adjust the image width as needed */
@@ -419,17 +430,76 @@ if(!class_exists('PMW_AdminHelper')):
           padding: 7px 5px;
           margin-top: 5px;
           text-decoration: none;
+        }
+        .pmw-release-features{
+          margin: 8px 0 12px 18px;
+          font-size: 13px;
+          line-height: 1.6;
+          padding-left: 12px;
+        }
+        .pmw-release-features li{
+          margin-bottom: 4px;
+          list-style: disc;
+        }
+        .pmw-release-note{
+          margin: 0 0 12px;
+          font-size: 13px;
+          font-weight: 600;
+          color: #c2410c;
         }';
       wp_add_inline_style('wp-admin', $notice_css);
       $notices = $this->get_pmw_admin_notices();
+      if(empty($notices)){
+        $notices = array();
+      }
       $pixels_option = $this->get_pmw_pixels_option();
+
+      /*** Mega Release announcement ***/
+      $notice_id = "mega_release_2025";
+      if(!isset($notices[$notice_id])){
+        $feature_list = array(
+          esc_html__('Google Tag: Easily add and manage your Google Tag with choose options to use it for GA4, Google Ads, or both.', 'pixel-manager-for-woocommerce'),
+          esc_html__('Enhanced Facebook Conversion API tracking.', 'pixel-manager-for-woocommerce'),
+          esc_html__('Added TikTok Conversion API tracking.', 'pixel-manager-for-woocommerce'),
+          esc_html__('Added Pinterest Conversion API tracking.', 'pixel-manager-for-woocommerce'),
+          esc_html__('Advanced Matching data now sent to Facebook, TikTok, Twitter, Bing, and Pinterest.', 'pixel-manager-for-woocommerce'),
+          esc_html__('Enable and desable Advanced Matching data sent option.', 'pixel-manager-for-woocommerce'),
+          esc_html__('Added Control to manage the Thank You page purchase event triggers.', 'pixel-manager-for-woocommerce'),
+          esc_html__('View the latest 10 Conversion API logs directly inside the plugin.', 'pixel-manager-for-woocommerce'),
+        );
+        $feature_html = '<ul class="pmw-release-features">';
+        foreach ($feature_list as $feature_text) {
+          $feature_html .= '<li>'.$feature_text.'</li>';
+        }
+        $feature_html .= '</ul>';
+        $html = sprintf(
+          '<div style="color:#1d2327;">
+            <p style="margin:0; font-size:16px; font-weight:600;">%1$s</p>
+            <p style="margin:8px 0 10px; font-size:14px; line-height:1.5;">%2$s</p>
+            %3$s
+            <p class="pmw-release-note">%4$s</p>
+            <a class="button button-primary" style="text-decoration:none;" href="%5$s">%6$s</a>
+          </div>',
+          esc_html__('🎉 Mega Release: Pixel Tag Manager 2.1 Highlights', 'pixel-manager-for-woocommerce'),
+          esc_html__('Here’s what shipped in this release:', 'pixel-manager-for-woocommerce'),
+          $feature_html,
+          esc_html__('We enhanced GTM containers and in-plugin tracking—review the updates and verify your setup. Reach out if you need any help.', 'pixel-manager-for-woocommerce'),
+          esc_url(admin_url('admin.php?page=pixel-manager')),
+          esc_html__('Open Pixel Manager settings', 'pixel-manager-for-woocommerce')
+        );
+        $notices[$notice_id] = array(
+          "is_active" => true,
+          "created_at" => current_time('Y-m-d'),
+          "html" => $this->pmw_add_admin_notice_html("notice-info", $html, $notice_id)
+        );
+      }
            
       /*** GrowInsights360 ***/
-      $notice_id = "growinsights364";
+      $notice_id = "growinsights360";
       if(!is_array($notices)){
         $notices = array();
       }
-      if(!isset($notices[$notice_id]) && isset($pixels_option['growinsights364']['is_enable']) && !$pixels_option['growinsights364']['is_enable']  || !isset($pixels_option['growinsights364']['is_enable'])){
+      if(!isset($notices[$notice_id])){
         $html = '
           <div>
             <p style="margin:0; font-size:16px; font-weight:600; color:#1d2327;">
@@ -459,30 +529,7 @@ if(!class_exists('PMW_AdminHelper')):
           "html" => $this->pmw_add_admin_notice_html("notice-info", $html, $notice_id)
         );
       }
-      //****Offer****
-      $notice_id = "offer_092023";
-      if( !isset($notices[$notice_id]) && !pmw_is_pro_version){        
-        $html = '<img src="'.esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/45offer.jpg").'" alt="Offer Image"><div><h3>Boost your eCommerce presence with GrowCommerce.</h3><span class="text">Unlock significant savings with our annual plan! Get up to a 50% discount on yearly plans!</span><span class="small-text">Get offer and unlock complet eCommerce pixels tracking access and enhanced features with using Google Tag Manager.</span><a class="offer-btn" target="_blank" href="'.esc_url_raw($this->get_price_plan_link()).'&utm_source=Plugin+WordPress+Notice&utm_medium=Notice+Explore+Offers+Button&m_campaign=Upsell+at+PixelTagManager+Plugin">Explore Offers</a></div>';
-        $notices[$notice_id] = array(
-          "is_active" => true,
-          "created_at" => "2023-09-03",
-          "html" => $this->pmw_add_admin_notice_html("notice-info", $html, $notice_id)
-        );
-      }
 
-      //Facebook Conversion API
-      $notice_id = "fb_conversion_api";
-      if(!is_array($notices)){
-        $notices = array();
-      }
-      if(!isset($notices[$notice_id]) && isset($pixels_option['fb_conversion_api']['is_enable']) && !$pixels_option['fb_conversion_api']['is_enable']  || !isset($pixels_option['fb_conversion_api']['is_enable'])){
-        $html = 'Lower Your Cost Per Action with Enhanced Event Matching, Improved Measurement, Ad Performance, and Attribution Throughout Your Customer\'s Entire Journey. <a href="admin.php?page=pixel-manager#facebook_pixel_id"><b><u>Enable Facebook Conversion API</u></b></a>';
-        $notices[$notice_id] = array(
-          "is_active" => true,
-          "created_at" => "2023-03-04",
-          "html" => $this->pmw_add_admin_notice_html("notice-info", $html, $notice_id)
-        );
-      }
       //****Review ****
       $notice_id = "wp_ptm_review";
       if( !isset($notices[$notice_id]) ){        
@@ -514,33 +561,17 @@ if(!class_exists('PMW_AdminHelper')):
     public function get_plan_features_html(){
       ob_start();
       ?>
-      <li class="ptm-has-price-child"><strong><?php esc_attr_e('GrowInsights360 GA4 Dashboard.','pixel-manager-for-woocommerce'); ?></strong>
-        <ul>
-            <li><?php esc_attr_e('Google Analytics Dashboard Overview','pixel-manager-for-woocommerce'); ?></li>
-            <li><?php esc_attr_e('General Reports - provides a high-level summary','pixel-manager-for-woocommerce'); ?></li>
-            <li><?php esc_attr_e('Product Performance Reports - with Multi-Dimensional Analysis','pixel-manager-for-woocommerce'); ?></li>
-            <li><?php esc_attr_e('Purchase Journey Reports','pixel-manager-for-woocommerce'); ?></li>
-            <li><?php esc_attr_e('Comparison options','pixel-manager-for-woocommerce'); ?></li>
-            <li><?php esc_attr_e('Time-Based Performance & Custom Date Range','pixel-manager-for-woocommerce'); ?></li>
-            <li><?php esc_attr_e('Ecommerce & User Metrics Reports','pixel-manager-for-woocommerce'); ?></li>
-            <li><?php esc_attr_e('Download CSV & PDF','pixel-manager-for-woocommerce'); ?></li>
-        </ul>
-      </li>
-      <li><?php esc_attr_e('Google Consent Mode v2 with Axeptio Integration','pixel-manager-for-woocommerce'); ?></li>
+      <li><?php esc_attr_e('GrowInsights360 GA4 Dashboard.','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Google Analytics 4 Tracking','pixel-manager-for-woocommerce'); ?></li>
-      <li><?php esc_attr_e('Form Submission Tracking','pixel-manager-for-woocommerce'); ?></li>
-      <li><?php esc_attr_e('Google Ads Conversion Tracking','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Google Ads Enhanced Conversion Tracking','pixel-manager-for-woocommerce'); ?></li>
-      <li><?php esc_attr_e('Google Ads Dynamic Remarketing Tracking','pixel-manager-for-woocommerce'); ?></li>
-      <li><?php esc_attr_e('Microsoft Ads Pixel (Bing Ads Pixel)','pixel-manager-for-woocommerce'); ?></li>
-      <li><?php esc_attr_e('Remarketing and Dynamic remarketing tracking for Microsoft Ads','pixel-manager-for-woocommerce'); ?></li>
-      <li><?php esc_attr_e('Facebook Conversion API','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Facebook Pixel Tracking','pixel-manager-for-woocommerce'); ?></li>
-      <li><?php esc_attr_e('Multiple Facebook Pixel ID(s) Tracking','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Pinterest Pixel Tracking','pixel-manager-for-woocommerce'); ?></li>
+      <li><?php esc_attr_e('TikTok Ads Pixel tracking','pixel-manager-for-woocommerce'); ?></li>
+      <li><?php esc_attr_e('Microsoft Ads Pixel (Bing Ads Pixel)','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Snapchat Pixel Tracking','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Twitter Ads Pixel tracking','pixel-manager-for-woocommerce'); ?></li>
-      <li><?php esc_attr_e('TikTok Ads Pixel tracking','pixel-manager-for-woocommerce'); ?></li>
+      <li><?php esc_attr_e('Conversion API for Facebook, TikTok, Pinterest','pixel-manager-for-woocommerce'); ?></li>
+      <li><?php esc_attr_e('Advanced Matching data is now sent to Facebook, TikTok, Twitter, Bing, and Pinterest','pixel-manager-for-woocommerce'); ?></li>
       <li><?php esc_attr_e('Premium Support','pixel-manager-for-woocommerce'); ?></li>
       <?php
       return ob_get_clean();
@@ -584,14 +615,24 @@ if(!class_exists('PMW_AdminHelper')):
           </div>
           
           <div class="sidebar-img">
-            <a target="_blank" href="<?php echo esc_url_raw($this->get_price_plan_link());?>&utm_source=Plugin+WordPress+Screen&utm_medium=Sidebar+Offer+Img&m_campaign=Upsell+at+PixelTagManager+Plugin" class=""><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/close-offer-soon.png"); ?>" alt="rate-us" /></a>
+            <div class="pmw-christmas-offer">
+              <p><span class="pmw-christmas-offer__badge"><?php esc_attr_e('Christmas Special','pixel-manager-for-woocommerce'); ?></span></p>
+              <h4>BUSINESS YEARLY</h4>
+              <h3><del>$49</del><strong> $39/ year</strong></h3>
+              <h4>ENTERPRISE YEARLY</h4>
+              <h3><del>$149</del><strong> $99/ year</strong></h3>
+              <p><?php esc_attr_e('Enjoy an extra 20% - 35% Christmas discount—automatically applied to the Business yearly plan.','pixel-manager-for-woocommerce'); ?></p>
+              <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=172&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Yearly+Christmas&m_campaign=Christmas+Offer"); ?>" class="pmw_btn pmw-btn-christmas">
+                <?php esc_attr_e('Unlock the savings','pixel-manager-for-woocommerce'); ?>
+              </a>
+            </div>
           </div>
           <div class="pmw-sec-2">
             <ul>
               <li><a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/docs/pixel-manager-for-woocommerce.pdf"); ?>" class="pmw_link-list-link"><?php echo esc_attr__('Installation Manual', 'pixel-manager-for-woocommerce'); ?></a></li>
               <li><?php echo esc_attr__('( Need help? Email support@growcommerce.io )', 'pixel-manager-for-woocommerce'); ?></li>
             </ul>
-          </div>
+          </div>          
         </div>
       </div>
       <?php

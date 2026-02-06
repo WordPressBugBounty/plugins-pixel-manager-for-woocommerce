@@ -35,13 +35,19 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
         <div class="pmw_form-group pmw_freevsprow">
           <div class="pmw-pricing-plan mb-5">
             <h1><?php esc_attr_e("Upgrad to our Pro Plan, starting at just $9.","pixel-manager-for-woocommerce"); ?></h1>
-            <div class="frrtopro">
-              <h3><?php esc_attr_e('Unlock our best savings offer with our annual plan! Get up to a 50% discount on yearly plans!','pixel-manager-for-woocommerce'); ?></h3>
+            <div class="pmw-christmas-offer">
+              <span class="pmw-christmas-offer__badge"><?php esc_attr_e('Christmas Special','pixel-manager-for-woocommerce'); ?></span>
+              <h3><?php esc_attr_e('Business yearly plan now $39 (down from $49).','pixel-manager-for-woocommerce'); ?></h3>
+              <p><?php esc_attr_e('Enjoy an extra 20%-35% Christmas discount—automatically applied to the Business yearly plan.','pixel-manager-for-woocommerce'); ?></p>
+              <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=172&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Yearly+Christmas&m_campaign=Christmas+Offer"); ?>" class="pmw_btn pmw-btn-christmas">
+                <?php esc_attr_e('Claim the Christmas deal','pixel-manager-for-woocommerce'); ?>
+              </a>
             </div>
+
             <br>
             <div class="switch-wrapper">
-              <input id="monthly" value="monthly" type="radio" name="plans_type" checked="">
-              <input id="yearly" value="yearly" type="radio" name="plans_type">
+              <input id="monthly" value="monthly" type="radio" name="plans_type">
+              <input id="yearly" value="yearly" type="radio" name="plans_type" checked="">
               <label for="monthly"><?php esc_attr_e('Monthly','pixel-manager-for-woocommerce'); ?></label>
               <label for="yearly"><?php esc_attr_e('Yearly','pixel-manager-for-woocommerce'); ?></label>
                             
@@ -56,6 +62,8 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                     <span class="text-small font-weight-bold"><?php esc_attr_e('No payment required','pixel-manager-for-woocommerce'); ?></span>
                   </div> */ ?>
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('BUSINESS','pixel-manager-for-woocommerce'); ?></h2>
+                  <span class="pmw-christmas-offer__badge">Christmas Special Offer</span>
+                  <h3><del>$49</del><strong> $39/ year</strong></h3>
                   <div class="price_allow_site"><?php esc_attr_e('1 active website','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$4.1','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span><?php esc_attr_e('billed annually ($49 per year)','pixel-manager-for-woocommerce'); ?></span><br>
@@ -73,6 +81,8 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               <div class="pmw_col-4">
                 <div class="bg-white p-2 rounded-lg shadow">
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('ENTERPRISE','pixel-manager-for-woocommerce'); ?></h2>
+                  <span class="pmw-christmas-offer__badge">Christmas Special Offer</span>
+                  <h3><del>$149</del><strong> $99/ year</strong></h3>
                   <div class="price_allow_site"><?php esc_attr_e('5 active  websites','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$12.4','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span><?php esc_attr_e('billed annually ($149 per year)','pixel-manager-for-woocommerce'); ?></span><br>
@@ -89,7 +99,8 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               <!-- END -->
               <div class="pmw_col-4">
                 <div class="bg-white p-2 rounded-lg shadow">
-                  <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('ENTERPRISE PLUS','pixel-manager-for-woocommerce'); ?></h2>
+                  <h2 class="h6 text-uppercase font-weight-bold mb-6"><?php esc_attr_e('ENTERPRISE PLUS','pixel-manager-for-woocommerce'); ?></h2>
+                  <h3><strong> $239/ year</strong></h3>
                   <div class="price_allow_site"><?php esc_attr_e('20 active  websites','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$19.9','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span><?php esc_attr_e('billed annually ($239 per year)','pixel-manager-for-woocommerce'); ?></span><br>
@@ -321,19 +332,31 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
                 <tr>
-                  <td><?php esc_attr_e('Facebook Conversion API','pixel-manager-for-woocommerce'); ?></td>
-                  <?php echo $this->get_plan_features_limited_detailshtml(); ?>
-                </tr>
-                <tr>
                   <td><?php esc_attr_e('Facebook Pixel Tracking','pixel-manager-for-woocommerce'); ?></td>
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
+                <tr>
+                  <td><?php esc_attr_e('Facebook Conversion API','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_detailshtml(); ?>
+                </tr>                
                 <tr>
                   <td><?php esc_attr_e('Multiple Facebook Pixel ID(s) Tracking','pixel-manager-for-woocommerce'); ?></td>
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
                 <tr>
                   <td><?php esc_attr_e('TikTok Ads Pixel Tracking','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_detailshtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('TikTok Conversion API','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_detailshtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Pinterest Pixel Tracking','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_detailshtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Pinterest Conversion API','pixel-manager-for-woocommerce'); ?></td>
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
                 <tr>
@@ -345,15 +368,15 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
                 <tr>
-                  <td><?php esc_attr_e('Pinterest Pixel Tracking','pixel-manager-for-woocommerce'); ?></td>
-                  <?php echo $this->get_plan_features_limited_detailshtml(); ?>
-                </tr>
-                <tr>
                   <td><?php esc_attr_e('Snapchat Pixel Tracking','pixel-manager-for-woocommerce'); ?></td>
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
                 <tr>
                   <td><?php esc_attr_e('Twitter Ads Pixel tracking','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_detailshtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Send Advanced Matching data is now sent to Facebook, TikTok, Twitter, Bing, and Pinterest','pixel-manager-for-woocommerce'); ?></td>
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
                 <tr>

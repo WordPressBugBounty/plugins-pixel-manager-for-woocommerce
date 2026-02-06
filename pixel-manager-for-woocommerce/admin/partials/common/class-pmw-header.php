@@ -15,7 +15,7 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 			add_action('pmw_header',array($this, 'before_start_header'));
 			//add_action('pmw_header',array($this, 'header_notices'));
 			add_action('pmw_header',array($this, 'page_header'));
-			add_action('pmw_header',array($this, 'header_menu'));
+			//add_action('pmw_header',array($this, 'header_menu'));
 		}	
 		
 		/**
@@ -50,43 +50,19 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 			?>
       <main>
       	<div class="pmw_container-header">
-      		<?php if(!$this->is_pro_version){?>
-      			<section class="hero-section">
-      				<section class="hero-section-logo">
-      					<a target="_blank" href="<?php echo esc_url_raw($this->get_pmw_website_link());?>product/pixel-tag-manager-for-woocommerce/?utm_source=Plugin+WordPress+Screen&utm_medium=Top+Logo+Img&m_campaign=Upsell+at+PixelTagManager+Plugin" class=""><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/pixel-icon.png"); ?>" alt="rate-us" /></a>
-      				</section>
-			      	<section class="hero-section-banner">			  					    
-								<div class="hero-caption">
-								  <h1><?php echo esc_attr__('Integrate GA4, Google Ads, Facebook, Facebook Conversion API, TikTok and other pixels through the utilization of Google Tag Manager.', 'pixel-manager-for-woocommerce'); ?></h1>
-								</div>
-						    <div class="pmw-top-pro-btn">
-						    	<a class="pmw_btn pmw_btn-light-default-pro" target="_blank" href="<?php echo esc_url_raw($this->get_price_plan_link());?>"><?php echo esc_attr__('Upgrade to Pro', 'pixel-manager-for-woocommerce'); ?></a>
-						    </div>
-							</section>
-						</section>
-				<?php } ?>
-				<?php if($this->is_pro_version){?>
-		      	<section class="hero-section">
-		      		<section class="hero-section-logo">
-      					<a target="_blank" href="<?php echo esc_url_raw($this->get_pmw_website_link());?>product/pixel-tag-manager-for-woocommerce/?utm_source=Plugin+WordPress+Screen&utm_medium=Top+Logo+Img&m_campaign=Upsell+at+PixelTagManager+Plugin" class=""><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/pixel-icon.png"); ?>" alt="rate-us" /></a>
-      				</section>
-      				<section class="hero-section-banner">
-								<div class="hero-caption">
-								  <h1><?php echo esc_attr__('Action Required - The free plugin version does not include the pro-featured code. Please install the PRO plugin version for access to enhanced features.', 'pixel-manager-for-woocommerce'); ?></h1>
-								</div>
-						    <div class="pmw-top-pro-btn">
-						    	<a class="pmw_btn pmw_btn-light-default-pro" href="<?php echo esc_url_raw("https://growcommerce.io/docs/wp-pro-plugins/pixel-tag-manager-for-woocommerce/trunk/pro-pixel-manager-for-woocommerce.zip"); ?>" download><?php echo esc_attr__('Download PRO', 'pixel-manager-for-woocommerce'); ?></a>
-						    </div>
-						  </section>
-						</section>
-					<?php } ?>
-					<div class="pmw_rate_us_header">
-	        	<a class="pmw-rate-us" href="https://wordpress.org/support/plugin/pixel-manager-for-woocommerce/reviews/" target="_blank"><?php echo esc_attr__('Add your review! ', 'pixel-manager-for-woocommerce'); ?><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/rate-us.png"); ?>" alt="rate-us" /></a>
-	        </div>
+          <section class="hero-section">
+            <section class="hero-section-logo">
+              <a target="_blank" href="<?php echo esc_url_raw($this->get_pmw_website_link());?>product/pixel-tag-manager-for-woocommerce/?utm_source=Plugin+WordPress+Screen&utm_medium=Top+Logo+Img&m_campaign=Upsell+at+PixelTagManager+Plugin" class=""><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/pixel-icon.png"); ?>" alt="rate-us" /></a>
+            </section>
+            <section class="hero-section-haader">			  					    
+              <?php $this->header_menu();?>
+            </section>
+          </section>
 				</div>
 				<section class="pmw_section-tabbing">
         	<div class="pmw_container">
-			<?php			
+            <div class="pmw_section-tab-box">
+			<?php
 		}
 
 		/* add active tab class */
@@ -105,18 +81,13 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 	  	//slug => arra();
 	  	$menu_list = array(
 	  		'pixel-manager' => array(
-	  			'title'=>__('Pixels', 'pixel-manager-for-woocommerce'),
+	  			'title'=>__('Pixels Settings', 'pixel-manager-for-woocommerce'),
 	  			'icon'=>'',
 	  			'css-icon'=>'pmw_icon-setting',
 	  			'acitve_icon'=>''
 	  		),'pixel-manager-growinsights360'=>array(
 	  			'title'=>__('GrowInsights360', 'pixel-manager-for-woocommerce'),
 	  			'css-icon'=>'pmw_icon-growinsights360',
-	  			'icon'=>'',
-	  			'acitve_icon'=>''
-	  		),'pixel-manager-documentation'=>array(
-	  			'title'=>__('Documentation', 'pixel-manager-for-woocommerce'),
-	  			'css-icon'=>'pmw_icon-documentation',
 	  			'icon'=>'',
 	  			'acitve_icon'=>''
 	  		),'pixel-manager-account'=>array(
@@ -128,6 +99,11 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 	  			'title'=>__('Support', 'pixel-manager-for-woocommerce'),
 	  			'icon'=>'im_icon im_icon-support',
 	  			'css-icon'=>'pmw_icon-support',
+	  			'acitve_icon'=>''
+	  		),'pixel-manager-documentation'=>array(
+	  			'title'=>__('Documentation', 'pixel-manager-for-woocommerce'),
+	  			'css-icon'=>'pmw_icon-documentation',
+	  			'icon'=>'',
 	  			'acitve_icon'=>''
 	  		)
 	  	);
@@ -213,11 +189,6 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 					</ul>
 				</div>
 				<?php
-				$screen_id = isset($_GET['page'])?sanitize_text_field($_GET['page']):"";
-				if( !in_array($screen_id, array("pixel-manager-growinsights360", "pixel-manager-documentation")) ){?>
-					<div class="pmw_section-tab-box">
-				<?php
-				}
 			}
 		}
 	}

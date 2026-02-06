@@ -17,12 +17,10 @@ if(!class_exists('PMW_Pixel')):
   class PMW_Pixel extends PMW_PixelHelper{
     protected $options = array();
     public function __construct(){
-      if(!is_admin()){
-        $this->req_int();
-        $this->options = $this->get_option();
-        //add_action('after_setup_theme', array($this, 'inject_pixels'));
-        $this->inject_pixels();
-      }
+      $this->req_int();
+      $this->options = $this->get_option();
+      //add_action('after_setup_theme', array($this, 'inject_pixels'));
+      $this->inject_pixels();
     }
 
     public function req_int(){
@@ -45,10 +43,6 @@ if(!class_exists('PMW_Pixel')):
           }
         }
       }
-      /*if( isset($current_user->ID) && $current_user->ID != 0 ){
-        $this->options['user_id'] = $current_user->ID;
-        $this->options['user_email'] = (isset($current_user->data->user_email))?$current_user->data->user_email:"";
-      }*/
       // set user ip
       if(!is_array($this->options)){
         $this->options = array('user_ip' => $this->get_user_ip());

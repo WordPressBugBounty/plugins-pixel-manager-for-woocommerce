@@ -54,7 +54,6 @@ class PMW_PixelManagerJS {
   }
 
   TrackGoogleAdsConversionFormSubmissionsBindings() {
-    event.preventDefault();
     const options = this.PixelManagerOptions;
 
     // Validate required fields for Google Ads form conversion tracking
@@ -62,8 +61,6 @@ class PMW_PixelManagerJS {
     const conversionId = options.google_ads_form_conversion?.id;
     const conversionLabel = options.google_ads_form_conversion?.label;
     const selector = options.google_ads_form_conversion?.selector;
-
-    console.log(isEnabled, conversionId, conversionLabel, selector);
 
     // Only proceed if tracking is enabled and all required fields are present
     if (isEnabled && conversionId && conversionLabel && selector) {
@@ -83,6 +80,10 @@ class PMW_PixelManagerJS {
   TrackFormSubmissionsGoogleAds(event){
     event.preventDefault();
     var this_var =  event.currentTarget;
+    // prevent infinite loop on programmatic submit
+    if (this_var && this_var.dataset && this_var.dataset.pmwSubmitted === '1') {
+      return;
+    }
     var form_name = this_var.getAttribute('aria-label') || this_var.getAttribute('name') || this_var.getAttribute('id');
     var form_id = this_var.getAttribute('id');
     var action_url = this_var.getAttribute('action');
@@ -103,6 +104,10 @@ class PMW_PixelManagerJS {
   TrackFormSubmissions(event){
     event.preventDefault();
     var this_var =  event.currentTarget;
+    // prevent infinite loop on programmatic submit
+    if (this_var && this_var.dataset && this_var.dataset.pmwSubmitted === '1') {
+      return;
+    }
     var form_name = this_var.getAttribute('aria-label') || this_var.getAttribute('name') || this_var.getAttribute('id');
     var form_id = this_var.getAttribute('id');
     var action_url = this_var.getAttribute('action');
@@ -117,7 +122,13 @@ class PMW_PixelManagerJS {
         page_url: page_url
       };
       dataLayer.push(PMWEvent);
+      // continue with normal form submission
+      if (this_var) {
+        this_var.dataset.pmwSubmitted = '1';
+        this_var.submit();
+      }
   }
+
   Purchase(){
     if(this.PixelManagerDataLayer.hasOwnProperty('checkout') && this.PixelManagerDataLayer.checkout.hasOwnProperty('cart_product_list')){
       this.LineItemReq["quantity"]="quantity";
@@ -137,44 +148,63 @@ class PMW_PixelManagerJS {
       dataLayer.push(PMWEvent);
     }
   }
-  PurchaseFB(){
-    if(this.PixelManagerDataLayer.hasOwnProperty('checkout') && this.PixelManagerDataLayer.checkout.hasOwnProperty('cart_product_list')){
-     // var Items = this.GetLineItems(this.PixelManagerDataLayer.checkout.cart_product_list, this.LineItemReq);
-      var fb_contents = [];
-      var fb_content_ids = [], num_items = 0;
-      var Items = this.PixelManagerDataLayer.checkout.cart_product_list;
-      for(var i_key in Items){
-        num_items+=parseInt(Items[i_key].quantity);
-        fb_content_ids.push(Items[i_key].id);
-        fb_contents.push({"id":Items[i_key].id, "quantity":Items[i_key].quantity, "item_price":Items[i_key].price});
-      }
-      //Facebook Conversio API
-      if(this.isFacebookConversionAPIEnable()){
-        var data = {
-          action: "pmw_call_facebook_converstion_api",
-          fb_event:"Purchase",
-          event_id:this.PMWEventID,
-          order_id:this.PixelManagerDataLayer.checkout.id,
-          prodct_data:fb_contents,
-          custom_data :{
-            value: this.PixelManagerDataLayer.checkout.total,
-            //currency: this.PixelManagerDataLayer.currency,
-            content_ids: fb_content_ids,
-            content_type: "product_group"
-          }
-        };
-        jQuery.ajax({
-          type: "POST",
-          dataType: "json",
-          url:  pmw_f_ajax_url,
-          data: data,
-          success: function (response) {
-          }
-        });
-      }
-      //End Facebook Conversio API
+
+  TrackPurchase() {
+    if (!this.PixelManagerDataLayer?.checkout?.cart_product_list) {
+      return;
     }
+
+    const { id: order_id, cart_product_list: items, total } = this.PixelManagerDataLayer.checkout;
+    const { currency } = this.PixelManagerDataLayer;
+    const itemsArray = Object.values(items);
+
+    // Prepare platforms data
+    const platformsData = {
+      facebook: this.PixelManagerOptions.fb_conversion_api?.is_enable || false,
+      tiktok: this.PixelManagerOptions.tiktok_conversion_api?.is_enable || false,
+      pinterest: this.PixelManagerOptions.pinterest_conversion_api?.is_enable || false,
+      //twitter: this.PixelManagerOptions.twitter_conversion_api?.is_enable || false,
+      //snapchat: this.PixelManagerOptions.snapchat_conversion_api?.is_enable || false
+    };
+
+    // Prepare common data
+    const eventData = {
+      event_id: this.PMWEventID,
+      order_id,
+      currency,
+      total,
+      items: JSON.stringify(itemsArray.map(item => ({
+        id: item.id,
+        name: item.item_name,
+        price: item.price,
+        quantity: item.quantity,
+        category: item.category?.[0]
+      }))),
+      platforms: JSON.stringify(platformsData) // Stringify the platforms object
+    };
+
+    // Only proceed if any platform is enabled
+    if (!Object.values(platformsData).some(Boolean)) {
+      return;
+    }
+
+    // Single AJAX call for all platforms
+    jQuery.ajax({
+      type: 'POST',
+      url: pmw_f_ajax_url,
+      data: {
+          action: 'pmw_process_conversion_events',
+          ...eventData
+      },
+      success: (response) => {
+          console.log('Conversion events processed:', response);
+      },
+      error: (xhr, status, error) => {
+          console.error('Error processing conversions:', error);
+      }
+    });
   }
+  
   IsEmpty(List){
     if(List != undefined && Object.keys(List).length > 0 ){
       return false;
@@ -219,7 +249,6 @@ class PMW_PixelManagerJS {
     }
   }
   /*get_variation_data(obj){
-    //console.log(p_attributes);
     var p_v_title = "";
     var variation_data = [];
     if(Object.keys(obj).length >0 ){
@@ -330,6 +359,13 @@ class PMW_PixelManagerJS {
   }
   isGA4Enable(){
     if(this.PixelManagerOptions.hasOwnProperty("google_analytics_4_pixel") && this.PixelManagerOptions.google_analytics_4_pixel.is_enable ){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  isTikTokConversionAPIEnable(){
+    if(this.PixelManagerOptions.hasOwnProperty("tiktok_conversion_api") && this.PixelManagerOptions.tiktok_conversion_api.is_enable){
       return true;
     }else{
       return false;

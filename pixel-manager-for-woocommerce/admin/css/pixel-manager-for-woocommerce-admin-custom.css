@@ -1,26 +1,10 @@
-/* Hide WP menu by default */
-body.pmw-menu-hidden #adminmenuwrap,
-body.pmw-menu-hidden #adminmenuback {
-    display: none !important;
-}
-/* Expand content when menu is hidden */
-body.pmw-menu-hidden #wpcontent,
-body.pmw-menu-hidden #wpfooter {
-    margin-left: 0 !important;
-    padding-left: 0 !important; /* remove default padding */
-}
-body #wpcontent{
-  padding-left: 0px;
-}
-body #wpfooter{
-  padding-left: 160px;
-}
 /* Toggle button bar */
 .grow-doc-header {
     background: #f1f1f1;
     padding-left: 4px;
     border-bottom: 1px solid #ccc;
 }
+.pmw_container{padding: 0 2px 0 0;}
 .grow-doc-toggle {
     background: #2271b1;
     color: #fff;
@@ -33,7 +17,7 @@ body #wpfooter{
 /* Iframe takes remaining height */
 .grow-doc-iframe {
     width: 100%;
-    height: calc(100vh - 72px); /* 60px = header height */
+    height: calc(100vh - 92px); /* 60px = header height */
 }
 .grow-doc-iframe iframe {
     width: 100%;

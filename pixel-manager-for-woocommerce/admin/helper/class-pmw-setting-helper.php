@@ -38,9 +38,9 @@ if(!class_exists('PMW_SettingHelper')):
             echo "</div>";
           }
 
-          if(isset($pixel_fields[0]["type"]) && $pixel_fields[0]["type"] != "hidden") {
+          if(isset($pixel_fields[0]["type"]) && $pixel_fields[0]["type"] != "hidden" && $pixel_fields[0]["type"] != "sub_section_end") {
             $active_class ="";
-          ?>
+            ?>
           <div class="pmw_form-row <?php echo ($key != "button")?esc_attr($key):""; ?>">
             <div class="pmw_form-group ">
             <?php
@@ -51,14 +51,22 @@ if(!class_exists('PMW_SettingHelper')):
                   $this->add_section($value);
                 }else if($value['type'] == "sub_section") {
                   $this->add_sub_section($value);
+                }else if($value['type'] == "sub_section_end") {
+                  $this->add_sub_section_end($value);
                 }else if($value['type'] == "text") {
                   $this->add_text_fiels($value);
                 }else if($value['type'] == "textarea") {
                   $this->add_textarea_fiels($value);
+                }else if($value['type'] == "select") {
+                  $this->add_select_fiels($value);
                 }else if($value['type'] == "switch") {
                   $this->add_switch_fiels($value);
+                }else if($value['type'] == "logs_viewer") {
+                  $this->add_logs_viewer($value);
                 }else if($value['type'] == "checkbox") {
                   $this->add_checkbox_fiels($value);
+                }else if($value['type'] == "radio") {
+                  $this->add_radio_fiels($value);
                 }else if($value['type'] == "multi_checkbox") {
                   $this->add_multi_checkbox_fiels($value);
                 }else if($value['type'] == "multi_text") {
@@ -77,15 +85,17 @@ if(!class_exists('PMW_SettingHelper')):
                   $this->add_freevspro_features($value);
                 }else if($value['type'] == "axeptio_setting") {
                   $this->add_axeptio_setting($value);
+                }else if($value['type'] == "html") {
+                  $this->add_html($value);
                 }/*else if($value['type'] == "line_item") {
                   $this->add_line_item($value);
                 }*/
 
               }
             } 
-          if(isset($pixel_fields[0]["type"]) && $pixel_fields[0]["type"] != "hidden") {?>
-            </div>
-          </div>
+          if(isset($pixel_fields[0]["type"]) && $pixel_fields[0]["type"] != "hidden" && $pixel_fields[0]["type"] != "sub_section"  ) {?>
+            </div><!--- End of pmw_form-row --->
+          </div><!--- End of pmw_form-wrapper --->
           <?php
           }
         }
@@ -121,24 +131,57 @@ if(!class_exists('PMW_SettingHelper')):
       $class = $this->get_array_val($args, "class");
       $label = $this->get_array_val($args, "label");
       $label_img = $this->get_array_val($args, "label_img");
+      $is_tongal = $this->get_array_val($args, "is_tongal");
+      $is_active = $this->get_array_val($args, "is_active");
+      $is_new_feature = $this->get_array_val($args, "is_new_feature", false);
+      $info = $this->get_array_val($args, "info");
       ?>
       <div class="pmw-sub-section-row">
-        <h4 class="pmw-sub-section <?php echo esc_attr($class); ?>">
+        <h4 class="pmw-sub-section <?php echo esc_attr($class); ?>" data-tongal="<?php echo ($is_tongal)?'1':'0'; ?>">
           <?php if($label_img){
             echo "<img class='pmw-setting-icon' src='".esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/".$label_img)."'>";
           }?>
-          <span><?php echo esc_attr($label); ?></span>
-          </h4>
+          <span class="<?php echo $is_new_feature ? 'highlight-feature' : ''; ?>">
+            <?php echo esc_attr($label); ?>
+            <?php if($is_new_feature): ?>
+              <span class="highlight-badge"><?php echo esc_attr__("New", "pixel-manager-for-woocommerce"); ?></span>
+            <?php endif; ?>
+          </span>
+          <?php if($is_active){ ?>
+            <span class="pmw-sub-status pmw-sub-status--active" title="Active">
+              <i class="pmw-dot"></i> <?php echo esc_attr__("Active", "pixel-manager-for-woocommerce"); ?>
+            </span>
+          <?php } ?>
+          <?php if($info){ ?>
+            <span class="pmw-sub-status pmw-sub-status-info" title="Pixel ID">
+               <?php echo esc_attr($info); ?>
+            </span>
+          <?php } ?>
+        </h4>
+      </div>
+      <?php if($is_tongal){ ?>
+      <div class="pmw-sub-section-content">
+      <?php } ?>
+      <?php
+    }
+    public function add_sub_section_end(array $args){
+      $is_tongal = $this->get_array_val($args, "is_tongal");
+      if($is_tongal){
+      ?>
       </div>
       <?php
+      }
     }
     public function add_freevspro_features(array $args){      
       $class = $this->get_array_val($args, "class");
       ?>
-      <div class="pmw_row-title pmw_row-title-absolute ml-2"></div>
-      <div class="plan-list">
-        <span class="pmw_show" data-title='FREE VS PRO comparison'><?php esc_attr_e('FREE VS PRO comparison','pixel-manager-for-woocommerce'); ?></span>
-        <div id="show-all-features" class="show-all-features pmw_price-table-wrapper">
+      <div class="pmw-sub-section-row">
+        <h4 class="pmw-sub-section <?php echo esc_attr($class); ?>" data-tongal="1">
+          <span><?php esc_attr_e('FREE VS PRO comparison','pixel-manager-for-woocommerce'); ?></span>
+        </h4>
+      </div>
+      <div class="pmw-sub-section-content">
+        <div class="pmw_price-table-wrapper">
           <table>
             <thead>
               <tr>
@@ -200,10 +243,26 @@ if(!class_exists('PMW_SettingHelper')):
                 <td><span class="free plan-yes"></span></td>
                 <td><span class="paid1-plan-yes"></span></td>
               </tr>
+              <tr>
+                <td><?php esc_attr_e('GrowInsights360 GA4 Dashboard','pixel-manager-for-woocommerce'); ?></td>
+                <td><span class="">FREE Version</span></td>
+                <td><span class="">FREE Version</span></td>
+              </tr>
+              <tr>
+                <td><?php esc_attr_e('Conversion api','pixel-manager-for-woocommerce'); ?></td>
+                <td><span class="">Purchases Event</span></td>
+                <td><span class="">All eCommerces Events</span></td>
+              </tr>
+              <tr>
+                <td><?php esc_attr_e('Advanced Matching user data sent','pixel-manager-for-woocommerce'); ?></td>
+                <td><span class="">Limited</span></td>
+                <td><span class="paid1-plan-yes"></span></td>
+              </tr>
             </thead>
           </table>
-        </div>                
-      </div>         
+          
+        </div>
+      </div>
       <?php      
     }
     /*public function add_line_item(array $args){
@@ -315,6 +374,74 @@ if(!class_exists('PMW_SettingHelper')):
       </div>         
       <?php      
     }
+    public function add_html(array $args){
+      $class = $this->get_array_val($args, "class");
+      $value = $this->get_array_val($args, "value");
+      if(!empty($value)){
+        ?>
+        <div class="pmw_html_field <?php echo esc_attr($class); ?>">
+          <?php echo wp_kses_post($value); ?>
+        </div>
+        <?php
+      }
+    }
+    public function add_select_fiels(array $args){
+      $name = $this->get_array_val($args, "name");
+      if($name != ""){
+        $id = $this->get_array_val($args, "id");
+        $class = $this->get_array_val($args, "class");
+        $label = $this->get_array_val($args, "label");
+        $value = $this->get_array_val($args, "value");
+        $options = $this->get_array_val($args, "options");
+        $note = $this->get_array_val($args, "note");
+        $tooltip = $this->get_array_val($args, "tooltip");
+        $label_img = $this->get_array_val($args, "label_img");
+        $is_pro_featured = $this->get_array_val($args, "is_pro_featured");
+        $pro_text = $this->get_array_val($args, "is_pro_text");
+        $pro_utm_text = $this->get_array_val($args, "pro_utm_text");
+        $is_pro_only = $this->get_array_val($args, "is_pro_only");
+        $is_disable = $this->get_array_val($args, "is_disable");
+        ?>
+        <label class="pmw_row-title pmw_row-title-absolute ml-2">
+          <?php if($label_img){
+            echo "<img class='pmw-setting-icon' src='".esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/".$label_img)."'>";
+          }?>
+          <span><?php echo esc_attr($label); ($is_pro_featured)?$this->display_proplan_with_link($pro_text, $pro_utm_text):""; ?></span>
+        </label>
+        <div class="form-input-inline ml-2">
+          <div class="pmw_input-col-lg">
+            <select <?php echo ($is_disable)?"disabled":""; ?> <?php echo ($is_pro_only)?esc_attr($this->is_disable_pro_featured()):"";?> name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($id); ?>" class="pmw_form-control <?php echo esc_attr($class); ?>">
+              <?php
+                if(!empty($options) && is_array($options)){
+                  foreach($options as $option_key => $option_label){
+                    $selected = selected($value, $option_key, false);
+                    echo '<option value="'.esc_attr($option_key).'" '.$selected.'>'.esc_html($option_label).'</option>';
+                  }
+                }
+              ?>
+            </select>
+            <span class="form-input-highlite-text"><?php echo esc_attr($note); ?></span>
+          </div>
+          <div class="im_input-col-sm offspace-top-1">
+            <div class="alert-wrapper">
+            <?php if( !empty($tooltip) && isset($tooltip['title']) ){
+              $title = $this->get_array_val($tooltip, "title");
+              $link_title = $this->get_array_val($tooltip, "link_title", "Installation Manual");
+              $link = $this->get_array_val($tooltip, "link");
+              ?>
+              <div class="pmw-alert-btn"><i class="alert-icon"></i></div>
+              <div class="pmw-alert-text"><p><?php echo esc_attr($title); ?></p>
+                <?php if($link){?>
+                  <a target="_blank" href="<?php echo esc_url_raw($link); ?>"><?php echo esc_attr($link_title); ?></a>
+                <?php } ?>
+              </div>            
+            <?php }?>
+            </div>
+          </div>
+        </div>         
+        <?php
+      }
+    }
     public function add_text_fiels(array $args){
       $name = $this->get_array_val($args, "name");
       if($name != ""){
@@ -325,14 +452,19 @@ if(!class_exists('PMW_SettingHelper')):
         $value = $this->get_array_val($args, "value");
         $note = $this->get_array_val($args, "note");
         $tooltip = $this->get_array_val($args, "tooltip");
-
+        $label_img = $this->get_array_val($args, "label_img");
         $is_pro_featured = $this->get_array_val($args, "is_pro_featured");
         $pro_text = $this->get_array_val($args, "is_pro_text");
         $pro_utm_text = $this->get_array_val($args, "pro_utm_text");
         $is_pro_only = $this->get_array_val($args, "is_pro_only");
         $is_disable = $this->get_array_val($args, "is_disable");
         ?>
-        <label class="pmw_row-title pmw_row-title-absolute ml-2"><?php echo esc_attr($label); ($is_pro_featured)?$this->display_proplan_with_link($pro_text, $pro_utm_text):""; ?></label>
+        <label class="pmw_row-title pmw_row-title-absolute ml-2">
+          <?php if($label_img){
+            echo "<img class='pmw-setting-icon' src='".esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/".$label_img)."'>";
+          }?>
+          <span><?php echo esc_attr($label); ($is_pro_featured)?$this->display_proplan_with_link($pro_text, $pro_utm_text):""; ?></span>
+        </label>
         <div class="form-input-inline ml-2">
           <div class="pmw_input-col-lg">
             <input type="text" <?php echo ($is_disable)?"disabled":""; ?> <?php echo ($is_pro_only)?esc_attr($this->is_disable_pro_featured()):"";?> name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($id); ?>" placeholder="<?php echo esc_attr($placeholder); ?>" value="<?php echo esc_attr($value); ?>" class="pmw_form-control <?php echo esc_attr($class); ?>">
@@ -601,6 +733,76 @@ if(!class_exists('PMW_SettingHelper')):
         <?php
       }
     }
+        /**
+     * Add radio button fields to the form
+     *
+     * @param array $args
+     * @return void
+     */
+    public function add_radio_fiels(array $args) {
+      $name = $this->get_array_val($args, "name");
+      if ($name != "") {
+        $id = $this->get_array_val($args, "id", $name);
+        $label = $this->get_array_val($args, "label");
+        $class = $this->get_array_val($args, "class");
+        $options = $this->get_array_val($args, "options");
+        $tooltip = $this->get_array_val($args, "tooltip");
+        
+        $is_pro_featured = $this->get_array_val($args, "is_pro_featured");
+        $pro_text = $this->get_array_val($args, "is_pro_text");
+        $pro_utm_text = $this->get_array_val($args, "pro_utm_text");
+        $is_pro_only = $this->get_array_val($args, "is_pro_only");
+        $disable = ($is_pro_only) ? $this->is_disable_pro_featured() : "";
+        ?>
+        <div class="form-input-inline pmw_checkbox-with-title pmw_radio-group ml-2">
+          <div class="pmw_input-col-lg">
+            <label class="pmw_custom-control-label " for="<?php echo esc_attr($id); ?>">
+              <?php echo esc_attr($label); 
+              ($is_pro_featured)?$this->display_proplan_with_link($pro_text, $pro_utm_text):"";
+              ?>
+            </label>
+          </div>
+          <div class="pmw_input-col-sm">
+            <div class="alert-wrapper">
+              <?php if( !empty($tooltip) && isset($tooltip['title']) ){
+              $title = $this->get_array_val($tooltip, "title");
+              $link_title = $this->get_array_val($tooltip, "link_title", "Installation Manual");
+              $link = $this->get_array_val($tooltip, "link");
+              ?>
+              <div class="pmw-alert-btn pmw-checkbox-alert-btn"><i class="alert-icon"></i></div>
+              <div class="pmw-alert-text"><p><?php echo esc_attr($title); ?></p>
+                <?php if($link){?>
+                  <a target="_blank" href="<?php echo esc_url_raw($link); ?>"><?php echo esc_attr($link_title); ?></a>
+                <?php } ?>
+              </div>          
+            <?php }?>
+            </div>            
+          </div>
+
+         <div class="pmw-multi_checkbox_list">
+            <div class="pmw-radio-options <?php echo esc_attr($class); ?>">
+              <?php foreach ($options as $option) { 
+                $option_value = $this->get_array_val($option, "value");
+                $option_label = $this->get_array_val($option, "label");
+                $option_checked = $this->get_array_val($option, "checked") ? 'checked="checked"' : '';
+                $option_id = $id . '_' . sanitize_title($option_value);
+              ?>
+                <div class="pmw-radio-option">
+                  <input type="radio" 
+                    id="<?php echo esc_attr($option_id); ?>" 
+                    name="<?php echo esc_attr($name); ?>" 
+                    value="<?php echo esc_attr($option_value); ?>" 
+                    <?php echo $option_checked; ?>
+                    <?php echo $disable; ?>>
+                  <label for="<?php echo esc_attr($option_id); ?>"><?php echo esc_html($option_label); ?></label>
+                </div>
+              <?php } ?>
+            </div>
+          </div>
+        </div>
+        <?php
+      }
+    }
     public function add_checkbox_fiels(array $args){
       $name = $this->get_array_val($args, "name");
       if($name != ""){
@@ -724,7 +926,7 @@ if(!class_exists('PMW_SettingHelper')):
         ?>
         <div class="form-input-inline pmw_switch-with-title ml-2">
           <div class="pmw_input-col-lg">
-            <label class="pmw_row-title">
+            <label class="pmw_row-title pmw_switch_title">
               <?php echo esc_attr($label); 
               ($is_pro_featured)?$this->display_proplan_with_link($pro_text, $pro_utm_text):"";
               ?>
@@ -753,7 +955,137 @@ if(!class_exists('PMW_SettingHelper')):
         </div>
         <?php
       }
-    } 
+    }
+    
+    public function add_logs_viewer(array $args){
+      $logs = $this->get_mw_conversion_api_logs();
+      $name = $this->get_array_val($args, "name");
+      if($name != ""){
+        $id = $this->get_array_val($args, "id");
+        $label = $this->get_array_val($args, "label");
+        $class = $this->get_array_val($args, "class");
+        ?>
+        <div class="pmw-logs-container">
+          <h4><?php echo esc_attr($label); ?></h4>
+          <div class="pmw-logs-list">
+            <?php 
+            if (!empty($logs) && is_array($logs)) {
+              foreach ($logs as $index => $log_entry) {
+                if (!is_array($log_entry)) continue;
+                
+                $log_time = isset($log_entry['log_time']) ? $log_entry['log_time'] : '';
+                $order_id = isset($log_entry['order_id']) ? $log_entry['order_id'] : '';
+                $errors = isset($log_entry['errors']) ? $log_entry['errors'] : [];
+                $processed = isset($log_entry['processed']) ? $log_entry['processed'] : [];
+                $has_errors = !empty($errors);
+                $status_class = $has_errors ? 'pmw-log-error' : 'pmw-log-success';
+                $status_text = $has_errors ? 'Error' : 'Success';
+              ?>
+              <div class="pmw-log-entry">
+                <div class="pmw-log-header pmw-log-header-toggle" data-target="log-details-<?php echo $index; ?>">
+                  <span class="pmw-log-time"><?php echo esc_html($log_time); ?></span>
+                  <?php if ($order_id): ?>
+                    <span class="pmw-log-order">Order #<?php echo esc_html($order_id); ?></span>
+                  <?php endif; ?>
+                  <span class="pmw-log-toggle">▼</span>
+                </div>
+                
+                <div id="log-details-<?php echo $index; ?>" class="pmw-log-details" style="display: none;">
+                  <?php if (!empty($processed)){ ?>
+                    <div class="pmw-platforms-grid">
+                      <?php foreach ($processed as $platform => $result){
+                        $platform_status = isset($result['success']) && $result['success'] ? 'success' : 'error';
+                        $platform_class = $platform_status === 'success' ? 'pmw-log-success' : 'pmw-log-error';
+                        $has_data = !empty($result['data']['response']);
+                        $data = isset($result['data']['response']) ? $result['data']['response'] : '';
+                        $payload = isset($result['data']['payload']) ? $result['data']['payload'] : '';
+                                  
+                      ?>
+                        <div class="pmw-platform-row">
+                          <div class="pmw-platform-header">
+                              <span class="pmw-platform-name"><?php echo esc_html(ucfirst($platform)); ?></span>
+                              <span class="pmw-platform-status <?php echo esc_attr($platform_class); ?>">
+                                  <?php echo esc_html(ucfirst($platform_status)); ?>
+                              </span>
+                          </div>
+                          <div class="pmw-platform-details">
+                            <?php if (isset($data['fbtrace_id'])){ ?>
+                              <div class="pmw-detail-row">
+                                <span class="pmw-detail-label">Trace ID:</span>
+                                <span class="pmw-detail-value"><?php echo esc_html($data['fbtrace_id']); ?></span>
+                              </div>
+                            <?php }
+                            if (isset($result['data']['error'])) { ?>
+                              <div class="pmw-detail-row">
+                                <span class="pmw-detail-label">Error:</span>
+                                <span class="pmw-detail-value"><?php echo esc_html($result['data']['error']); ?></span>
+                              </div>
+                            <?php }
+                              
+                            if (isset($data['events_received'])) { ?>
+                              <div class="pmw-detail-row">
+                                <span class="pmw-detail-label">Events Received:</span>
+                                <span class="pmw-detail-value"><?php echo esc_html($data['events_received']); ?></span>
+                              </div>
+                            <?php }
+                              
+                            if (isset($result['error'])) { ?>
+                              <div class="pmw-detail-row error">
+                                <span class="pmw-detail-label">Error:</span>
+                                <span class="pmw-detail-value"><?php echo esc_html($result['error']); ?></span>
+                              </div>
+                            <?php }
+                            if (!empty($payload)) {
+                              ?>
+                              <div class="pmw-detail-row">
+                                <span class="pmw-detail-label">Payload:</span>
+                                <div class="pmw-json-viewer">
+                                  <pre><code class="language-json"><?php 
+                                      echo htmlspecialchars(json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), ENT_QUOTES, 'UTF-8', false); 
+                                  ?></code></pre>
+                                </div>
+                              </div>
+                              <?php
+                            }
+                            ?>
+                          </div>
+                        </div>
+                      <?php } ?>
+                    </div>
+                  <?php } ?>
+                  
+                  <?php if (!empty($errors)): ?>
+                    <div class="pmw-errors-section">
+                      <div class="pmw-errors-title">Errors:</div>
+                      <ul class="pmw-errors-list">
+                        <?php foreach ($errors as $error): ?>
+                          <li><?php echo esc_html($error); ?></li>
+                        <?php endforeach; ?>
+                      </ul>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              </div>
+              <?php 
+                  } // end foreach
+              } else {
+                  echo '<div class="pmw-no-logs">' . __('No logs available.', 'pixel-manager-for-woocommerce') . '</div>';
+              }
+              ?>
+          </div>
+        </div>
+        <script>
+        jQuery(document).ready(function($) {
+          jQuery('.pmw-log-header-toggle').on('click', function() {
+            const target = $(this).data('target');
+            jQuery(this).toggleClass('active');
+            jQuery('#' + target).slideToggle(200);
+          });
+        });
+        </script>
+        <?php
+      }
+    }
 
     public function add_button(array $args){
       $name = $this->get_array_val($args, "name");

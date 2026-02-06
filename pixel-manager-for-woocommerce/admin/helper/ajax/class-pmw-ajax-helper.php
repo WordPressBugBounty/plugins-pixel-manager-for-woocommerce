@@ -97,10 +97,19 @@ if(!class_exists('PMW_AjaxHelper')):
           "email_id" => isset($_POST["email_id"])?sanitize_email($_POST["email_id"]):""
         ),
         "generate_lead_from" => isset($_POST["generate_lead_from"])?sanitize_text_field($_POST["generate_lead_from"]):"",
+        "gtm_container" => array(
+          "load_mode" => isset($_POST["gtm_container_load_mode"]) ? sanitize_text_field($_POST["gtm_container_load_mode"]) : "default_ptm",
+          "custom_container_id" => isset($_POST["gtm_container_custom_id"]) ? sanitize_text_field($_POST["gtm_container_custom_id"]) : ""
+        ),
         "google_ads_conversion" => array(
           "id" => isset($_POST["google_ads_conversion_id"])?sanitize_text_field($_POST["google_ads_conversion_id"]):"",
           "label" => isset($_POST["google_ads_conversion_label"])?sanitize_text_field($_POST["google_ads_conversion_label"]):"",
           "is_enable" => isset($_POST["google_ads_conversion_is_enable"])?sanitize_text_field($_POST["google_ads_conversion_is_enable"]):false
+        ),
+        "google_tag" => array(
+          "for" => isset($_POST["google_tag_for"]) ? sanitize_text_field($_POST["google_tag_for"]) : "",
+          "id" => isset($_POST["google_tag_id"])?sanitize_text_field($_POST["google_tag_id"]):"",
+          "is_enable" => isset($_POST["google_tag_is_enable"])?sanitize_text_field($_POST["google_tag_is_enable"]):false
         ),
         "google_ads_form_conversion" => array(
           "id" => isset($_POST["google_ads_form_conversion_id"])?sanitize_text_field($_POST["google_ads_form_conversion_id"]):"",
@@ -109,9 +118,27 @@ if(!class_exists('PMW_AjaxHelper')):
           "is_enable" => isset($_POST["google_ads_form_conversion_is_enable"])?sanitize_text_field($_POST["google_ads_form_conversion_is_enable"]):false
         ),
         "fb_conversion_api" => array(
-          "api_token" => isset($_POST["fb_conversion_api_token"])?sanitize_text_field($_POST["fb_conversion_api_token"]):"",
-          "is_enable" => isset($_POST["fb_conversion_api_is_enable"])?sanitize_text_field($_POST["fb_conversion_api_is_enable"]):false
+          "api_token" => isset($_POST["fb_conversion_api_token"]) ? sanitize_text_field($_POST["fb_conversion_api_token"]) : "",
+          "is_enable" => isset($_POST["fb_conversion_api_is_enable"]) ? sanitize_text_field($_POST["fb_conversion_api_is_enable"]) : false,
+          "test_event_code" => isset($_POST["test_event_code"]) ? sanitize_text_field($_POST["test_event_code"]) : ""
         ),
+        "tiktok_conversion_api" => array(
+          "api_token" => isset($_POST["tiktok_conversion_api_token"]) ? sanitize_text_field($_POST["tiktok_conversion_api_token"]) : "",
+          "is_enable" => isset($_POST["tiktok_conversion_api_is_enable"]) ? sanitize_text_field($_POST["tiktok_conversion_api_is_enable"]) : false
+        ),
+        "pinterest_conversion_api" => array(
+          "ad_account_id" => isset($_POST["pinterest_conversion_api_ad_account_id"]) ? sanitize_text_field($_POST["pinterest_conversion_api_ad_account_id"]) : "",
+          "api_token" => isset($_POST["pinterest_conversion_api_token"]) ? sanitize_text_field($_POST["pinterest_conversion_api_token"]) : "",
+          "is_enable" => isset($_POST["pinterest_conversion_api_is_enable"]) ? sanitize_text_field($_POST["pinterest_conversion_api_is_enable"]) : false
+        ),
+        /*"twitter_conversion_api" => array(
+          "api_token" => isset($_POST["twitter_conversion_api_token"]) ? sanitize_text_field($_POST["twitter_conversion_api_token"]) : "",
+          "is_enable" => isset($_POST["twitter_conversion_api_is_enable"]) ? sanitize_text_field($_POST["twitter_conversion_api_is_enable"]) : false
+        ),
+        "snapchat_conversion_api" => array(
+          "api_token" => isset($_POST["snapchat_conversion_api_token"]) ? sanitize_text_field($_POST["snapchat_conversion_api_token"]) : "",
+          "is_enable" => isset($_POST["snapchat_conversion_api_is_enable"]) ? sanitize_text_field($_POST["snapchat_conversion_api_is_enable"]) : false
+        ),*/
         "google_ads_enhanced_conversion" => array(
           "is_enable" => isset($_POST["google_ads_enhanced_conversion_is_enable"])?sanitize_text_field($_POST["google_ads_enhanced_conversion_is_enable"]):false
         ),
@@ -123,7 +150,13 @@ if(!class_exists('PMW_AjaxHelper')):
           "exclude_shipping_ordertotal" => isset($_POST["exclude_shipping_ordertotal"])?sanitize_text_field($_POST["exclude_shipping_ordertotal"]):false,
           "exclude_fee_ordertotal" => isset($_POST["exclude_fee_ordertotal"])?sanitize_text_field($_POST["exclude_fee_ordertotal"]):false,
           "send_product_sku" => isset($_POST["send_product_sku"])?sanitize_text_field($_POST["send_product_sku"]):false,
-          "roles_exclude_tracking" => isset($_POST["roles_exclude_tracking"])?sanitize_text_field($_POST["roles_exclude_tracking"]):''
+          "roles_exclude_tracking" => isset($_POST["roles_exclude_tracking"])?sanitize_text_field($_POST["roles_exclude_tracking"]):'',
+          "stop_send_user_data_ptm" => isset($_POST["stop_send_user_data_ptm"])?sanitize_text_field($_POST["stop_send_user_data_ptm"]):false,
+          "conversion_api_logs" => isset($_POST["conversion_api_logs"])?sanitize_text_field($_POST["conversion_api_logs"]):false,
+          "conversion_api_logs_payload" => ( isset($_POST["conversion_api_logs"]) && isset($_POST["conversion_api_logs_payload"]) )?sanitize_text_field($_POST["conversion_api_logs_payload"]):false
+        ),
+        "tracking" => array(
+          "purchase_event_trigger" => isset($_POST["purchase_event_trigger"])?sanitize_text_field($_POST["purchase_event_trigger"]):''
         ),
         "axeptio" => array(
           "project_id" => isset($_POST["axeptio_project_id"])?sanitize_text_field($_POST["axeptio_project_id"]):"",
@@ -134,7 +167,6 @@ if(!class_exists('PMW_AjaxHelper')):
           "cookies_consent_cn" => isset($_POST["axeptio_cookies_consent_cn"])?sanitize_text_field($_POST["axeptio_cookies_consent_cn"]):""
         ),
         "privecy_policy" => array(
-          "is_theme_plugin_list" => isset($_POST["is_theme_plugin_list"])?sanitize_text_field($_POST["is_theme_plugin_list"]):0,
           "privecy_policy" => 1
         )
       );
@@ -142,8 +174,8 @@ if(!class_exists('PMW_AjaxHelper')):
       if(!empty($pixels)){
         foreach($pixels as $val){
           $return[$val] = array(
-            "pixel_id" => isset($_POST[$val."_id"])?sanitize_text_field($_POST[$val."_id"]):"",
-            "is_enable" => isset($_POST[$val."_is_enable"])?sanitize_text_field($_POST[$val."_is_enable"]):false
+            "pixel_id" => isset($_POST[$val."_id"]) ? sanitize_text_field($_POST[$val."_id"]) : "",
+            "is_enable" => isset($_POST[$val."_is_enable"]) ? sanitize_text_field($_POST[$val."_is_enable"]) : false
           );
         }
       }
@@ -238,6 +270,10 @@ if(!class_exists('PMW_AjaxHelper')):
       $return = array();      
       if(!isset($pixels_option["user"]["email_id"]) || $pixels_option["user"]["email_id"] == "" || !is_email($pixels_option["user"]["email_id"]) ){
         $return = array("error" => true, "message" => __("Check your email ID.", "pixel-manager-for-woocommerce"));
+      }else if(isset($pixels_option["google_tag"]["is_enable"]) && $pixels_option["google_tag"]["is_enable"] && !$this->is_google_tag_id($pixels_option["google_tag"]["id"])){
+        $return = array("error" => true, "message" => __("Check your Google Tag ID (GT-).", "pixel-manager-for-woocommerce"));
+      }else if(isset($pixels_option["google_tag"]["is_enable"]) && $pixels_option["google_tag"]["is_enable"] && ( !isset($pixels_option["google_tag"]["for"]) || $pixels_option["google_tag"]["for"] == "" ) ){
+        $return = array("error" => true, "message" => __("While using Google Tag ID (GT-), Required to \"Use Google Tag for\".", "pixel-manager-for-woocommerce"));
       }else if(isset($pixels_option["google_analytics_4_pixel"]["pixel_id"]) && $pixels_option["google_analytics_4_pixel"]["pixel_id"] && !$this->is_google_analytics_4_measurement_id($pixels_option["google_analytics_4_pixel"]["pixel_id"])){
         $return = array("error" => true, "message" => __("Check your Google Analytics 4 Measurement ID.", "pixel-manager-for-woocommerce"));
       }else if(isset($pixels_option["google_ads_conversion"]["id"]) && $pixels_option["google_ads_conversion"]["id"] && !$this->is_gads_conversion_id($pixels_option["google_ads_conversion"]["id"])){
@@ -265,6 +301,21 @@ if(!class_exists('PMW_AjaxHelper')):
           $return = array("error" => true, "message" => __("Google Conversion Id Required to Enable Google Ads Dynamic Remarketing Tracking.", "pixel-manager-for-woocommerce")); 
         }
       }
+      /*else if((isset($pixels_option["google_ads_dynamic_remarketing"]["is_enable"]) && $pixels_option["google_ads_dynamic_remarketing"]["is_enable"]) || (isset($pixels_option["google_ads_conversion"]["is_enable"]) && $pixels_option["google_ads_conversion"]["is_enable"]) || (isset($pixels_option["google_ads_enhanced_conversion"]["is_enable"]) && $pixels_option["google_ads_enhanced_conversion"]["is_enable"])){
+        if( isset($pixels_option["google_tag"]["method_is_enable"]) && $pixels_option["google_tag"]["method_is_enable"] ){
+          if(( !isset($pixels_option["google_tag"]["is_enable"]) || !$pixels_option["google_tag"]["is_enable"]) || (!isset($pixels_option["google_tag"]["id"]) || $pixels_option["google_tag"]["id"] == "") ){
+            $return = array("error" => true, "message" => __("Google Tag ID and enable is required to enable Google Ads Conversion and Remarketing Tracking.", "pixel-manager-for-woocommerce"));
+          }
+        }else if((isset($pixels_option["google_ads_conversion"]["id"]) && $pixels_option["google_ads_conversion"]["id"] == "") || (isset($pixels_option["google_ads_conversion"]["label"]) && $pixels_option["google_ads_conversion"]["label"] == "")){
+          if(isset($pixels_option["google_ads_conversion"]["is_enable"]) && $pixels_option["google_ads_conversion"]["is_enable"]){
+            $return = array("error" => true, "message" => __("Google Conversion Id and Label Required to Enable Google Ads Conversion Tracking.", "pixel-manager-for-woocommerce"));          
+          }else if(isset($pixels_option["google_ads_enhanced_conversion"]["is_enable"]) && $pixels_option["google_ads_enhanced_conversion"]["is_enable"]){
+            $return = array("error" => true, "message" => __("Google Conversion Id and Label Required to Enable Google Ads Enhanced Conversion Tracking.", "pixel-manager-for-woocommerce"));          
+          }else if(isset($pixels_option["google_ads_conversion"]["id"]) && $pixels_option["google_ads_conversion"]["id"] == "" && isset($pixels_option["google_ads_dynamic_remarketing"]["is_enable"]) && $pixels_option["google_ads_dynamic_remarketing"]["is_enable"]){
+            $return = array("error" => true, "message" => __("Google Conversion Id Required to Enable Google Ads Dynamic Remarketing Tracking.", "pixel-manager-for-woocommerce")); 
+          }          
+        }
+      }*/
       return $return;
     }
     
@@ -300,6 +351,30 @@ if(!class_exists('PMW_AjaxHelper')):
       if(!isset($pixels_option["fb_conversion_api"]["is_enable"]) || $pixels_option["fb_conversion_api"]["is_enable"] ==""){
         $pixels_option["fb_conversion_api"]["is_enable"] = false;
       }
+      if(!isset($pixels_option["tiktok_conversion_api"]["api_token"]) || $pixels_option["tiktok_conversion_api"]["api_token"] ==""){
+        $pixels_option["tiktok_conversion_api"]["is_enable"] = false;
+      }
+      if(!isset($pixels_option["tiktok_conversion_api"]["is_enable"]) || $pixels_option["tiktok_conversion_api"]["is_enable"] ==""){
+        $pixels_option["tiktok_conversion_api"]["is_enable"] = false;
+      }
+      if(!isset($pixels_option["google_tag"]["id"]) || $pixels_option["google_tag"]["id"] =="" || !isset($pixels_option["google_tag"]["is_enable"]) || $pixels_option["google_tag"]["is_enable"] == ""){
+        $pixels_option["google_tag"]["is_enable"] = false;
+        $pixels_option["google_tag"]["for"] = "";
+      }
+      // Twitter Conversion API
+      /*if(!isset($pixels_option["twitter_conversion_api"]["api_token"]) || $pixels_option["twitter_conversion_api"]["api_token"] ==""){
+        $pixels_option["twitter_conversion_api"]["is_enable"] = false;
+      }
+      if(!isset($pixels_option["twitter_conversion_api"]["is_enable"]) || $pixels_option["twitter_conversion_api"]["is_enable"] ==""){
+        $pixels_option["twitter_conversion_api"]["is_enable"] = false;
+      }*/
+      // Snapchat Conversion API
+      /*if(!isset($pixels_option["snapchat_conversion_api"]["api_token"]) || $pixels_option["snapchat_conversion_api"]["api_token"] ==""){
+        $pixels_option["snapchat_conversion_api"]["is_enable"] = false;
+      }
+      if(!isset($pixels_option["snapchat_conversion_api"]["is_enable"]) || $pixels_option["snapchat_conversion_api"]["is_enable"] ==""){
+        $pixels_option["snapchat_conversion_api"]["is_enable"] = false;
+      }*/
       //axeptio
       if(!isset($pixels_option["axeptio"]["project_id"]) || $pixels_option["axeptio"]["project_id"] ==""){
         $pixels_option["axeptio"]["is_enable"] = false;

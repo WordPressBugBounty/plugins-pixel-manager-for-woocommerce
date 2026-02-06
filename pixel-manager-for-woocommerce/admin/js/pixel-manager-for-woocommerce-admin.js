@@ -49,7 +49,6 @@ var pmw_helper = {
         this_var.pmw_loader(true);
       },
       success: function (response) {
-      	console.log(f_data.action);
       	if( f_data.action == "pmw_check_privecy_policy" && !response.hasOwnProperty('message')){
       		if (response.error === true ){
       			pmw_helper.show_privacy_popup();
@@ -121,24 +120,6 @@ var pmw_helper = {
 		jQuery("#pmw_accept_privecy_policy").on("click", function (event) {
       event.preventDefault();
       pmw_helper.close_privacy_popup();
-      if(document.getElementById("ch_is_theme_plugin_list").checked){
-      	document.getElementById("is_theme_plugin_list").value = 1;
-      }else {
-		    document.getElementById("is_theme_plugin_list").value = 0;
-		  }
-      /*change action value*/
-      var action_els=document.getElementsByName("action");
-			for (var i=0;i<action_els.length;i++) {
-				action_els[i].value = "pmw_pixels_save";
-			}
-			/*end */
-      var data = jQuery("#pmw-pixels").serializeArray();
-      pmw_helper.pmw_ajax_call(data);
-    });
-    jQuery("#allow_this_tool_only").on("click", function (event) {
-      event.preventDefault();
-      pmw_helper.close_privacy_popup();
-		  document.getElementById("is_theme_plugin_list").value = 0;
       /*change action value*/
       var action_els=document.getElementsByName("action");
 			for (var i=0;i<action_els.length;i++) {
@@ -155,7 +136,22 @@ var pmw_helper = {
       jQuery(this).toggleClass("active");
       jQuery(this).next('.pmw_slide-down-area').slideToggle();
     });
-		
+		/*function pmwToggleGoogleTagLegacyFields(){
+			var isGoogleTagMethod = jQuery('#google_tag_method_is_enable').is(':checked');
+			var googleTagSelectors = ['.google_tag_id'];
+			googleTagSelectors.forEach(function(selector){
+				var $row = jQuery(selector);
+				if(!$row.length){
+					return;
+				}
+				$row.toggle(isGoogleTagMethod);
+			});
+		}
+		var $googleTagSwitch = jQuery('#google_tag_method_is_enable');
+		if($googleTagSwitch.length){
+			pmwToggleGoogleTagLegacyFields();
+			$googleTagSwitch.on('change', pmwToggleGoogleTagLegacyFields);
+		}	*/	
 		/* Activate License Key- Account Page */
 		jQuery("#pmw-pixels-licensekey").on("submit", function( event ){
 			event.preventDefault();

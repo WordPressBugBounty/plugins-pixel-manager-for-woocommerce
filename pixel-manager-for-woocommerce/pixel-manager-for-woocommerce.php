@@ -15,7 +15,7 @@
  * Plugin Name:       Pixel Tag Manager for WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/pixel-manager-for-woocommerce/
  * Description:       Pixel Tag Manager for WooCommerce helps you track key eCommerce events with ease. It supports GA4, Google Ads, Facebook Pixel, TikTok, Pinterest, Snapchat, Bing Ads, and more. With seamless integration, you get accurate data for better targeting and remarketing. Plus, it comes with GrowInsights360 – a built-in GA4 analytics dashboard that gives you clear reports on traffic, conversions, and product performance.
- * Version:           2.0
+ * Version:           2.1
  * Author:            GrowCommerce
  * Author URI:        https://growcommerce.io/
  * License:           GPL-2.0+
@@ -23,7 +23,7 @@
  * Text Domain:       pixel-manager-for-woocommerce
  * Domain Path:       /languages
  * WC requires at least: 3.7.0
- * WC tested up to: 10.1.2
+ * WC tested up to: 10.4.3
  */
 
 // If this file is called directly, abort.
@@ -40,7 +40,7 @@ if ( ! defined( 'WPINC' ) ) {
  * First check the PRO plugin and need to remove it
  **/
 if( ! defined( 'PIXEL_MANAGER_FOR_WOOCOMMERCE_VERSION' ) ){
-	define( 'PIXEL_MANAGER_FOR_WOOCOMMERCE_VERSION', '2.0' );
+	define( 'PIXEL_MANAGER_FOR_WOOCOMMERCE_VERSION', '2.1' );
 }
 if( ! defined( 'PMW_API_URL' ) ){
   define( 'PMW_API_URL', 'https://growcommerceapi.com/api/' );

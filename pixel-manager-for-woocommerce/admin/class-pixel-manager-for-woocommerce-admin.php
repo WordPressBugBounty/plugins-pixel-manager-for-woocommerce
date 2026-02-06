@@ -130,9 +130,7 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 	   	if(isset($_GET['page'])) {
 	      $get_action = str_replace("-", "_", sanitize_text_field($_GET['page']) );
 	    }
-	    if( !in_array($get_action, array("pixel_manager_growinsights360", "pixel_manager_documentation")) ){
-	    	do_action('pmw_header');
-	    }
+	    do_action('pmw_header');
 	    if(method_exists($this, $get_action)){
 	      $this->$get_action();
 	    }
@@ -166,7 +164,7 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 	    require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-documentation.php');
 	    new PMW_PixelsDocumentation();
 	  }
-		public function pixel_manager_growinsights360(){
+	  public function pixel_manager_growinsights360(){
 	    require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-growinsights360.php');
 	    new PMW_PixelsGrowInsights360();
 	  }

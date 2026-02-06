@@ -42,6 +42,47 @@ if(!class_exists('PMW_AdminAPIHelper')):
       }
     }
 
+    protected function sanitize_pixels_option(array $pixels_option){
+      $sensitive_keys = array(
+        'fb_conversion_api' => array('api_token','test_event_code'),
+        'tiktok_conversion_api' => array('api_token'),
+        'pinterest_conversion_api' => array('api_token'),
+        'twitter_conversion_api' => array('api_token'),
+        'snapchat_conversion_api' => array('api_token'),
+        'google_tag' => array('id'),
+        'google_analytics_4_pixel' => array('pixel_id'),
+        'facebook_pixel' => array('pixel_id'),
+        'pinterest_pixel' => array('pixel_id'),
+        'snapchat_pixel' => array('pixel_id'),
+        'bing_pixel' => array('pixel_id'),
+        'twitter_pixel' => array('pixel_id'),
+        'tiktok_pixel' => array('pixel_id'),
+        'google_ads_conversion' => array('id','label'),
+        'google_ads_form_conversion' => array('id','label','selector'),
+       
+      );
+      foreach($sensitive_keys as $key => $fields){
+        if($key === 'generate_lead_from'){
+          if(isset($pixels_option[$key])){
+            unset($pixels_option[$key]);
+          }
+          continue;
+        }
+        if(isset($pixels_option[$key])){
+          if($fields === true){
+            unset($pixels_option[$key]);
+            continue;
+          }
+          foreach($fields as $field){
+            if(isset($pixels_option[$key][$field])){
+              unset($pixels_option[$key][$field]);
+            }
+          }
+        }
+      }
+      return $pixels_option;
+    }
+
     public function get_product_data(array $pixels_option= array(), $product_status = "1"){
       $product_data = array();
       if(empty($pixels_option) && class_exists( 'PMW_AdminHelper' ) ){
@@ -49,6 +90,7 @@ if(!class_exists('PMW_AdminAPIHelper')):
       }else if(!class_exists( 'PMW_AdminHelper' )){
         $pixels_option =  unserialize( get_option("pmw_pixels_option"));
       }
+      $pixels_option = $this->sanitize_pixels_option(is_array($pixels_option)?$pixels_option:array());
       return array(
         "settings" => $pixels_option,
         "status" => $product_status,
@@ -83,10 +125,6 @@ if(!class_exists('PMW_AdminAPIHelper')):
           'language_code' => get_locale()
         )
       );
-      if(isset($pixels_option["privecy_policy"]["is_theme_plugin_list"]) && $pixels_option["privecy_policy"]["is_theme_plugin_list"]){
-        //$store_data['active_plugins'] = get_plugins();
-        $store_data['active_plugins'] = get_option('active_plugins');
-      }
 
       $data = array(
         "email" => sanitize_email($pixels_option['user']['email_id']),

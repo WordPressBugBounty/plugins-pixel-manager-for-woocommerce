@@ -24,27 +24,10 @@ if(!class_exists('PMW_PixelsGrowInsights360')){
       $iframe_url = "https://growinsights360.growcommerce.io/login?".http_build_query( $store_data );
       ?>
       <div class="pmw_page">
-        <div class="grow-doc-header grow-custom-header">
-          <button class="grow-doc-toggle" id="toggle-menu"><?php echo esc_attr__('☰ WP Menu', 'pixel-manager-for-woocommerce'); ?></button>
-          <?php 
-          $pmw_header = new PMW_Header();
-          $pmw_header->header_menu();
-          ?>                
-        </div>
         <div class="grow-doc-iframe grow-growinsights360-iframe"> 
           <iframe src="<?php echo esc_url_raw($iframe_url); ?>"></iframe>
         </div>
       </div>
-      <script>
-        (function($){
-            // Apply hidden menu by default
-            $('body').addClass('pmw-menu-hidden');
-
-            $('#toggle-menu').on('click', function(){
-                $('body').toggleClass('pmw-menu-hidden');
-            });
-        })(jQuery);
-      </script>
       <?php
     }
   }
