@@ -19,74 +19,13 @@ if(!class_exists('PMW_AjaxHelper')):
       $this->PMW_API = new PMW_AdminAPIHelper();
       add_action('wp_ajax_pmw_pixels_save', array($this,'pmw_pixels_save') );
       add_action('wp_ajax_pmw_check_privecy_policy', array($this,'pmw_check_privecy_policy') );
-      add_action('wp_ajax_pmw_pixels_license_key_save', array($this,'pmw_pixels_license_key_save') );
       add_action('wp_ajax_pmw_notice_dismiss', array($this,'pmw_notice_dismiss') );
+      add_action('wp_ajax_pmw_clean_debug_logs', array($this,'pmw_clean_debug_logs') );
     }
 
     public function includes(){
       if(!class_exists('PMW_AdminAPIHelper')){
         require_once( PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/helper/class-pmw-admin-api-helper.php');
-      }
-    }
-
-    /**
-     * License Key update Ajax
-     **/
-    public function pmw_pixels_license_key_save(){
-      $ajax_nonce = isset($_POST["pmw_ajax_nonce"])?sanitize_text_field($_POST["pmw_ajax_nonce"]):"";
-      $license_key = isset($_POST["license_key"])?sanitize_text_field($_POST["license_key"]):"";
-      $status = isset($_POST["status"])?sanitize_text_field($_POST["status"]):"0";
-      if($this->admin_safe_ajax_call($ajax_nonce, 'pmw_ajax_nonce')){
-        $fields = array(
-          "license_key" => $license_key
-        );
-        $validate = $this->validate_pixels_license($fields);
-        $store_id = $this->get_store_id();
-        if(isset($validate["error"]) && $validate["error"] == true){
-          echo wp_send_json( $validate );
-          exit;
-        }else if($store_id == ""){
-          $validate = array("error" => true, "message" => __("First save your ", "pixel-manager-for-woocommerce").'<a href="admin.php?page=pixel-manager"><b><u>Pixel Settings</u></b></a>');
-          echo wp_send_json( $validate );
-          exit;
-        }else{
-          
-          $data = array(
-            "store_id" => sanitize_text_field($store_id),
-            "website" => esc_url_raw(get_site_url()),
-            "license_key" => $fields["license_key"],
-            "status" => $status
-          );
-          $args = array(
-            'timeout' => 10000,
-            'headers' => array(
-              'Authorization' => "Bearer PMDZCXJL==",
-              'Content-Type' => 'application/json'
-            ),
-          'body' => wp_json_encode($data)
-          );
-          $api_rs = $this->PMW_API->pmw_api_call("license/update", $args);
-          $this->PMW_API->update_store_api_data();      
-          if (isset($api_rs->error) && $api_rs->error == '' ) {
-            if(isset($api_rs->data->license_key) && $api_rs->data->license_key != '' ){
-              if(isset($api_rs->data->status) && $api_rs->data->status == 1){
-                echo wp_send_json( array("error" => false, 'message'=> __("Your license key is activated.", "pixel-manager-for-woocommerce")) );
-              }else{
-                //$this->update_plan_paid_to_free();
-                echo wp_send_json( array("error" => false, 'message'=> __("Your license key is deactivated.", "pixel-manager-for-woocommerce")) );
-              }
-            }else{
-              echo wp_send_json( array("error" => false, 'message'=> $api_rs->mesg) );
-            }
-            exit;
-          }else{
-            echo wp_send_json( array("error" => true, 'message'=> $api_rs->mesg) );
-            exit;
-          }          
-        }
-      }else{
-        echo wp_send_json( array("error"=>true, 'message'=> __("Your admin nonce is not valid.", "pixel-manager-for-woocommerce")) );
-        exit;
       }
     }
     
@@ -129,7 +68,8 @@ if(!class_exists('PMW_AjaxHelper')):
         "pinterest_conversion_api" => array(
           "ad_account_id" => isset($_POST["pinterest_conversion_api_ad_account_id"]) ? sanitize_text_field($_POST["pinterest_conversion_api_ad_account_id"]) : "",
           "api_token" => isset($_POST["pinterest_conversion_api_token"]) ? sanitize_text_field($_POST["pinterest_conversion_api_token"]) : "",
-          "is_enable" => isset($_POST["pinterest_conversion_api_is_enable"]) ? sanitize_text_field($_POST["pinterest_conversion_api_is_enable"]) : false
+          "is_enable" => isset($_POST["pinterest_conversion_api_is_enable"]) ? sanitize_text_field($_POST["pinterest_conversion_api_is_enable"]) : false,
+          "test_events" => isset($_POST["pinterest_conversion_api_test_events"]) ? sanitize_text_field($_POST["pinterest_conversion_api_test_events"]) : ""
         ),
         /*"twitter_conversion_api" => array(
           "api_token" => isset($_POST["twitter_conversion_api_token"]) ? sanitize_text_field($_POST["twitter_conversion_api_token"]) : "",
@@ -153,6 +93,7 @@ if(!class_exists('PMW_AjaxHelper')):
           "roles_exclude_tracking" => isset($_POST["roles_exclude_tracking"])?sanitize_text_field($_POST["roles_exclude_tracking"]):'',
           "stop_send_user_data_ptm" => isset($_POST["stop_send_user_data_ptm"])?sanitize_text_field($_POST["stop_send_user_data_ptm"]):false,
           "conversion_api_logs" => isset($_POST["conversion_api_logs"])?sanitize_text_field($_POST["conversion_api_logs"]):false,
+          "conversion_api_browser_debug" => isset($_POST["conversion_api_browser_debug"])?sanitize_text_field($_POST["conversion_api_browser_debug"]):false,
           "conversion_api_logs_payload" => ( isset($_POST["conversion_api_logs"]) && isset($_POST["conversion_api_logs_payload"]) )?sanitize_text_field($_POST["conversion_api_logs_payload"]):false
         ),
         "tracking" => array(
@@ -383,6 +324,27 @@ if(!class_exists('PMW_AjaxHelper')):
         $pixels_option["axeptio"]["is_enable"] = false;
       }
       return $pixels_option;
+    }
+
+    /**
+     * Clean Debug Logs - Clear pmw_conversion_api_logs option
+     **/
+    public function pmw_clean_debug_logs(){
+      $ajax_nonce = isset($_POST["pmw_ajax_nonce"])?sanitize_text_field($_POST["pmw_ajax_nonce"]):"";
+      
+      if($this->admin_safe_ajax_call($ajax_nonce, 'pmw_ajax_nonce')){
+        // Clear the conversion API logs option
+        $result = update_option('pmw_conversion_api_logs', array());
+        
+        if($result !== false) {
+          echo wp_send_json( array("error" => false, 'message' => __("All debug logs have been successfully deleted.", "pixel-manager-for-woocommerce")) );
+        } else {
+          echo wp_send_json( array("error" => true, 'message' => __("Failed to delete debug logs. Please try again.", "pixel-manager-for-woocommerce")) );
+        }
+      } else {
+        echo wp_send_json( array("error" => true, 'message' => __("Your admin nonce is not valid.", "pixel-manager-for-woocommerce")) );
+      }
+      exit;
     }
   }
 endif;

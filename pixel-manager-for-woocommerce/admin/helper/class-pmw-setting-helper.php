@@ -733,7 +733,7 @@ if(!class_exists('PMW_SettingHelper')):
         <?php
       }
     }
-        /**
+    /**
      * Add radio button fields to the form
      *
      * @param array $args
@@ -965,14 +965,17 @@ if(!class_exists('PMW_SettingHelper')):
         $label = $this->get_array_val($args, "label");
         $class = $this->get_array_val($args, "class");
         ?>
+        <?php if(!empty($logs)) { ?>
+          <a href="#" class="button button-secondary clean_debug_logs" id="clean_debug_logs"><?php _e("Delete All Logs", "pixel-manager-for-woocommerce") ?></a>
+        <?php } ?>
         <div class="pmw-logs-container">
           <h4><?php echo esc_attr($label); ?></h4>
-          <div class="pmw-logs-list">
-            <?php 
+          <div class="pmw-logs-list" id="pmw-log-list">
+            <?php
             if (!empty($logs) && is_array($logs)) {
               foreach ($logs as $index => $log_entry) {
                 if (!is_array($log_entry)) continue;
-                
+                $event_name = isset($log_entry['event_name']) ? $log_entry['event_name'] : '';
                 $log_time = isset($log_entry['log_time']) ? $log_entry['log_time'] : '';
                 $order_id = isset($log_entry['order_id']) ? $log_entry['order_id'] : '';
                 $errors = isset($log_entry['errors']) ? $log_entry['errors'] : [];
@@ -984,6 +987,7 @@ if(!class_exists('PMW_SettingHelper')):
               <div class="pmw-log-entry">
                 <div class="pmw-log-header pmw-log-header-toggle" data-target="log-details-<?php echo $index; ?>">
                   <span class="pmw-log-time"><?php echo esc_html($log_time); ?></span>
+                  <span class="pmw-log-event"><?php echo esc_html($event_name); ?></span>
                   <?php if ($order_id): ?>
                     <span class="pmw-log-order">Order #<?php echo esc_html($order_id); ?></span>
                   <?php endif; ?>

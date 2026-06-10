@@ -117,6 +117,7 @@ if(!class_exists('PMW_Pixels')){
       $pinterest_conversion_api_token = isset($pixels_option['pinterest_conversion_api']['api_token']) ? $pixels_option['pinterest_conversion_api']['api_token'] : "";
       $pinterest_conversion_api_ad_account_id = isset($pixels_option['pinterest_conversion_api']['ad_account_id']) ? $pixels_option['pinterest_conversion_api']['ad_account_id'] : "";
       $pinterest_conversion_api_is_enable = isset($pixels_option['pinterest_conversion_api']['is_enable']) ? $pixels_option['pinterest_conversion_api']['is_enable'] : "";
+      $pinterest_conversion_api_test_events = isset($pixels_option['pinterest_conversion_api']['test_events']) ? $pixels_option['pinterest_conversion_api']['test_events'] : "";
       
       // Twitter Conversion API - Commented out as requested
       // $twitter_conversion_api_token = isset($pixels_option['twitter_conversion_api']['api_token']) ? $pixels_option['twitter_conversion_api']['api_token'] : "";
@@ -149,6 +150,7 @@ if(!class_exists('PMW_Pixels')){
       $purchase_event_trigger = isset($pixels_option['tracking']['purchase_event_trigger']) ? $pixels_option['tracking']['purchase_event_trigger'] : 'url_based';
       $conversion_api_logs = isset($pixels_option['integration']['conversion_api_logs'])?$pixels_option['integration']['conversion_api_logs']:"";
       $conversion_api_logs_payload = isset($pixels_option['integration']['conversion_api_logs_payload'])?$pixels_option['integration']['conversion_api_logs_payload']:"";
+      $conversion_api_browser_debug = isset($pixels_option['integration']['conversion_api_browser_debug'])?$pixels_option['integration']['conversion_api_browser_debug']:"";
       $debug_logs_is_active = (!empty($conversion_api_logs) || !empty($conversion_api_logs_payload));
       
       $fields = [
@@ -842,6 +844,19 @@ if(!class_exists('PMW_Pixels')){
             "class" => "pinterest_conversion_api_ad_account_id"
           ]
         ],
+        "pinterest_conversion_api_test_events" => [
+          [
+            "type" => "checkbox",
+            "label" => __("Enable Test Conversions API events", "pixel-manager-for-woocommerce"),
+            "name" => "pinterest_conversion_api_test_events",
+            "id" => "pinterest_conversion_api_test_events",
+            "value" => $pinterest_conversion_api_test_events,
+            "class" => "pinterest_conversion_api_test_events",
+            "tooltip" => [
+              "title" => __("Enable this option to send test conversion events to Pinterest API for development and testing purposes.", "pixel-manager-for-woocommerce")
+            ]
+          ]
+        ],
         "pinterest_upgrade_banner" => [
           [
             "type"  => "html",
@@ -864,7 +879,7 @@ if(!class_exists('PMW_Pixels')){
         "sub_section_twitter" => [    
           [
             "type" => "sub_section",
-            "label" => __("Twitter Pixel", "pixel-manager-for-woocommerce"),
+            "label" => __("(Twitter) X Pixel", "pixel-manager-for-woocommerce"),
             "label_img" => "twitter_pixel.png",
             "is_tongal" => true,
             "is_new_feature" => false,
@@ -876,13 +891,13 @@ if(!class_exists('PMW_Pixels')){
         "twitter_pixel" => [    
           [
            "type" => "text_with_switch",
-            "label" => __("Twitter pixel ID", "pixel-manager-for-woocommerce"),
+            "label" => __("(Twitter) X pixel ID", "pixel-manager-for-woocommerce"),
             "label_img" => "twitter_pixel.png",
-            "note"  => __("Ex. Twitter pixel ID: o9e1c", "pixel-manager-for-woocommerce"),
+            "note"  => __("Ex. (Twitter) X pixel ID: o9e1c", "pixel-manager-for-woocommerce"),
             "name" => "twitter_pixel_id",
             "id" => "twitter_pixel_id",
             "value" => $twitter_pixel_id,
-            "placeholder" => __("Twitter Pixel ID", "pixel-manager-for-woocommerce"),
+            "placeholder" => __("(Twitter) X Pixel ID", "pixel-manager-for-woocommerce"),
             "class" => "twitter_pixel_id"
           ],
           [
@@ -1188,10 +1203,10 @@ if(!class_exists('PMW_Pixels')){
             "class" => "pixel_section_setting",
           ]
         ],
-        "sub_section_pixels_tracking_trigger" => [
+        "sub_section_pixels_eventtracking" => [
           [
             "type" => "sub_section",
-            "label" => __("Tracking trigger", "pixel-manager-for-woocommerce"),
+            "label" => __("Event Tracking", "pixel-manager-for-woocommerce"),
             "is_tongal" => true,
             "is_new_feature" => true,
             "class" => "pixels_tracking_trigger_sub_section_setting",
@@ -1263,6 +1278,19 @@ if(!class_exists('PMW_Pixels')){
             "class" => "conversion_api_logs",
             "tooltip" =>[
               "title" => __("Activate this feature to enable conversion API log of last 10 events.", "pixel-manager-for-woocommerce")
+            ]
+          ]
+        ],
+        "conversion_api_browser_debug" => [    
+          [
+            "type" => "switch",
+            "label" => __("Debug Log in Browser Console (For Developer)", "pixel-manager-for-woocommerce"),
+            "name" => "conversion_api_browser_debug",
+            "id" => "conversion_api_browser_debug",
+            "value" => $conversion_api_browser_debug,
+            "class" => "conversion_api_browser_debug",
+            "tooltip" =>[
+              "title" => __("Enable this feature to output conversion API debug logs to browser console for development and troubleshooting.", "pixel-manager-for-woocommerce")
             ]
           ]
         ],

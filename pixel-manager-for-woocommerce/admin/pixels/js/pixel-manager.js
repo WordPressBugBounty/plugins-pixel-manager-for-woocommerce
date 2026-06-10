@@ -170,6 +170,7 @@ class PMW_PixelManagerJS {
     // Prepare common data
     const eventData = {
       event_id: this.PMWEventID,
+      event_source_url: window.location.href,
       order_id,
       currency,
       total,
@@ -197,10 +198,14 @@ class PMW_PixelManagerJS {
           ...eventData
       },
       success: (response) => {
+        if(this.PixelManagerOptions?.integration?.conversion_api_browser_debug){
           console.log('Conversion events processed:', response);
+        }
       },
       error: (xhr, status, error) => {
+        if(this.PixelManagerOptions?.integration?.conversion_api_browser_debug){
           console.error('Error processing conversions:', error);
+        }
       }
     });
   }

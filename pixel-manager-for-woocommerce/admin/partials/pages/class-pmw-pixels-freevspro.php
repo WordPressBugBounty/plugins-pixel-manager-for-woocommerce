@@ -34,14 +34,147 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
       <div class="pmw_form-wrapper pmw_form-wrapper_freevsprow pmw_form-row">
         <div class="pmw_form-group pmw_freevsprow">
           <div class="pmw-pricing-plan mb-5">
-            <h1><?php esc_attr_e("Upgrad to our Pro Plan, starting at just $9.","pixel-manager-for-woocommerce"); ?></h1>
-            <div class="pmw-christmas-offer">
-              <span class="pmw-christmas-offer__badge"><?php esc_attr_e('Christmas Special','pixel-manager-for-woocommerce'); ?></span>
-              <h3><?php esc_attr_e('Business yearly plan now $39 (down from $49).','pixel-manager-for-woocommerce'); ?></h3>
-              <p><?php esc_attr_e('Enjoy an extra 20%-35% Christmas discount—automatically applied to the Business yearly plan.','pixel-manager-for-woocommerce'); ?></p>
-              <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=172&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Yearly+Christmas&m_campaign=Christmas+Offer"); ?>" class="pmw_btn pmw-btn-christmas">
-                <?php esc_attr_e('Claim the Christmas deal','pixel-manager-for-woocommerce'); ?>
-              </a>
+            
+            <div class="sidebar-banner banner-horizontal">
+              <!-- Ambient floating shapes -->
+              <div class="banner-shape banner-shape-1"></div>
+              <div class="banner-shape banner-shape-2"></div>
+              <div class="banner-shape banner-shape-3"></div>
+              <div class="banner-inner">
+                <div class="col-left">
+                  <!-- Live badge -->
+                  <div class="banner-badge">
+                    <span class="badge-dot"></span>
+                    <?php echo esc_attr__('Limited Time Offer', 'pixel-manager-for-woocommerce'); ?>
+                  </div>
+                  <!-- Discount pill -->
+                  <div class="discount-pill">
+                    <sup>%</sup><?php echo esc_attr__('55 OFF', 'pixel-manager-for-woocommerce'); ?>
+                  </div>
+                  <!-- Free 1 month badge -->
+                  <div class="free-month-badge">
+                    <span class="gift-icon">🎁</span>
+                    <span>+ <span class="highlight"><?php echo esc_attr__('1 Month FREE', 'pixel-manager-for-woocommerce'); ?></span> <?php echo esc_attr__('included, after', 'pixel-manager-for-woocommerce'); ?></span><span class="highlight"><?php echo esc_attr__('$49/y', 'pixel-manager-for-woocommerce'); ?></span>
+                  </div>
+                  <!-- Headline -->
+                  <h2 class="banner-headline">
+                    <?php echo esc_attr__('Supercharge Your', 'pixel-manager-for-woocommerce'); ?><br>
+                    <span class="gradient-text"><?php echo esc_attr__('E-Commerce Growth', 'pixel-manager-for-woocommerce'); ?></span>
+                  </h2>
+                  <!-- Subtext -->
+                  <p class="banner-subtext">
+                    <?php echo esc_attr__('Enjoy full access to the GrowCommerce suite with a 30-day free trial. Cancel anytime before the trial ends and pay nothing. No risk.', 'pixel-manager-for-woocommerce'); ?>
+                  </p>
+                  <!-- Stats strip -->
+                  <div class="banner-stats">
+                    <div class="stat-item">
+                      <div class="stat-value"><?php echo esc_attr__('4K+', 'pixel-manager-for-woocommerce'); ?></div>
+                      <div class="stat-label"><?php echo esc_attr__('Users', 'pixel-manager-for-woocommerce'); ?></div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                      <div class="stat-value">5★</div>
+                      <div class="stat-label"><?php echo esc_attr__('Rating', 'pixel-manager-for-woocommerce'); ?></div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                      <div class="stat-value">30d</div>
+                      <div class="stat-label"><?php echo esc_attr__('Free Trial', 'pixel-manager-for-woocommerce'); ?></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-right">
+                  <!-- Features -->
+                  <ul class="banner-features">
+                    <li>
+                      <span class="feature-check">
+                        <svg viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3"/>
+                        </svg>
+                      </span>
+                      <?php echo esc_attr__('All fetures that menstion in below', 'pixel-manager-for-woocommerce'); ?>
+                    </li>
+                    <li>
+                      <span class="feature-check">
+                        <svg viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3"/>
+                        </svg>
+                      </span>
+                      <?php echo esc_attr__('eCommerce Event Automation', 'pixel-manager-for-woocommerce'); ?>
+                    </li>
+                    <li>
+                      <span class="feature-check">
+                        <svg viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3"/>
+                        </svg>
+                      </span>
+                      <?php echo esc_attr__('Complete GA4 Setup & Form Tracking', 'pixel-manager-for-woocommerce'); ?>
+                    </li>
+                    <li>
+                      <span class="feature-check">
+                        <svg viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3"/>
+                        </svg>
+                      </span>
+                      <?php echo esc_attr__('Google Ads Conversion + Enhanced & Remarketing', 'pixel-manager-for-woocommerce'); ?>
+                    </li>
+                    <li>
+                      <span class="feature-check">
+                        <svg viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3"/>
+                        </svg>
+                      </span>
+                      <?php echo esc_attr__('Facebook, TikTok & Pinterest Pixel with Conversion API Integration', 'pixel-manager-for-woocommerce'); ?>
+                    </li>
+                    <li>
+                      <span class="feature-check">
+                        <svg viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3"/>
+                        </svg>
+                      </span>
+                      <?php echo esc_attr__('Snapchat, X & Microsoft Bing Ads Pixel', 'pixel-manager-for-woocommerce'); ?>
+                    </li>
+                    
+                    <li>
+                      <span class="feature-check">
+                        <svg viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3"/>
+                        </svg>
+                      </span>
+                      <?php echo esc_attr__('24/6 priority support', 'pixel-manager-for-woocommerce'); ?>
+                    </li>
+                    <li>
+                      <span class="feature-check">
+                        <svg viewBox="0 0 12 12">
+                          <polyline points="2,6 5,9 10,3"/>
+                        </svg>
+                      </span>
+                      <?php echo esc_attr__('1 Month Free Trial, Start with $0', 'pixel-manager-for-woocommerce'); ?>
+                    </li>
+                  </ul>
+                  <!-- Countdown timer -->
+                  <div class="banner-divider">
+                    <div class="divider-line"></div>
+                    <div class="banner-timer">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12,6 12,12 16,14"/>
+                      </svg>
+                      <?php echo esc_attr__('Offer Ending', 'pixel-manager-for-woocommerce'); ?> <span class="timer-display" id="countdown">Soon</span>
+                    </div>
+                    <div class="divider-line"></div>
+                  </div>
+                  <!-- CTA button -->
+                  <a target="_blank" href="<?php echo esc_url('https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=business_yearly&utm_source=Plugin+Price+Banner+Screen&utm_medium=FreeVsPro+BUSINESS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin'); ?>" class="banner-cta">
+                  <?php echo esc_attr__('Claim 55% Off + 1 Month Free →', 'pixel-manager-for-woocommerce'); ?>
+                  </a>
+                  <!-- Secondary link -->
+                  <a target="_blank" href="<?php echo esc_url('https://growcommerce.io/product/pixel-tag-manager-for-woocommerce/'); ?>" class="banner-secondary">
+                  <?php echo esc_attr__('View all plans &amp; features', 'pixel-manager-for-woocommerce'); ?>
+                  </a>
+                </div>
+
+              </div>
             </div>
 
             <br>
@@ -62,14 +195,14 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                     <span class="text-small font-weight-bold"><?php esc_attr_e('No payment required','pixel-manager-for-woocommerce'); ?></span>
                   </div> */ ?>
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('BUSINESS','pixel-manager-for-woocommerce'); ?></h2>
-                  <span class="pmw-christmas-offer__badge">Christmas Special Offer</span>
-                  <h3><del>$49</del><strong> $39/ year</strong></h3>
+                  <span class="pmw-christmas-offer__badge">30 Days FREE Trial</span>
+                  <h3><strong> $49/ year</strong></h3>
                   <div class="price_allow_site"><?php esc_attr_e('1 active website','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$4.1','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span><?php esc_attr_e('billed annually ($49 per year)','pixel-manager-for-woocommerce'); ?></span><br>
                   <span class="h5 per-site"><?php esc_attr_e('$4.1/month per website','pixel-manager-for-woocommerce'); ?></span>
                   <div class="custom-separator my-3 mx-auto bg-primary"></div>
-                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=172&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=business_yearly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                   <ul>     
                     <li><?php esc_attr_e('Use on 1 Site','pixel-manager-for-woocommerce'); ?></li>
                     <?php echo $this->get_plan_features_html(); ?>
@@ -81,14 +214,14 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               <div class="pmw_col-4">
                 <div class="bg-white p-2 rounded-lg shadow">
                   <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('ENTERPRISE','pixel-manager-for-woocommerce'); ?></h2>
-                  <span class="pmw-christmas-offer__badge">Christmas Special Offer</span>
+                  <span class="pmw-christmas-offer__badge">Special Offer</span>
                   <h3><del>$149</del><strong> $99/ year</strong></h3>
                   <div class="price_allow_site"><?php esc_attr_e('5 active  websites','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$12.4','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span><?php esc_attr_e('billed annually ($149 per year)','pixel-manager-for-woocommerce'); ?></span><br>
                   <span class="h5 per-site"><?php esc_attr_e('$2.5/month per website','pixel-manager-for-woocommerce'); ?></span>
                   <div class="custom-separator my-3 mx-auto bg-primary"></div>
-                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=174&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISE+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=enterprise_yearly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISE+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                   <ul>
                     <li><?php esc_attr_e('Use on 5 Sites','pixel-manager-for-woocommerce'); ?></li>
                     <?php echo $this->get_plan_features_html(); ?>
@@ -99,14 +232,14 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
               <!-- END -->
               <div class="pmw_col-4">
                 <div class="bg-white p-2 rounded-lg shadow">
-                  <h2 class="h6 text-uppercase font-weight-bold mb-6"><?php esc_attr_e('ENTERPRISE PLUS','pixel-manager-for-woocommerce'); ?></h2>
+                  <h2 class="h6 text-uppercase font-weight-bold mb-4"><?php esc_attr_e('ENTERPRISE PLUS','pixel-manager-for-woocommerce'); ?></h2>
                   <h3><strong> $239/ year</strong></h3>
                   <div class="price_allow_site"><?php esc_attr_e('20 active  websites','pixel-manager-for-woocommerce'); ?></div>
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$19.9','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span><?php esc_attr_e('billed annually ($239 per year)','pixel-manager-for-woocommerce'); ?></span><br>
                   <span class="h5 per-site"><?php esc_attr_e('$1.0/month per website','pixel-manager-for-woocommerce'); ?></span>
                   <div class="custom-separator my-3 mx-auto bg-primary"></div>
-                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=183&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISEPLUS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=enterprise_plus_yearly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISEPLUS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                   <ul>
                     <li><?php esc_attr_e('Use on 20 Sites','pixel-manager-for-woocommerce'); ?></li>
                     <?php echo $this->get_plan_features_html(); ?>
@@ -124,7 +257,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$9','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span class="h5 per-site"><?php esc_attr_e('$9/month per website','pixel-manager-for-woocommerce'); ?></span>
                   <div class="custom-separator my-3 mx-auto bg-primary"></div>
-                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=95&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=business_monthly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                   <ul>
                     <li><?php esc_attr_e('Use on 1 Site','pixel-manager-for-woocommerce'); ?></li>
                     <?php echo $this->get_plan_features_html(); ?>
@@ -140,7 +273,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$25','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span class="h5 per-site"><?php esc_attr_e('$5/month per website','pixel-manager-for-woocommerce'); ?></span>
                   <div class="custom-separator my-3 mx-auto bg-primary"></div>
-                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=96&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISE+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=enterprise_monthly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISE+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                   <ul>
                     <li><?php esc_attr_e('Use on 5 Sites','pixel-manager-for-woocommerce'); ?></li>
                     <?php echo $this->get_plan_features_html(); ?>
@@ -156,7 +289,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                   <h2 class="h2 font-weight-bold"><?php esc_attr_e('$40','pixel-manager-for-woocommerce'); ?><span class="text-small font-weight-normal"> /<?php esc_attr_e('month','pixel-manager-for-woocommerce'); ?></span></h2>
                   <span class="h5 per-site"><?php esc_attr_e('$2/month per website','pixel-manager-for-woocommerce'); ?></span>
                   <div class="custom-separator my-3 mx-auto bg-primary"></div>
-                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=185&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISEPLUS+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                  <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=enterprise_plus_monthly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISEPLUS+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="pmw_btn pmw_btn-fill shadow rounded-pill pay-subscription"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                   <ul>
                     <li><?php esc_attr_e('Use on 20 Sites','pixel-manager-for-woocommerce'); ?></li>
                     <?php echo $this->get_plan_features_html(); ?>
@@ -201,7 +334,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                         <div class="billing-msg"></div>
                       </div>
                       <div class="price_allow_site"><?php esc_attr_e('1 active website','pixel-manager-for-woocommerce'); ?></div>
-                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=85&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+FREE&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/product/pixel-tag-manager-for-woocommerce/?product=pixel-tag-manager-for-woocommerce&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+FREE&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                     </div>
                   </th>
                   <th>
@@ -216,8 +349,8 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                         <div class="billing-msg"><?php esc_attr_e('billed annually','pixel-manager-for-woocommerce'); ?></div>
                       </div>
                       <div class="price_allow_site"><?php esc_attr_e('1 active website','pixel-manager-for-woocommerce'); ?></div>
-                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=95&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="monthly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
-                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=172&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="yearly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=business_monthly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="monthly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=business_yearly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+BUSINESS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="yearly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                     </div>
                   </th>
                   <th>
@@ -231,8 +364,8 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                         <div class="billing-msg"><?php esc_attr_e('billed annually','pixel-manager-for-woocommerce'); ?></div>
                       </div>
                       <div class="price_allow_site"><?php esc_attr_e('5 active  websites','pixel-manager-for-woocommerce'); ?></div>
-                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=96&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISE+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="monthly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
-                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=174&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISE+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="yearly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=enterprise_monthly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISE+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="monthly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=enterprise_yearly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISE+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="yearly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                     </div>
                   </th>
                   <th>
@@ -246,8 +379,8 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                         <div class="billing-msg"><?php esc_attr_e('billed annually','pixel-manager-for-woocommerce'); ?></div>
                       </div>
                       <div class="price_allow_site"><?php esc_attr_e('20 active  websites','pixel-manager-for-woocommerce'); ?></div>
-                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=185&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISEPLUS+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="monthly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
-                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=183&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISEPLUSPLUS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="yearly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=enterprise_plus_monthly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISEPLUS+Monthly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="monthly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
+                      <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/checkout/?product=pixel-tag-manager-for-woocommerce&plan=enterprise_plus_yearly&utm_source=Plugin+WordPress+Screen&utm_medium=FreeVsPro+ENTERPRISEPLUSPLUS+Yearly&m_campaign=Upsell+at+PixelTagManager+Plugin"); ?>" class="yearly btn btn-pay-list"><?php esc_attr_e('Get Started','pixel-manager-for-woocommerce'); ?></a>
                     </div>
                   </th>
                 </tr>
@@ -260,33 +393,7 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                   <td>5</td>
                   <td>20</td>
                 </tr>
-                <tr>
-                  <td class="ptm-full-width" colspan=5><strong><?php esc_attr_e('GrowInsights360 GA4 Dashboard','pixel-manager-for-woocommerce'); ?></strong></td>                 
-                </tr>
-                <tr>
-                  <td><?php esc_attr_e('Google Analytics Dashboard Overview','pixel-manager-for-woocommerce'); ?></td>
-                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
-                </tr>
-                <tr>
-                  <td><?php esc_attr_e('General Reports - provides a high-level summary','pixel-manager-for-woocommerce'); ?></td>
-                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
-                </tr>
-                <tr>
-                  <td><?php esc_attr_e('Product Performance Reports - with Multi-Dimensional Analysis','pixel-manager-for-woocommerce'); ?></td>
-                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
-                </tr>
-                <tr>
-                  <td><?php esc_attr_e('Purchase Journey Reports','pixel-manager-for-woocommerce'); ?></td>
-                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
-                </tr>
-                <tr>
-                  <td><?php esc_attr_e('Ecommerce & User Metrics','pixel-manager-for-woocommerce'); ?></td>
-                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
-                </tr>
-                <tr>
-                  <td><?php esc_attr_e('Download CSV & PDF','pixel-manager-for-woocommerce'); ?></td>
-                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
-                </tr>
+                
                 <tr>
                   <td class="ptm-full-width" colspan=5><strong><?php esc_attr_e('Pixels Tracking','pixel-manager-for-woocommerce'); ?></strong></td>
                 </tr>
@@ -380,10 +487,37 @@ if(!class_exists('PMW_PixelsFreeVsPro')){
                   <?php echo $this->get_plan_features_limited_detailshtml(); ?>
                 </tr>
                 <tr>
+                  <td class="ptm-full-width" colspan=5><strong><?php esc_attr_e('GrowInsights360 GA4 Dashboard','pixel-manager-for-woocommerce'); ?></strong></td>                 
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Google Analytics Dashboard Overview','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('General Reports - provides a high-level summary','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Product Performance Reports - with Multi-Dimensional Analysis','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Purchase Journey Reports','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Ecommerce & User Metrics','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
+                  <td><?php esc_attr_e('Download CSV & PDF','pixel-manager-for-woocommerce'); ?></td>
+                  <?php echo $this->get_plan_features_limited_allhtml(); ?>
+                </tr>
+                <tr>
                   <td class="ptm-full-width" colspan=5><strong><?php esc_attr_e('Support','pixel-manager-for-woocommerce'); ?></strong></td>
                 </tr>
                 <tr>
-                  <td><?php esc_attr_e('Priority Support (24*5)','pixel-manager-for-woocommerce'); ?></td>
+                  <td><?php esc_attr_e('Priority Support (24*6)','pixel-manager-for-woocommerce'); ?></td>
                   <td><span class="free plan-no"></span></td>
                   <td><span class="paid1-plan-yes"></span></td>
                   <td><span class="paid2-plan-yes"></span></td>

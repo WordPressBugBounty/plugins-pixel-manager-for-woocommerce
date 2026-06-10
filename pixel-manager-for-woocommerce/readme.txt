@@ -5,13 +5,10 @@ Plugin URI: https://wordpress.org/plugins/pixel-manager-for-woocommerce/
 Author: GrowCommerce
 Author URI: https://growcommerce.io/
 Tags: google analytics 4, google ads conversion, facebook pixel, dynamic retargeting, facebook conversion API
-Requires at least: 3.5.0
-Tested up to: 6.9
-WC requires at least: 4.0
-WC tested up to: 10.4.3
+Requires at least: 5.6
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1
-Version: 2.1
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,7 +27,7 @@ The plugin also supports Google Consent Mode V2, ensuring compliance with privac
 Using Google Tag Manager, Pixel Tag Manager automatically captures a wide range of WooCommerce events, including:
 
 * Page Views
-* Product Views 
+* Product Views
 * Product List Views
 * Add to Cart (from listings & product pages)
 * Remove from Cart
@@ -215,6 +212,11 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 10. Purchase Journey – GrowInsights360
 
 == Changelog ==
+
+= 2.2 - 10 June 2026 =
+* Check the  compatibility with WordPress 7.0
+* improve pinterest tracking
+
 = 2.1 - 26 December 2025 =
 * Added compatibility with latest WordPress and WooCommerce versions for improved stability and performance.
 * Added Google Tag option to use it for GA4, Google Ads, or both.
@@ -226,7 +228,6 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 * Added granular control over Thank You page purchase event triggers for more flexible conversion tracking setup.
 * New Conversion API logs viewer within the plugin dashboard to monitor and debug the latest 10 API calls.
 * UI Improvements.
-
 
 = 2.0 - 27 August 2025 =
 * In this update, we have added the GrowInsights360 Dashboard inside the Pixel Tag Manager to provide enhanced tracking and reporting capabilities. The update also introduces multi-dimensional GA4 reporting, including Product Performance and Purchase Journey insights, along with time-based performance analysis and custom date range selection. We’ve also added options to download reports in CSV and PDF formats, improved the overall user interface for a more intuitive experience

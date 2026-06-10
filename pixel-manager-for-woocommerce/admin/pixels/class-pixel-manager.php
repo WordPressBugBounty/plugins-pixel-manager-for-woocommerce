@@ -312,6 +312,15 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
+      // Validate order status - prevent purchase events for failed orders
+      $order_status = $order->get_status();
+      $failed_statuses = array('failed', 'cancelled', 'refunded', 'trash');
+      
+      if (in_array($order_status, $failed_statuses)) {
+        // Do not inject data layer for failed/cancelled orders
+        return;
+      }
+
       if(!isset($this->PixelManagerDataLayer['checkout']) || !is_array($this->PixelManagerDataLayer['checkout'])){
         $this->PixelManagerDataLayer['checkout'] = [];
       }
@@ -372,9 +381,19 @@ document.addEventListener('DOMContentLoaded', function () {
      * inject data layer for product
      **/
     public function PMW_woocommerce_inject_data_layer_product(){
-      if ( is_order_received_page() ) {
-        if( $this->PixelItemFunction->get_order_from_order_received_page() ) {
-          $order = $this->PixelItemFunction->get_order_from_order_received_page();        
+      if ( is_order_received_page() && $this->purchase_event_trigger == "url_based" ) {
+        $order = $this->PixelItemFunction->get_order_from_order_received_page();
+        if( $order ) {
+          
+          // Validate order status - prevent purchase events for failed orders
+          $order_status = $order->get_status();
+          $failed_statuses = array('failed', 'cancelled', 'refunded', 'trash');
+          
+          if (in_array($order_status, $failed_statuses)) {
+            // Do not inject data layer for failed/cancelled orders
+            return;
+          }
+
           $order_items = $order->get_items();
           /*if( is_user_logged_in() ) {
             $user = get_current_user_id();
@@ -449,6 +468,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
         $total = isset($_POST['total']) ? floatval($_POST['total']) : 0;
         $currency = isset($_POST['currency']) ? sanitize_text_field($_POST['currency']) : '';
+        $event_source_url = isset($_POST['event_source_url']) ? sanitize_text_field($_POST['event_source_url']) : '';
         
         // Handle items JSON
         $items = [];
@@ -483,6 +503,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $method_name = "process_{$platform}_event";
             if (method_exists($this, $method_name)) {
               $result = $this->$method_name([
+                'event_source_url' => $event_source_url,
                 'event_id' => $event_id,
                 'order_id' => $order_id,
                 'total' => $total,
@@ -537,15 +558,9 @@ document.addEventListener('DOMContentLoaded', function () {
       $currency = isset($data['currency']) ? sanitize_text_field($data['currency']) : '';
       $total = isset($data['total']) ? floatval($data['total']) : 0.0;
       $items = isset($data['items']) && is_array($data['items']) ? $data['items'] : [];
-      $event_source_url = '';
-      if ($order_id && function_exists('wc_get_order')) {
-        $order = wc_get_order($order_id);
-        if ($order) {
-          $event_source_url = esc_url_raw($order->get_checkout_order_received_url());
-        }
-      }
+      $event_source_url = isset($data['event_source_url']) ? sanitize_text_field($data['event_source_url']) : '';
 
-      $user_data = $this->get_user_data($order_id);
+      $user_data = $this->PTMUserData;
       unset($user_data['st1']);
       $payload = [
         'partner_agent' => 'GrowCommerce',
@@ -650,6 +665,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if(isset($_COOKIE['_ttp']) && !empty($_COOKIE['_ttp'])) {
         $processed_data['ttp'] = sanitize_text_field($_COOKIE['_ttp']);
       }
+      $event_source_url = isset($data['event_source_url']) ? sanitize_text_field($data['event_source_url']) : '';
+      
       $payload = [
         'event_source' => 'web',
         'event_source_id' => $pixel_id,
@@ -675,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function () {
               }, $items)
             ],
             'page' => [
-              //'url' => get_permalink(),
+              'url' => $event_source_url,
               'ref' => 'Thank You Page'
             ]
           ]
@@ -727,6 +744,7 @@ document.addEventListener('DOMContentLoaded', function () {
       $ad_account_id = isset($this->options['pinterest_conversion_api']['ad_account_id']) ? sanitize_text_field($this->options['pinterest_conversion_api']['ad_account_id']) : "";
       $access_token = isset($this->options['pinterest_conversion_api']['api_token']) ? sanitize_text_field($this->options['pinterest_conversion_api']['api_token']) : "";
       $access_tokenis_enable = isset($this->options['pinterest_conversion_api']['is_enable']) ? sanitize_text_field($this->options['pinterest_conversion_api']['is_enable']) : "";
+      $test_events = isset($this->options['pinterest_conversion_api']['test_events']) ? sanitize_text_field($this->options['pinterest_conversion_api']['test_events']) : "";
       $conversion_api_logs_payload = isset($this->options['integration']['conversion_api_logs_payload']) ? sanitize_text_field($this->options['integration']['conversion_api_logs_payload']) : '';
 
       if (empty($ad_account_id) || empty($access_token) || empty($access_tokenis_enable)) {
@@ -736,10 +754,15 @@ document.addEventListener('DOMContentLoaded', function () {
       $order_id = isset($data['order_id']) ? intval($data['order_id']) : '';
       $user_data = $this->get_user_data($order_id);
       foreach ($user_data as $key => $value) {
-        if (empty($value) || !in_array($key, ['em', 'ph', 'fn', 'ln', 'country', 'ct', 'st', 'zp'])) {
+        if (empty($value) || !in_array($key, ['em', 'ph', 'fn', 'ln', 'country', 'ct', 'st', 'zp','client_ip_address','client_user_agent'])) {
           unset($user_data[$key]);
-        }else if(in_array($key, ['em', 'ph', 'fn', 'ln', 'country', 'ct', 'st', 'zp'])){
+        }else if(in_array($key, ['client_ip_address','client_user_agent'])){
+          $user_data[$key] = $value;
+        }else if(in_array($key, ['em', 'ph', 'fn', 'ln', 'country', 'ct', 'st', 'zp','client_ip_address','client_user_agent'])){
           $user_data[$key] = [hash('sha256', $value)];
+          if($key === 'em'){
+            $user_data["hashed_maids"] = [hash('sha256', $value)];
+          }
         }
       }
       if(!empty($this->click_ids['epik']['id'])){
@@ -751,13 +774,7 @@ document.addEventListener('DOMContentLoaded', function () {
         unset($user_data['external_id']);
       }
 
-      $event_source_url = '';
-      if ($order_id && function_exists('wc_get_order')) {
-        $order = wc_get_order($order_id);
-        if ($order) {
-          $event_source_url = esc_url_raw($order->get_checkout_order_received_url());
-        }
-      }
+      $event_source_url = isset($data['event_source_url']) ? sanitize_text_field($data['event_source_url']) : '';
 
       $total = isset($data['total']) ? floatval($data['total']) : 0;
       $items = isset($data['items']) && is_array($data['items']) ? $data['items'] : [];
@@ -776,8 +793,11 @@ document.addEventListener('DOMContentLoaded', function () {
         'content_name' => "Order received",
         'partner_name' => 'GrowCommerce',
         'custom_data' => [
+          'content_ids' => array_map(function($item) {
+            return isset($item['id']) ? sanitize_text_field($item['id']) : '';
+          }, $items),
           'currency' => $currency,
-          'value' => $total,
+          'value' => (string)$total,
           'order_id' => (string)$order_id,
           'contents' => array_map(function($item) {
             $quantity = isset($item['quantity']) ? intval($item['quantity']) : 1;
@@ -787,7 +807,7 @@ document.addEventListener('DOMContentLoaded', function () {
               'item_category' => isset($item['category']) ? sanitize_text_field($item['category']) : '',
               'item_brand' => isset($item['brand']) ? sanitize_text_field($item['brand']) : '',
               'quantity' => $quantity,
-              'item_price' => isset($item['price']) ? floatval($item['price']) : 0.0
+              'item_price' => isset($item['price']) ? (string)floatval($item['price']) : '0.0'
             ];
           }, $items),
           'num_items' => $num_items
@@ -803,7 +823,11 @@ document.addEventListener('DOMContentLoaded', function () {
         $log_data['payload'] = $payload;
       }
       try {
-        $response = wp_remote_post("https://api.pinterest.com/v5/ad_accounts/{$ad_account_id}/events", [
+        $api_url = "https://api.pinterest.com/v5/ad_accounts/{$ad_account_id}/events";
+        if($test_events){
+          $api_url = "https://api.pinterest.com/v5/ad_accounts/{$ad_account_id}/events?test=true";
+        }
+        $response = wp_remote_post($api_url, [
           'headers' => [
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $access_token
@@ -999,7 +1023,8 @@ document.addEventListener('DOMContentLoaded', function () {
      */
     private function get_user_data($order_id = null) {
       $user_data = [
-        'client_ip_address' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
+        //'client_ip_address' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
+        'client_ip_address' => $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'],
         'client_user_agent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '',
         'fbc' => isset($_COOKIE['_fbc']) ? $_COOKIE['_fbc'] : '',
         'fbp' => isset($_COOKIE['_fbp']) ? $_COOKIE['_fbp'] : ''
