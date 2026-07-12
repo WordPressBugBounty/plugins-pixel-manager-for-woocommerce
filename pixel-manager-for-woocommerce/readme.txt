@@ -6,9 +6,9 @@ Author: GrowCommerce
 Author URI: https://growcommerce.io/
 Tags: google analytics 4, google ads conversion, facebook pixel, dynamic retargeting, facebook conversion API
 Requires at least: 5.6
-Tested up to: 7.0
+Tested up to: 7.0.1
 Requires PHP: 7.4
-Stable tag: 2.2
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -151,10 +151,8 @@ The Pixel Tag Manager plugin offers seamless integration with various tracking p
 
 For additional assistance, refer to our plugin documentation or contact our support team.
 
-### Documentation 
-Documentation of the plugin, [Open the Documentation](https://growcommerce.io/doc/pixel-tag-manager/)
-
-PDF Documentation of the plugin, [Open the documentation](https://growcommerce.io/docs/pixel-manager-for-woocommerce.pdf)
+### Documentation
+Documentation of the plugin, [Open the Documentation](https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/introduction/)
 
 ### Privacy & Terms
 When a user onboards for the first time by adding an email address or updating it in the Pixel Settings page, they must accept the Privacy Policy and Terms before saving data.
@@ -176,28 +174,28 @@ Basic tracking available for the all pixels. (Page view and Purchase events trac
 It’s our advanced reporting dashboard. It provides deeper GA4 insights, product performance tracking, and purchase journey reports.
 
 = How to create a Google Analytics 4 (GA4) Measurement ID? =
-Check our plugin [documentation](https://growcommerce.io/docs/pixel-manager-for-woocommerce.pdf) and follow the mentioned steps in the doc for to Google Analytics 4 (GA4) Measurement ID.
+Check our plugin [documentation](https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/create-google-analytics-4/) and follow the mentioned steps in the doc for to Google Analytics 4 (GA4) Measurement ID.
 
 = What is Bing Ads? =
 Bing Ads also known as Microsoft Advertising (formerly Bing Ads, Microsoft adCenter and MSN adCenter) is a service that provides pay per click advertising on the Bing, Yahoo!, and DuckDuckGo search engines.
 
 = How to create a Facebook pixel ID? =
-For create Facebook pixel ID, see the article- https://www.facebook.com/business/help/952192354843755?id=1205376682832142
+For create Facebook pixel ID, see the article- https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/create-facebook-pixel-id/
 
 = How to create a Pinterest pixel ID? =
-To create Pinterest pixel ID, see the article - https://developers.pinterest.com/docs/tag/conversion/#basecode
+To create Pinterest pixel ID, see the article - https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/create-pinterest-pixel-id/
 
 = How to create a Snapchat pixel ID? =
-To create Snapchat pixel ID, see the article - https://businesshelp.snapchat.com/s/article/pixel-website-install?language=en_US
+To create Snapchat pixel ID, see the article - https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/create-snapchat-pixel-id/
 
 = How to create a Bing Ads pixel ID (UET tag id)? =
-To create Bing Ads pixel ID (UET tag id), see article - https://help.ads.microsoft.com/#apex/ads/en/56682/-1
+To create Bing Ads pixel ID (UET tag id), see article - https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/create-bing-ads-uet-tag-id/
 
 = How to create a Twitter pixel ID? =
-To create Twitter pixel ID, see the article - https://business.twitter.com/en/help/campaign-measurement-and-analytics/conversion-tracking-for-websites.html
+To create Twitter pixel ID, see the article - https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/create-x-twitter-pixel-id/
 
 = How to create a TikTok pixel ID? =
-To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article?aid=10021
+To create TikTok pixel ID, see the article - https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/create-tiktok-pixel-id/
 
 == Screenshots ==
 1. Analytics & Pixel settings Settings
@@ -213,9 +211,12 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 
 == Changelog ==
 
+= 2.2.1 - 12 July 2026 =
+* Added nonce verification to the Conversion API AJAX handler.
+
 = 2.2 - 10 June 2026 =
-* Check the  compatibility with WordPress 7.0
-* improve pinterest tracking
+* Check the compatibility with WordPress 7.0
+* Improved Pinterest tracking
 
 = 2.1 - 26 December 2025 =
 * Added compatibility with latest WordPress and WooCommerce versions for improved stability and performance.
@@ -302,7 +303,7 @@ To create TikTok pixel ID, see the article - https://ads.tiktok.com/help/article
 * Add the FreeVsPro Page
 
 = 1.2.4.1 - 15 October 2022 =
-* Minor bug fixe on the account page
+* Minor bug fix on the account page
 
 = 1.2.4 - 13 October 2022 =
 * New: We are happy to announce, The Pixel Tag Manager plugin for WooCommerce added the pro version capability to use more pixels

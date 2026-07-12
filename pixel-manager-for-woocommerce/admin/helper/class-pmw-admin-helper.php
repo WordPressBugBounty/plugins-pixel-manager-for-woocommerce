@@ -234,6 +234,9 @@ if(!class_exists('PMW_AdminHelper')):
     public function get_support_page_link(){
       return "https://growcommerce.io/support?utm_source=Plugin+WordPress+Screen&utm_medium=Support+Page&m_campaign=Upsell+at+PixelTagManager+Plugin";
     }
+    public function get_documentation_page_link(){
+      return "https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/introduction/";
+    }
     public function get_pmw_website_link(){
       return "https://growcommerce.io/";
     }
@@ -606,7 +609,7 @@ if(!class_exists('PMW_AdminHelper')):
           </div>
           <div class="pmw-sec-2">
             <ul>
-              <li><a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/docs/pixel-manager-for-woocommerce.pdf"); ?>" class="pmw_link-list-link"><?php echo esc_attr__('Installation Manual', 'pixel-manager-for-woocommerce'); ?></a></li>
+              <li><a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/documentation/pixel-tag-manager-for-woocommerce/introduction/"); ?>" class="pmw_link-list-link"><?php echo esc_attr__('Installation Manual', 'pixel-manager-for-woocommerce'); ?></a></li>
               <li><?php echo esc_attr__('( Need help? Email support@growcommerce.io )', 'pixel-manager-for-woocommerce'); ?></li>
             </ul>
           </div>

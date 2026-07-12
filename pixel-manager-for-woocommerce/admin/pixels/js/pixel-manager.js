@@ -195,6 +195,7 @@ class PMW_PixelManagerJS {
       url: pmw_f_ajax_url,
       data: {
           action: 'pmw_process_conversion_events',
+          nonce: (typeof pmw_conversion_nonce !== 'undefined') ? pmw_conversion_nonce : '',
           ...eventData
       },
       success: (response) => {

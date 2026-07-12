@@ -84,7 +84,7 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 			if(strpos($this->screen_id, 'pixel-manager') !== false){
 				wp_enqueue_style( $this->plugin_name, esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL . '/admin/css/pixel-manager-for-woocommerce-admin.css'), array(), $this->version, 'all' );
 			}
-			if( in_array($this->screen_id, array("pixel-manager-growinsights360", "pixel-manager-documentation")) ){
+			if( in_array($this->screen_id, array("pixel-manager-growinsights360")) ){
 				wp_enqueue_style( $this->plugin_name.'-custom', esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL . '/admin/css/pixel-manager-for-woocommerce-admin-custom.css'), array(), $this->version, 'all' );
 			}
 		}
@@ -112,8 +112,6 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 			add_submenu_page('pixel-manager', __('Pixel Settings','pixel-manager-for-woocommerce'), __('Pixel Settings','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager' );
 			add_submenu_page('pixel-manager', __('GrowInsights360','pixel-manager-for-woocommerce'), __('GrowInsights360','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-growinsights360', array($this, 'show_page') );
 			add_submenu_page('pixel-manager', __('Account','pixel-manager-for-woocommerce'), __('Account','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-account', array($this, 'show_page'));
-			add_submenu_page('pixel-manager', __('Documentation','pixel-manager-for-woocommerce'), __('Documentation','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-documentation', array($this, 'show_page'));
-			add_submenu_page('pixel-manager', __('Support','pixel-manager-for-woocommerce'), __('Support','pixel-manager-for-woocommerce'), 'manage_options', 'pixel-manager-support', array($this, 'show_page'));
 			if(!$this->is_pro_version){
 				add_submenu_page('pixel-manager', __('Upgrade to Pro','pixel-manager-for-woocommerce'), '<span style="background: #2271b1;padding: 1px 10px 3px 10px;color:#fff;">'.__('Upgrade to Pro','pixel-manager-for-woocommerce').'</span>', 'manage_options', 'pixel-manager-upgrade-pro', array($this, 'show_page'));
 				add_submenu_page('pixel-manager', __('Free Vs Pro','pixel-manager-for-woocommerce'), __('Free Vs Pro','pixel-manager-for-woocommerce').'<img style="position: absolute; height: 28px;bottom: 5px; right: 10px;" src="'.$discount_icon.'">', 'manage_options', 'pixel-manager-freevspro', array($this, 'show_page'));				
@@ -134,7 +132,7 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 	    if(method_exists($this, $get_action)){
 	      $this->$get_action();
 	    }
-	    if( !in_array($get_action, array("pixel_manager_growinsights360", "pixel_manager_documentation")) ){
+	    if( !in_array($get_action, array("pixel_manager_growinsights360")) ){
 	      do_action('pmw_footer');
 	    }
 	  }
@@ -143,11 +141,6 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 	  	require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels.php');
 	  	new PMW_Pixels();
 	  }
-	  public function pixel_manager_support(){
-	  	require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-support.php');
-	  	new PMW_PixelsSupport();
-	  }
-
 	  public function pixel_manager_upgrade_pro(){
 	    require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-upgrade-pro.php');
 	    new PMW_PixelsUpgradePro();
@@ -159,10 +152,6 @@ if ( ! class_exists( 'Pixel_Manager_For_Woocommerce_Admin' ) ) {
 	  public function pixel_manager_account(){
 	    require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-account.php');
 	    new PMW_PixelsAccount();
-	  }
-	  public function pixel_manager_documentation(){
-	    require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-documentation.php');
-	    new PMW_PixelsDocumentation();
 	  }
 	  public function pixel_manager_growinsights360(){
 	    require_once(PIXEL_MANAGER_FOR_WOOCOMMERCE_DIR . 'admin/partials/pages/class-pmw-pixels-growinsights360.php');

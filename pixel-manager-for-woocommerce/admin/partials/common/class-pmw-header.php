@@ -158,7 +158,7 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 			          </li>
 								<?php	
 							}else if($key == "pixel-manager-support"){
-								?>								
+								?>
 								<li class="pmw_main-tab-item">
 		              <a target="_blank" href="<?php echo esc_url_raw($this->get_support_page_link()); ?>" class="pmw_main-tab-link <?php echo esc_attr($is_active); ?>">
 		              	<?php if( isset($value['css-icon']) && $value['css-icon'] ){?>
@@ -169,7 +169,20 @@ if ( ! class_exists( 'PMW_Header' ) ) {
 		                <span class="navinfonavtext"><?php echo esc_attr($value['title']); ?></span>
 		              </a>
 			          </li>
-								<?php	
+								<?php
+							}else if($key == "pixel-manager-documentation"){
+								?>
+								<li class="pmw_main-tab-item">
+		              <a target="_blank" href="<?php echo esc_url_raw($this->get_documentation_page_link()); ?>" class="pmw_main-tab-link <?php echo esc_attr($is_active); ?>">
+		              	<?php if( isset($value['css-icon']) && $value['css-icon'] ){?>
+		              		<i class="pmw_icon <?php echo esc_attr($value['css-icon']); ?>"></i>
+		              	<?php }else if($icon!=""){?>
+		                	<span class="navinfoicon"><img src="<?php echo esc_url_raw($icon); ?>" /></span>
+		              	<?php } ?>
+		                <span class="navinfonavtext"><?php echo esc_attr($value['title']); ?></span>
+		              </a>
+			          </li>
+								<?php
 							}else{
 							?>								
 							<li class="pmw_main-tab-item">

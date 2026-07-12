@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ?>
     <script type="text/javascript" data-pagespeed-no-defer data-cfasync="false">
       var pmw_f_ajax_url = '<?php echo esc_url_raw(admin_url( 'admin-ajax.php' )); ?>';
+      var pmw_conversion_nonce = '<?php echo esc_js( wp_create_nonce( 'pmw_process_conversion_events' ) ); ?>';
       window.PixelManagerOptions = window.PixelManagerOptions || [];
       window.PixelManagerOptions = <?php echo json_encode($set_options); ?>;
       window.PixelManagerEventOptions = <?php echo json_encode($EventOptions); ?>;
@@ -453,7 +454,12 @@ document.addEventListener('DOMContentLoaded', function () {
      * Process conversion events for all enabled platforms
      */
     public function process_conversion_events() {
-      
+
+      // Verify the request originated from a real page load on this site.
+      if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'pmw_process_conversion_events' ) ) {
+        wp_send_json_error( [ 'message' => 'Invalid or missing nonce' ], 403 );
+      }
+
       $response = [
         'success' => true,
         'log_time' => date('Y-m-d H:i:s'),
@@ -463,23 +469,45 @@ document.addEventListener('DOMContentLoaded', function () {
       ];
 
       try {
-        // Get and sanitize input
+        // Get and sanitize input. event_id is client-supplied on purpose
+        // (used as the platform's dedup key); everything that affects the
+        // reported conversion value is re-derived from the order below.
         $event_id = isset($_POST['event_id']) ? sanitize_text_field($_POST['event_id']) : '';
         $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
-        $total = isset($_POST['total']) ? floatval($_POST['total']) : 0;
-        $currency = isset($_POST['currency']) ? sanitize_text_field($_POST['currency']) : '';
-        $event_source_url = isset($_POST['event_source_url']) ? sanitize_text_field($_POST['event_source_url']) : '';
-        
-        // Handle items JSON
-        $items = [];
-        if (!empty($_POST['items'])) {
-          $items_json = wp_unslash($_POST['items']);
-          $items = json_decode($items_json, true);
-          if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception('Invalid items data');
-          }
+        $event_source_url = isset($_POST['event_source_url']) ? esc_url_raw(wp_unslash($_POST['event_source_url'])) : '';
+
+        if (!$order_id || !$this->is_woocommerce_active()) {
+          throw new Exception('Invalid order');
         }
-        
+        $order = wc_get_order($order_id);
+        if (!$order) {
+          throw new Exception('Invalid order');
+        }
+
+        $failed_statuses = array('failed', 'cancelled', 'refunded', 'trash');
+        if (in_array($order->get_status(), $failed_statuses, true)) {
+          throw new Exception('Order not eligible for conversion tracking');
+        }
+
+        // Derive the reported values from the order itself rather than the
+        // client-supplied total/currency/items, which cannot be trusted.
+        $total = (float) $this->get_order_total('order_received', $order);
+        $currency = $order->get_currency();
+
+        $items = [];
+        foreach ($order->get_items() as $order_item) {
+          $product_id = $this->PixelItemFunction->get_variation_id_or_product_id($order_item->get_data(), true);
+          $product = wc_get_product($product_id);
+          if (!$product) {
+            continue;
+          }
+          $items[] = [
+            'id' => $this->is_send_sku ? (string) $product->get_sku() : (string) $product_id,
+            'quantity' => (int) $order_item->get_quantity(),
+            'price' => (float) $product->get_price()
+          ];
+        }
+
         // Handle platforms JSON
         $platforms = [];
         if (!empty($_POST['platforms'])) {
@@ -493,9 +521,19 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Exception('No platforms specified');
         }
 
+        // Platforms already sent for this order are not resent, so a
+        // replayed/forged request can't inflate conversion counts.
+        $sent_platforms = $order->get_meta('_pmw_capi_sent_platforms');
+        $sent_platforms = is_array($sent_platforms) ? $sent_platforms : [];
+
         // Process each enabled platform
         foreach ($platforms as $platform => $is_enabled) {
           if (!$is_enabled) {
+            continue;
+          }
+
+          if (in_array($platform, $sent_platforms, true)) {
+            $response['processed'][$platform] = ['success' => true, 'platform' => $platform, 'skipped' => true];
             continue;
           }
 
@@ -513,6 +551,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
               if($result['success']){
                 $response['processed'][$platform] = ['success' => true, 'platform' => $platform, 'data' => $result];
+                $sent_platforms[] = $platform;
               }else{
                 $response['processed'][$platform] = ['success' => false, 'platform' => $platform, 'data' => $result];
               }
@@ -527,7 +566,10 @@ document.addEventListener('DOMContentLoaded', function () {
             $response['errors'][] = "{$platform}: " . $e->getMessage();
           }
         }
-        
+
+        $order->update_meta_data('_pmw_capi_sent_platforms', array_values(array_unique($sent_platforms)));
+        $order->save();
+
         if($this->options['integration']['conversion_api_logs']){
           $this->save_pmw_conversion_api_logs($response);
         }
