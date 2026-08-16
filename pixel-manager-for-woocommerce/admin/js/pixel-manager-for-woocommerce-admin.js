@@ -49,25 +49,10 @@ var pmw_helper = {
         this_var.pmw_loader(true);
       },
       success: function (response) {
-      	if( f_data.action == "pmw_check_privecy_policy" && !response.hasOwnProperty('message')){
-      		if (response.error === true ){
-      			pmw_helper.show_privacy_popup();
-      		}else{
-      			/*change action value*/
-      			document.getElementById("pixels_save_action").value = "pmw_pixels_save";
-						/*end */
-			      var data = jQuery("#pmw-pixels").serializeArray();
-			      pmw_helper.pmw_ajax_call(data);			      
-      		}
-      		return false;
-      	}
-      	if( f_data.action == "pmw_pixels_save" || f_data.action == "pmw_check_privecy_policy"){ //remove disabled save button
+      	if( f_data.action == "pmw_pixels_save" ){ //remove disabled save button
       		document.getElementById("pixels_save").disabled = false;
-      		/*change action value*/
-			      document.getElementById("pixels_save_action").value = "pmw_check_privecy_policy";
-					/*end */
       	}
-      	if (response.error === false && response.hasOwnProperty('message') && response.message != "" ) {         
+      	if (response.error === false && response.hasOwnProperty('message') && response.message != "" ) {
 	        this_var.add_message("success", "Success",  response.message);
           //clean debug logs html
           if(f_data.action == "pmw_clean_debug_logs"){
@@ -98,26 +83,6 @@ var pmw_helper = {
       value: document.getElementById('pmw_ajax_nonce').value
     }];    
 		this.pmw_ajax_call(data);
-	},
-	show_privacy_popup:function(){
-		let body = document.getElementsByClassName('toplevel_page_pixel-manager');
-		let popup = document.getElementById('pmw_privacy_popup');
-		body[0].classList.add("modal-open");
-		popup.classList.add("show");
-		body[0].insertAdjacentHTML('afterend', '<div id="modal-backdrop" class="modal-backdrop fade show"></div>');
-	},
-	close_privacy_popup:function(){
-		let body = document.getElementsByClassName('toplevel_page_pixel-manager');
-		let popup = document.getElementById('pmw_privacy_popup');
-		body[0].classList.remove("modal-open");
-		popup.classList.remove("show");
-		let modal_backdrop = document.getElementById("modal-backdrop");
-		if(modal_backdrop != null){
-			modal_backdrop.remove();
-		}
-		this.pmw_loader(false);
-		//remove disabled save button
-		document.getElementById("pixels_save").disabled = false;
 	}
 };
 
@@ -127,29 +92,10 @@ var pmw_helper = {
 		jQuery("#pmw-pixels").on("submit", function( event ){
 			event.preventDefault();
 			document.getElementById("pixels_save").disabled = true;
-			/*var data = {
-        action : 'pmw_check_privecy_policy',
-       	data : jQuery(this).serialize()
-      };*/
       var data = jQuery("#pmw-pixels").serializeArray();
       pmw_helper.pmw_ajax_call(data);
 		});
-		jQuery("#pmw_accept_privecy_policy").on("click", function (event) {
-      event.preventDefault();
-      pmw_helper.close_privacy_popup();
-      /*change action value*/
-      var action_els=document.getElementsByName("action");
-			for (var i=0;i<action_els.length;i++) {
-				action_els[i].value = "pmw_pixels_save";
-			}
-			/*end */
-      var data = jQuery("#pmw-pixels").serializeArray();
-      pmw_helper.pmw_ajax_call(data);
-    });
-    jQuery("#close").on("click", function () {
-    	pmw_helper.close_privacy_popup();
-    });
-    jQuery(".toggle_title-text").on("click", function () {
+		jQuery(".toggle_title-text").on("click", function () {
       jQuery(this).toggleClass("active");
       jQuery(this).next('.pmw_slide-down-area').slideToggle();
     });

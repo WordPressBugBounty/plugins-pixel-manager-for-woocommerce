@@ -83,7 +83,7 @@ if(!class_exists('PMW_AdminAPIHelper')):
       return $pixels_option;
     }
 
-    public function get_product_data(array $pixels_option= array(), $product_status = "1"){
+    public function get_product_data(array $pixels_option= array(), $product_status = "1", $include_settings = true){
       $product_data = array();
       if(empty($pixels_option) && class_exists( 'PMW_AdminHelper' ) ){
         $pixels_option = $this->PMW_AdminHelper->get_pmw_pixels_option();
@@ -92,7 +92,7 @@ if(!class_exists('PMW_AdminAPIHelper')):
       }
       $pixels_option = $this->sanitize_pixels_option(is_array($pixels_option)?$pixels_option:array());
       return array(
-        "settings" => $pixels_option,
+        "settings" => $include_settings ? $pixels_option : array(),
         "status" => $product_status,
         "version" => PIXEL_MANAGER_FOR_WOOCOMMERCE_VERSION,
         "domain" => esc_url_raw(get_site_url()),
@@ -100,13 +100,23 @@ if(!class_exists('PMW_AdminAPIHelper')):
       );
     }
 
-    public function save_product_store( $pixels_option = array(), $product_status = "1"){
+    public function save_product_store( $pixels_option = array(), $product_status = "1", $force = false){
       if(empty($pixels_option) && class_exists( 'PMW_AdminHelper' ) ){
         $pixels_option = $this->PMW_AdminHelper->get_pmw_pixels_option();
       }else if(!class_exists( 'PMW_AdminHelper' )){
         $pixels_option =  unserialize( get_option("pmw_pixels_option"));
       }
       if(empty($pixels_option)){
+        return;
+      }
+
+      // Layered consent: "Allow email and domain" enables the connection, and
+      // "Allow PTM settings" additionally includes the non-sensitive settings.
+      // Without the connection consent nothing is sent, except the forced
+      // one-time opt-out notification ($force = true).
+      $allow_email_domain = !empty($pixels_option['allow_email_domain']);
+      $allow_ptm_settings = !empty($pixels_option['allow_ptm_settings']);
+      if( !$force && !$allow_email_domain ){
         return;
       }
 
@@ -132,8 +142,8 @@ if(!class_exists('PMW_AdminAPIHelper')):
         //"last_name" => "",
         "website" => esc_url_raw(get_site_url()),            
         "product_id" => ( defined( 'PMW_PRODUCT_ID' ) )?PMW_PRODUCT_ID:2,
-        "store_data" => $store_data,
-        "product_data" => $this->get_product_data($pixels_option, $product_status)
+        "store_data" => $allow_ptm_settings ? $store_data : array(),
+        "product_data" => $this->get_product_data($pixels_option, $product_status, $allow_ptm_settings)
       );
 
       $args = array(

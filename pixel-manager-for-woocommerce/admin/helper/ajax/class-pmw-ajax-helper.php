@@ -18,7 +18,6 @@ if(!class_exists('PMW_AjaxHelper')):
       $this->includes();
       $this->PMW_API = new PMW_AdminAPIHelper();
       add_action('wp_ajax_pmw_pixels_save', array($this,'pmw_pixels_save') );
-      add_action('wp_ajax_pmw_check_privecy_policy', array($this,'pmw_check_privecy_policy') );
       add_action('wp_ajax_pmw_notice_dismiss', array($this,'pmw_notice_dismiss') );
       add_action('wp_ajax_pmw_clean_debug_logs', array($this,'pmw_clean_debug_logs') );
     }
@@ -107,9 +106,8 @@ if(!class_exists('PMW_AjaxHelper')):
           "cookies_consent_uk" => isset($_POST["axeptio_cookies_consent_uk"])?sanitize_text_field($_POST["axeptio_cookies_consent_uk"]):"",
           "cookies_consent_cn" => isset($_POST["axeptio_cookies_consent_cn"])?sanitize_text_field($_POST["axeptio_cookies_consent_cn"]):""
         ),
-        "privecy_policy" => array(
-          "privecy_policy" => 1
-        )
+        "allow_email_domain" => isset($_POST["allow_email_domain"]) ? sanitize_text_field($_POST["allow_email_domain"]) : false,
+        "allow_ptm_settings" => isset($_POST["allow_ptm_settings"]) ? sanitize_text_field($_POST["allow_ptm_settings"]) : false
       );
       $pixels = array("google_analytics_4_pixel","facebook_pixel","pinterest_pixel","snapchat_pixel","bing_pixel","twitter_pixel","tiktok_pixel");
       if(!empty($pixels)){
@@ -139,13 +137,32 @@ if(!class_exists('PMW_AjaxHelper')):
           exit;
         }else{
           $store_data = array();
-          $pixels_option = $this->filter_pixels_option($pixels_option);       
+          // Capture the previous connection state before overwriting the option.
+          $old_option = $this->get_pmw_pixels_option();
+          $was_connected = ( is_array($old_option) && !empty($old_option['allow_email_domain']) );
+
+          $pixels_option = $this->filter_pixels_option($pixels_option);
           $pixels_option = apply_filters("pmw_pixels_option_before_save", $pixels_option);
-          $this->save_pmw_pixels_option($pixels_option);
-          $api_rs = $this->PMW_API->save_product_store($pixels_option, 1);
-          if (!empty($api_rs) && isset($api_rs->error) && $api_rs->error == '' && isset($api_rs->data) ) {
-            $this->save_pmw_api_store((array)$api_rs->data);
-          }                
+          $this->save_pmw_pixels_option($pixels_option); // always save to the WordPress DB
+
+          // "Allow email and domain" is what enables the connection. What is actually
+          // sent (email/domain vs. plugin settings) is filtered inside save_product_store.
+          $is_connected = !empty($pixels_option['allow_email_domain']);
+          if( $is_connected ){
+            $api_rs = $this->PMW_API->save_product_store($pixels_option, 1);
+            if (!empty($api_rs) && isset($api_rs->error) && $api_rs->error == '' && isset($api_rs->data) ) {
+              $this->save_pmw_api_store((array)$api_rs->data);
+            }
+          }else if( $was_connected ){
+            // Just disconnected: deactivate the record on the middleware using the
+            // identity it was ACTUALLY synced with (the previous email/domain), so a
+            // newly-entered email is never pushed to the server when the connection
+            // is turned off. Force the flags off so no store data/settings are sent.
+            $disconnect_option = $old_option;
+            $disconnect_option['allow_email_domain'] = false;
+            $disconnect_option['allow_ptm_settings'] = false;
+            $this->PMW_API->save_product_store($disconnect_option, 0, true);
+          }
           echo wp_send_json( array("error" => false, 'message' => __("Your pixel settings saved.", "pixel-manager-for-woocommerce")) );
           exit;
         }
@@ -154,33 +171,6 @@ if(!class_exists('PMW_AjaxHelper')):
         exit;
       }
     }
-    /**
-     * Check privecy policy base on user email
-     **/
-    public function pmw_check_privecy_policy(){
-      $ajax_nonce = isset($_POST["pmw_ajax_nonce"])?sanitize_text_field($_POST["pmw_ajax_nonce"]):"";
-      if($this->admin_safe_ajax_call($ajax_nonce, 'pmw_ajax_nonce')){
-        $pixels_option = $this->get_post_pmw_pixels_option_sanitize();
-        $validate = $this->validate_pixels($pixels_option);
-        if(isset($validate["error"]) && $validate["error"] == true){
-          echo wp_send_json( $validate );
-          exit;
-        }else{
-          $pixels_option_old = $this->get_pmw_pixels_option();
-          if( isset($pixels_option_old['privecy_policy']['privecy_policy']) && $pixels_option_old['privecy_policy']['privecy_policy'] == 1 && $pixels_option_old['user']['email_id'] ==  $pixels_option['user']['email_id']){
-            echo wp_send_json( array( "error" => false ) );
-            exit;
-          }else{
-            echo wp_send_json( array( "error" => true ) );
-            exit;
-          }
-        }
-      }else{
-        echo wp_send_json( array("error" => true, 'message' => __("Your admin nonce is not valid.", "pixel-manager-for-woocommerce")) );
-        exit;
-      }
-    }
-
     /**
      * Check AJAX nonce
      **/

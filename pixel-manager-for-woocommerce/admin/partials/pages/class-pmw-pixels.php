@@ -51,6 +51,8 @@ if(!class_exists('PMW_Pixels')){
       do_action("pmw_before_pixel_settings", $this->is_pro_version);
       $pixels_option = $this->get_pmw_pixels_option();
       $email_id = isset($pixels_option['user']['email_id'])?$pixels_option['user']['email_id']:$current_user->user_email;
+      $allow_email_domain = isset($pixels_option['allow_email_domain'])?$pixels_option['allow_email_domain']:"1";
+      $allow_ptm_settings = isset($pixels_option['allow_ptm_settings'])?$pixels_option['allow_ptm_settings']:"";
       //Google
       $gtm_container_load_mode = isset($pixels_option['gtm_container']['load_mode']) ? $pixels_option['gtm_container']['load_mode'] : "default_ptm";
       $gtm_container_custom_id = isset($pixels_option['gtm_container']['custom_container_id']) ? $pixels_option['gtm_container']['custom_container_id'] : "";
@@ -135,8 +137,6 @@ if(!class_exists('PMW_Pixels')){
       $axeptio_is_enable = isset($pixels_option['axeptio']['is_enable'])?$pixels_option['axeptio']['is_enable']:"";
       $axeptio_cookies_version = isset($pixels_option['axeptio']['cookies_version'])?$pixels_option['axeptio']['cookies_version']:"";
 
-      $privecy_policy = isset($pixels_option['privecy_policy']['privecy_policy'])?$pixels_option['privecy_policy']['privecy_policy']:"";
-      
       /**
        * Advance settings
        **/
@@ -179,33 +179,42 @@ if(!class_exists('PMW_Pixels')){
             ]
           ]
         ],
-        "section_freevspro" => [    
+        "allow_to_connect" => [
           [
-            "type" => "section",
-            "label" => __("Comparison between free and pro events tracking", "pixel-manager-for-woocommerce"),
-            "class" => "freevspro_section_setting",
-          ]
-        ],
-        "section_freevspro_features" => [    
-          [
-            "type" => "freevspro_features",
-            "class" => "freevspro_features_setting",
-          ]
-        ],
-        "ptm_upgrade_banner" =>  [
-          [
-            "type"  => "html",
-            "class" => "pmw-pro-upgrade-notice facebook-upgrade-banner",
+            "type" => "html",
+            "class" => "allow_connect_head",
             "value" => sprintf(
-              '<div class="pmw-upgrade-callout"><h4>%1$s</h4><p>%2$s</p><a class="button button-primary" target="_blank" href="%3$s">%4$s</a></div>',
-              esc_html__('Unlock the complete PRO experience', 'pixel-manager-for-woocommerce'),
-              esc_html__('Access every premium feature including support for all major eCommerce events, conversion api tracking and priority support.', 'pixel-manager-for-woocommerce'),
-              esc_url_raw($this->get_price_plan_link().'&utm_source=Plugin+WordPress+Screen&utm_medium=GA4+Section+Upgrade&m_campaign=Upsell+at+PixelTagManager+Plugin'),
-              esc_html__('Upgrade to Pro', 'pixel-manager-for-woocommerce')
+              '<span class="pmw_ac_title">%1$s</span><p class="pmw_ac_desc">%2$s</p>',
+              esc_html__('Allow to connect', 'pixel-manager-for-woocommerce'),
+              esc_html__('Choose what this store shares with GrowCommerce. Nothing leaves your site unless you enable it here — otherwise everything is saved only in your WordPress database.', 'pixel-manager-for-woocommerce')
             )
+          ],
+          [
+            "type" => "switch",
+            "label" => __("Allow email and domain", "pixel-manager-for-woocommerce"),
+            "note" => __("Share your account email and site domain so GrowCommerce can connect your store.", "pixel-manager-for-woocommerce"),
+            "name" => "allow_email_domain",
+            "id" => "allow_email_domain",
+            "value" => $allow_email_domain,
+            "class" => "allow_email_domain",
+            "tooltip" =>[
+              "title" => __("Required to connect. Sends your account email and site domain to GrowCommerce.", "pixel-manager-for-woocommerce")
+            ]
+          ],
+          [
+            "type" => "switch",
+            "label" => __("Allow PTM non sensitive settings and store information", "pixel-manager-for-woocommerce"),
+            "note" => __("Also share your non-sensitive plugin settings and store info. API tokens and pixel IDs are never sent.", "pixel-manager-for-woocommerce"),
+            "name" => "allow_ptm_settings",
+            "id" => "allow_ptm_settings",
+            "value" => $allow_ptm_settings,
+            "class" => "allow_ptm_settings",
+            "tooltip" =>[
+              "title" => __("Requires \"Allow email and domain\". Sends your non-sensitive plugin settings and store info for diagnostics and feature updates.", "pixel-manager-for-woocommerce")
+            ]
           ]
         ],
-        "section_google" => [    
+        "section_google" => [
           [
             "type" => "section",
             "label" => __("Analytics & Pixel settings", "pixel-manager-for-woocommerce"),
@@ -1067,17 +1076,38 @@ if(!class_exists('PMW_Pixels')){
             "is_tongal" => true
           ]
         ],
+        "section_freevspro" => [
+          [
+            "type" => "section",
+            "label" => __("Comparison between free and pro events tracking", "pixel-manager-for-woocommerce"),
+            "class" => "freevspro_section_setting",
+          ]
+        ],
+        "section_freevspro_features" => [
+          [
+            "type" => "freevspro_features",
+            "class" => "freevspro_features_setting",
+          ]
+        ],
+        "ptm_upgrade_banner" =>  [
+          [
+            "type"  => "html",
+            "class" => "pmw-pro-upgrade-notice facebook-upgrade-banner",
+            "value" => sprintf(
+              '<div class="pmw-upgrade-callout"><h4>%1$s</h4><p>%2$s</p><a class="button button-primary" target="_blank" href="%3$s">%4$s</a></div>',
+              esc_html__('Unlock the complete PRO experience', 'pixel-manager-for-woocommerce'),
+              esc_html__('Access every premium feature including support for all major eCommerce events, conversion api tracking and priority support.', 'pixel-manager-for-woocommerce'),
+              esc_url_raw($this->get_price_plan_link().'&utm_source=Plugin+WordPress+Screen&utm_medium=GA4+Section+Upgrade&m_campaign=Upsell+at+PixelTagManager+Plugin'),
+              esc_html__('Upgrade to Pro', 'pixel-manager-for-woocommerce')
+            )
+          ]
+        ],
         "hidden" => [
           [
             "type" => "hidden",
-            "name" => "privecy_policy",
-            "id" => "privecy_policy",
-            "value" => $privecy_policy
-          ],[
-            "type" => "hidden",
             "id" => "pixels_save_action",
             "name" => "action",
-            "value" => "pmw_check_privecy_policy"
+            "value" => "pmw_pixels_save"
           ]
         ],
         "tab_end_pixels" => [ 
@@ -1427,67 +1457,6 @@ if(!class_exists('PMW_Pixels')){
         echo $this->get_sidebar_html($this->is_pro_version, $this->plan_name);
         ?>
       </div>
-      <div id="pmw_privacy_popup" class="modal fade">
-        <div class="modal-dialog modal-dialog-centered">
-          <!-- Modal content -->
-          <div class="modal-content">
-            <div class="modal-header">
-              <span id="close" class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-              <div class="modal-top-area">
-                <div class="logo-section">
-                  <div class="logo_section-img"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/wp.png"); ?>" alt="img"></div>
-                  <div class="logo_section-img"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/pixel-icon.png"); ?>" alt="img"></div>
-                </div>
-              </div>
-              <div class="modal-middle-area">
-                <p><strong>Hey <?php echo esc_attr(get_bloginfo()); ?>,</strong></p>
-               <p><?php echo esc_attr__('Never miss an important update - opt in to our security and feature updates notifications, and non-sensitive diagnostic tracking with', 'pixel-manager-for-woocommerce'); ?> <a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/"); ?>">GrowCommerce</a></p>
-                <p><a target="_blank" href="<?php echo esc_url_raw("https://growcommerce.io/privacy-terms/"); ?>"><?php echo esc_attr__('Privacy & Terms', 'pixel-manager-for-woocommerce'); ?></a></p>
-                <div class="modal_button-area">
-                  <button class="pmw_btn pmw_btn-fill" id="pmw_accept_privecy_policy"><?php echo esc_attr__('Allow & Continue', 'pixel-manager-for-woocommerce'); ?></button>
-                </div>
-              </div>
-              <div class="modal-bottom-area">
-                <h2 class="toggle_title-text"><?php echo esc_attr__('What Permissions are being Granted?', 'pixel-manager-for-woocommerce'); ?></h2>
-                <div class="pmw_slide-down-area">
-                  <ul>
-                    <li>
-                      <div class="pmw_slide-area-image"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/icon-plugin.png"); ?>" alt="img"></div>
-                      <div class="pmw_slide-area-content">
-                        <span class="pmw_slide-area-title"><?php echo esc_attr__('Allow This Tool Only', 'pixel-manager-for-woocommerce'); ?></span>
-                        <p><?php echo esc_attr__('Only this plugin and store basic info like domain, currency, language, and country to improve functionality.', 'pixel-manager-for-woocommerce'); ?></p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="pmw_slide-area-image"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/Icon-profile.png"); ?>" alt="img"></div>
-                      <div class="pmw_slide-area-content">
-                        <span class="pmw_slide-area-title"><?php echo esc_attr__('Your Profile Overview', 'pixel-manager-for-woocommerce'); ?></span>
-                        <p><?php echo esc_attr__('Email address', 'pixel-manager-for-woocommerce'); ?></p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="pmw_slide-area-image"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/Icon-site-overview.png"); ?>" alt="img"></div>
-                      <div class="pmw_slide-area-content">
-                        <span class="pmw_slide-area-title"><?php echo esc_attr__('Your Site Overview', 'pixel-manager-for-woocommerce'); ?></span>
-                        <p><?php echo esc_attr__('Site URL, country, currency, WP version, PHP info', 'pixel-manager-for-woocommerce'); ?></p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="pmw_slide-area-image"><img src="<?php echo esc_url_raw(PIXEL_MANAGER_FOR_WOOCOMMERCE_URL."/admin/images/Icon-notice.png"); ?>" alt="img"></div>
-                      <div class="pmw_slide-area-content">
-                        <span class="pmw_slide-area-title"><?php echo esc_attr__('Admin Notice', 'pixel-manager-for-woocommerce'); ?></span>
-                        <p><?php echo esc_attr__('Updates, announcements, marketing, no spam', 'pixel-manager-for-woocommerce'); ?></p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <svg version="1.1" class="svg-filters" style="display:none;">
         <defs>
           <filter id="marker-shape">
@@ -1611,6 +1580,18 @@ if(!class_exists('PMW_Pixels')){
             jQuery(document).on('change', '#conversion_api_logs', function() {
               if (!jQuery(this).is(':checked')) {
                 jQuery('#conversion_api_logs_payload').prop('checked', false);
+              }
+            });
+
+            // Allow to connect: "PTM settings" requires the email + domain connection.
+            jQuery(document).on('change', '#allow_ptm_settings', function(){
+              if(jQuery(this).is(':checked')){
+                jQuery('#allow_email_domain').prop('checked', true);
+              }
+            });
+            jQuery(document).on('change', '#allow_email_domain', function(){
+              if(!jQuery(this).is(':checked')){
+                jQuery('#allow_ptm_settings').prop('checked', false);
               }
             });
 

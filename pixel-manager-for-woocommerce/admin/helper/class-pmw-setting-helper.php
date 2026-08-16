@@ -915,8 +915,8 @@ if(!class_exists('PMW_SettingHelper')):
         $class = $this->get_array_val($args, "class");
         $value = $this->get_array_val($args, "value");
         $checked = ($value ==1)?"checked":"";
-        $tooltip = $this->get_array_val($args, "tooltip"); 
-        //$note = $this->get_array_val($args, "note");
+        $tooltip = $this->get_array_val($args, "tooltip");
+        $note = $this->get_array_val($args, "note");
 
         $is_pro_featured = $this->get_array_val($args, "is_pro_featured");
         $pro_text = $this->get_array_val($args, "is_pro_text");
@@ -927,10 +927,13 @@ if(!class_exists('PMW_SettingHelper')):
         <div class="form-input-inline pmw_switch-with-title ml-2">
           <div class="pmw_input-col-lg">
             <label class="pmw_row-title pmw_switch_title">
-              <?php echo esc_attr($label); 
+              <?php echo esc_attr($label);
               ($is_pro_featured)?$this->display_proplan_with_link($pro_text, $pro_utm_text):"";
               ?>
             </label>
+            <?php if($note){ ?>
+              <span class="pmw_switch_desc"><?php echo esc_html($note); ?></span>
+            <?php } ?>
           </div>
           <div class="pmw_input-col-sm offspace-top-1">
             <div class="alert-wrapper">

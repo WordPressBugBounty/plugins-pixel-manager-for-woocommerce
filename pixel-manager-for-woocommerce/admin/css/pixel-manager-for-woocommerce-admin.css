@@ -725,6 +725,66 @@ h4.section_sub_setting{
     -webkit-transform: translateX(23px);
     transform: translateX(23px);
 }
+/* Allow to connect - grouped card with two switches (Connect Account section) */
+.pmw_form-row.allow_to_connect {margin-left: 10px; max-width: 780px}
+.pmw_form-row.allow_to_connect .pmw_form-group{
+    background: #fff;
+    border: 1px solid #e3e5e8;
+    border-radius: 10px;
+    padding: 2px 20px;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+}
+.pmw_form-row.allow_to_connect .allow_connect_head{
+    padding: 16px 0 12px;
+}
+.pmw_form-row.allow_to_connect .pmw_ac_title{
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1d2327;
+}
+.pmw_form-row.allow_to_connect .pmw_ac_desc{
+    margin: 4px 0 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #646970;
+    max-width: 600px;
+}
+.pmw_form-row.allow_to_connect .pmw_switch-with-title{
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 14px 0;
+    border-top: 1px solid #eef0f2;
+}
+.pmw_form-row.allow_to_connect .pmw_input-col-lg{
+    width: auto;
+    flex: 1;
+}
+.pmw_form-row.allow_to_connect label.pmw_switch_title{
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+    display: block;
+    text-transform: none;
+}
+.pmw_form-row.allow_to_connect .pmw_switch_desc{
+    display: block;
+    margin: 3px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #646970;
+    text-transform: none;
+    max-width: 520px;
+}
+.pmw_form-row.allow_to_connect .pmw_input-col-sm{
+    width: auto;
+    justify-content: flex-end;
+}
+.pmw_form-row.allow_to_connect .offspace-top-1{
+    margin-top: 0;
+}
 .pmw_input-col-lg {
     width: 80%;
 }
