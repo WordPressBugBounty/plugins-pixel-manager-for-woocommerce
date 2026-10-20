@@ -340,6 +340,12 @@ if(!class_exists('PMW_AdminHelper')):
     }
 
     public function pmw_display_admin_notices(){
+      // The dismiss handler rendered below prints a pmw_ajax_nonce. Only emit it
+      // to users who are allowed to use the plugin's AJAX actions, so the token
+      // is never exposed to lower-privilege roles (e.g. Contributors).
+      if ( ! current_user_can('manage_options') ) {
+        return;
+      }
       $max_limite = 1; //max limite to display
       $notices = $this->get_pmw_admin_notices();
       $last_hide_notice_date = isset($notices["last_hide_notice_date"])?$notices["last_hide_notice_date"]:"";

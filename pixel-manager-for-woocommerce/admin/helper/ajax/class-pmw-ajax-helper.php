@@ -175,8 +175,12 @@ if(!class_exists('PMW_AjaxHelper')):
      * Check AJAX nonce
      **/
     protected function admin_safe_ajax_call( $nonce, $registered_nonce_name ) {
-      // only return results when the user is an admin with manage options
-      if ( is_admin() && wp_verify_nonce($nonce,$registered_nonce_name) ) {
+      // Only allow users who can manage the site (the same capability that gates
+      // every Pixel Tag Manager admin screen) to run state-changing AJAX actions.
+      // is_admin() is NOT an authorization check: it is true for every
+      // admin-ajax.php request regardless of the user's role, so a capability
+      // check must be verified in addition to the nonce.
+      if ( is_admin() && current_user_can('manage_options') && wp_verify_nonce($nonce,$registered_nonce_name) ) {
         return true;
       } else {
         return false;

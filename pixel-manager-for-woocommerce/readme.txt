@@ -8,7 +8,7 @@ Tags: google analytics 4, google ads conversion, facebook pixel, dynamic retarge
 Requires at least: 5.6
 Tested up to: 7.0.4
 Requires PHP: 7.4
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -210,6 +210,9 @@ To create TikTok pixel ID, see the article - https://growcommerce.io/documentati
 10. Purchase Journey – GrowInsights360
 
 == Changelog ==
+= 2.2.3 - 21 Oct 2026 =
+* Security: Added a capability check (manage_options) to the admin AJAX actions, in addition to the existing nonce, so only administrators can change tracking settings. The admin-notice nonce is no longer shown to lower-privilege roles. Thanks to Suhayb Ahmed (cyboltx), reported via WPScan.
+
 = 2.2.2 - 16 Aug 2026 =
 * Options to what store shares with GrowCommerce. Your choices take effect when you save your pixel settings.
 
